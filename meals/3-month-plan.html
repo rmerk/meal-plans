@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My 3-Month Meal Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <!--
+      Meal Plan Website
+      Generated for user goal: 205lbs -> 180lbs
+      Focus: Asian-inspired, High Protein, Batch Prep
+    -->
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 font-bold text-xl text-emerald-400">
+                    Goal: 180 lbs
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Overview</a>
+                        <a href="#prep" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Week 1 Prep</a>
+                        <a href="#shopping-list" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Shopping List</a>
+                        <a href="#recipes" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Recipes</a>
+                    </div>
+                </div>
+                <!-- Mobile menu button placeholder (simplified for static site) -->
+                <div class="md:hidden text-xs text-slate-400">
+                    Scroll down for sections
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Bottom Nav for easy access -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around py-3 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50 text-xs font-medium text-slate-600">
+        <a href="#overview" class="flex flex-col items-center gap-1 hover:text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            Info
+        </a>
+        <a href="#prep" class="flex flex-col items-center gap-1 hover:text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            Plan
+        </a>
+        <a href="#shopping-list" class="flex flex-col items-center gap-1 hover:text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            Shop
+        </a>
+        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-emerald-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+            Cook
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <!-- Header Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">My 3-Month Meal Plan</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto">From 205 lbs to 180 lbs. High protein, Asian-inspired, batch prep focused.</p>
+        </header>
+
+        <!-- Disclaimer -->
+        <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-8 rounded-r-lg">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-amber-700">
+                        <strong>Medical Disclaimer:</strong> This plan is for informational purposes only. Please consult with a doctor or dietitian before starting any aggressive weight loss plan.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Plan Overview</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold text-emerald-600 mb-2">The Numbers</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>Target Loss: 25 lbs (12-13 weeks)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>Rate: ~2 lbs per week</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-emerald-400 rounded-full mr-2"></span>Calories: 1,900 - 2,100 daily</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold text-emerald-600 mb-2">The Strategy</h3>
+                    <ul class="space-y-2 text-slate-600">
+                        <li class="flex items-center"><span class="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>High Protein & Fiber</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>Batch Prep Lunches & Dinners</li>
+                        <li class="flex items-center"><span class="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>Asian-inspired flavor profiles</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prep Section -->
+        <section id="prep" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-2">
+                <h2 class="text-2xl font-bold text-slate-800">Week 1: Prep Strategy</h2>
+                <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Est. Time: 2-3 Hours</span>
+            </div>
+
+            <div class="mb-6">
+                <h3 class="font-bold text-lg text-slate-700 mb-3">The Menu (14 Meals)</h3>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Lunches (7 Total)</span>
+                        <div class="mt-2">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-slate-700 font-medium">Beef & Broccoli Bowl</span>
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-1 rounded-full">4x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-700 font-medium">Chicken Salad</span>
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-1 rounded-full">3x</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Dinners (7 Total)</span>
+                        <div class="mt-2">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-slate-700 font-medium">Beef Stir-Fry</span>
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-1 rounded-full">4x</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-slate-700 font-medium">Pork & Soba</span>
+                                <span class="bg-slate-200 text-slate-600 text-xs px-2 py-1 rounded-full">3x</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-lg text-slate-700 mb-3">Order of Operations</h3>
+                <ol class="relative border-l border-slate-200 ml-3 space-y-6">
+                    <li class="mb-10 ml-4">
+                        <div class="absolute w-3 h-3 bg-emerald-500 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                        <h4 class="text-md font-semibold text-slate-900">1. Prep Carbs</h4>
+                        <p class="mb-1 text-sm font-normal text-slate-500">Start the rice (2 cups dry) and cook soba noodles. Rinse noodles with cold water & oil.</p>
+                    </li>
+                    <li class="mb-10 ml-4">
+                        <div class="absolute w-3 h-3 bg-emerald-500 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                        <h4 class="text-md font-semibold text-slate-900">2. Vegetables & Aromatics</h4>
+                        <p class="mb-1 text-sm font-normal text-slate-500">Chop everything at once. Mince ~30 cloves garlic, grate ginger. Chop broccoli, cabbage, carrots, onions, bok choy.</p>
+                    </li>
+                    <li class="mb-10 ml-4">
+                        <div class="absolute w-3 h-3 bg-emerald-500 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                        <h4 class="text-md font-semibold text-slate-900">3. Mix Sauces</h4>
+                        <p class="mb-1 text-sm font-normal text-slate-500">Make all 4 sauces in separate jars/bowls so they are ready to dump in pan.</p>
+                    </li>
+                    <li class="mb-10 ml-4">
+                        <div class="absolute w-3 h-3 bg-emerald-500 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                        <h4 class="text-md font-semibold text-slate-900">4. Cook & Assemble</h4>
+                        <p class="mb-1 text-sm font-normal text-slate-500">Cook one meal at a time. Portion immediately into containers. <strong>Note:</strong> Keep salad components separate.</p>
+                    </li>
+                    <li class="ml-4">
+                        <div class="absolute w-3 h-3 bg-emerald-500 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                        <h4 class="text-md font-semibold text-slate-900">5. Cool & Store</h4>
+                        <p class="mb-1 text-sm font-normal text-slate-500">Let hot meals cool 30-45 mins before lidding to prevent sogginess.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Shopping List Section -->
+        <section id="shopping-list" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Shopping List</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <!-- Produce Column -->
+                <div>
+                    <h4 class="font-bold text-emerald-700 uppercase text-sm tracking-wider mb-3">Produce</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Garlic (3-4 heads)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Fresh Ginger (5 inches)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Green Onions (1 bunch)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Cabbage (1 head)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Carrots (1 bag/bunch)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Large Cucumber (1)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Cilantro & Mint (1 ea)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Limes (3)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Onions (4 medium)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Baby Bok Choy (12-15)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Red Bell Peppers (3)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-emerald-600">Broccoli (5 heads/2lbs)</li>
+                    </ul>
+                </div>
+
+                <!-- Protein Column -->
+                <div>
+                    <h4 class="font-bold text-red-700 uppercase text-sm tracking-wider mb-3">Protein</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-red-600">Lean Ground Beef (1.25 lbs)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-red-600">Chicken Breast (1.125 lbs)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-red-600">Flank/Sirloin Steak (1.5 lbs)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-red-600">Lean Pork Loin (1.125 lbs)</li>
+                    </ul>
+                </div>
+
+                <!-- Pantry Column -->
+                <div>
+                    <h4 class="font-bold text-amber-700 uppercase text-sm tracking-wider mb-3">Pantry</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Brown Rice (2 lbs)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Soba Noodles (1 pack)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Low-Sodium Soy Sauce</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Gochugaru (Korean Chili)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Honey or Maple Syrup</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Sesame Oil</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Toasted Sesame Seeds</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Cooking Oils (Olive, Avo)</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Cornstarch</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Chicken/Beef Broth</li>
+                        <li class="flex items-start"><input type="checkbox" class="mt-1 mr-2 accent-amber-600">Rice Vinegar</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipes Section -->
+        <section id="recipes" class="space-y-8 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Detailed Recipes</h2>
+
+            <!-- Recipe 1 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden">
+                <div class="bg-red-50 p-4 border-b border-red-100 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-red-900">1. Gochugaru Beef & Broccoli Bowl</h3>
+                    <span class="bg-white text-red-800 text-xs font-bold px-2 py-1 rounded border border-red-200">Lunch (4 Servings)</span>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Ingredients</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>1.25 lbs 93/7 lean ground beef</li>
+                                <li>8 cups broccoli florets</li>
+                                <li>4 cups cooked brown rice</li>
+                                <li class="font-semibold mt-2 list-none">Sauce:</li>
+                                <li>6 tbsp soy sauce</li>
+                                <li>4-8 tsp gochugaru (to taste)</li>
+                                <li>4 tsp honey, 4 tsp sesame oil</li>
+                                <li>8 cloves garlic, 4 tsp ginger</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Instructions</h4>
+                            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                                <li>Steam broccoli until tender-crisp.</li>
+                                <li>Whisk sauce ingredients together.</li>
+                                <li>Brown beef in a large skillet; drain fat.</li>
+                                <li>Add sauce to beef, thicken for 2 mins.</li>
+                                <li>Toss in broccoli to coat.</li>
+                                <li>Portion over rice. Garnish with green onions.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 2 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden">
+                <div class="bg-orange-50 p-4 border-b border-orange-100 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-orange-900">2. Vietnamese-Style Chicken Salad</h3>
+                    <span class="bg-white text-orange-800 text-xs font-bold px-2 py-1 rounded border border-orange-200">Lunch (3 Servings)</span>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Ingredients</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>1.125 lbs chicken breast (cooked/shredded)</li>
+                                <li>6 cups cabbage, 3 cups carrots</li>
+                                <li>1.5 cups cucumber, cilantro, mint</li>
+                                <li class="font-semibold mt-2 list-none">Dressing:</li>
+                                <li>Juice of 3 limes, 3 tbsp olive oil</li>
+                                <li>3 tsp sesame oil, 3 tsp honey</li>
+                                <li>3 tsp soy sauce, 3 cloves garlic</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Instructions (Deconstructed)</h4>
+                            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                                <li>Combine cabbage, carrots, herbs for base.</li>
+                                <li>Whisk dressing ingredients.</li>
+                                <li><strong>Storage:</strong> Keep salad base, chicken, and dressing in 3 separate containers per meal.</li>
+                                <li>Mix just before eating to keep crisp.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 3 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden">
+                <div class="bg-blue-50 p-4 border-b border-blue-100 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-blue-900">3. Classic Beef & Broccoli Stir-Fry</h3>
+                    <span class="bg-white text-blue-800 text-xs font-bold px-2 py-1 rounded border border-blue-200">Dinner (4 Servings)</span>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Ingredients</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>1.5 lbs flank steak (thinly sliced)</li>
+                                <li>12 cups broccoli, 4 onions</li>
+                                <li>4 tsp cornstarch + 4 tbsp soy sauce (marinade)</li>
+                                <li class="font-semibold mt-2 list-none">Sauce:</li>
+                                <li>1/4 cup broth, 8 tbsp soy sauce</li>
+                                <li>4 tsp sesame oil, 4 tsp honey</li>
+                                <li>8 cloves garlic, 4 tsp ginger</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Instructions</h4>
+                            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                                <li>Marinate beef in cornstarch/soy (10 min).</li>
+                                <li>Sear beef in batches on high heat. Remove.</li>
+                                <li>Stir-fry veggies. Add water to steam (2 min).</li>
+                                <li>Return beef and add sauce. Cook until thick.</li>
+                                <li>Serve over brown rice.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 4 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden">
+                <div class="bg-purple-50 p-4 border-b border-purple-100 flex justify-between items-center">
+                    <h3 class="font-bold text-lg text-purple-900">4. Pork & Soba Noodle Stir-Fry</h3>
+                    <span class="bg-white text-purple-800 text-xs font-bold px-2 py-1 rounded border border-purple-200">Dinner (3 Servings)</span>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Ingredients</h4>
+                            <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
+                                <li>1.125 lbs pork loin (thinly sliced)</li>
+                                <li>6 oz dry soba noodles</li>
+                                <li>12-15 baby bok choy, 3 peppers</li>
+                                <li class="font-semibold mt-2 list-none">Sauce:</li>
+                                <li>9 tbsp soy sauce, 3 tbsp rice vinegar</li>
+                                <li>3 tsp sesame oil, 3 tsp honey</li>
+                                <li>6 cloves garlic, 3 tsp ginger</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2">Instructions</h4>
+                            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                                <li>Cook soba noodles, rinse cold.</li>
+                                <li>Stir-fry pork until cooked. Remove.</li>
+                                <li>Stir-fry veggies (bok choy/peppers).</li>
+                                <li>Add pork, noodles, and sauce back in.</li>
+                                <li>Toss until hot and combined.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="text-center text-slate-400 text-sm py-8">
+            <p>Generated by AI • Good luck hitting 180 lbs!</p>
+        </footer>
+
+    </div>
+</body>
+</html>
