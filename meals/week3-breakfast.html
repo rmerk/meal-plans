@@ -8,7 +8,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        /* Print styles */
+        @media print {
+            /* Hide navigation and non-essential elements */
+            nav, .md\:hidden.fixed.bottom-0, footer, .print\:hidden {
+                display: none !important;
+            }
+
+            /* Optimize for print */
+            body {
+                background: white;
+                font-size: 11pt;
+            }
+
+            /* Show all content */
+            section {
+                page-break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0;
+            }
+
+            /* Checkbox styles for print */
+            input[type="checkbox"] {
+                -webkit-appearance: checkbox;
+                appearance: checkbox;
+                width: 14px;
+                height: 14px;
+                border: 1px solid #000;
+            }
+
+            /* Remove background colors for print */
+            .bg-slate-50, .bg-white {
+                background: white !important;
+            }
+
+            /* Shopping list optimizations */
+            #shopping ul {
+                column-count: 2;
+                column-gap: 20px;
+            }
+        }
     </style>
+    <script src="meal-utils.js"></script>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
 

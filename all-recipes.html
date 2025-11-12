@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Recipes - Quick Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <script src="meals/plans.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen antialiased">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    All Recipes
+                </h1>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                    Quick reference to all meal plans and recipes
+                </p>
+                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Search Bar -->
+        <div class="mb-8">
+            <div class="relative">
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search recipes by name, protein, or keywords..."
+                    class="w-full px-4 py-3 pl-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    oninput="filterRecipes()"
+                >
+                <svg class="absolute left-4 top-3.5 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Recipe Directory -->
+        <div id="recipe-directory" class="space-y-8">
+            <!-- Dynamically generated recipe cards will go here -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-12">
+            <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="text-slate-500 text-lg">No recipes found matching your search.</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm py-8 mt-12">
+        <p>All recipes from your meal prep collection</p>
+    </footer>
+
+    <script>
+        // Comprehensive recipe data extracted from meal plans
+        const recipesByPlan = {
+            "Week 1 Meals": [
+                { name: "Gochugaru Beef & Broccoli Bowl", type: "Lunch", servings: 4, protein: "Ground Beef", cuisine: "Korean-inspired" },
+                { name: "Vietnamese-Style Chicken Salad", type: "Lunch", servings: 3, protein: "Chicken Breast", cuisine: "Vietnamese" },
+                { name: "Classic Beef & Broccoli Stir-Fry", type: "Dinner", servings: 4, protein: "Flank Steak", cuisine: "Chinese" },
+                { name: "Pork & Soba Noodle Stir-Fry", type: "Dinner", servings: 3, protein: "Pork Loin", cuisine: "Japanese" }
+            ],
+            "Week 1 Breakfasts": [
+                { name: "Kimchi Scramble", type: "Breakfast", servings: 1, protein: "Eggs", cuisine: "Korean-inspired" },
+                { name: "Greek Yogurt Protein Bowl", type: "Breakfast", servings: 1, protein: "Greek Yogurt", cuisine: "Greek" },
+                { name: "Savory Tofu Scramble", type: "Breakfast", servings: 1, protein: "Tofu", cuisine: "American" },
+                { name: "Protein Smoothie", type: "Breakfast", servings: 1, protein: "Protein Powder", cuisine: "American" }
+            ],
+            "Week 2 Meals": [
+                { name: "Spicy Turkey 'Bibimbap' Bowl", type: "Lunch", servings: 4, protein: "Ground Turkey", cuisine: "Korean" },
+                { name: "Ginger-Garlic Ground Chicken", type: "Lunch", servings: 3, protein: "Ground Chicken", cuisine: "Asian-inspired" },
+                { name: "Spicy-Sweet Crispy Tofu", type: "Dinner", servings: 4, protein: "Tofu", cuisine: "Asian Fusion" },
+                { name: "Ground Pork & Green Bean", type: "Dinner", servings: 3, protein: "Ground Pork", cuisine: "Chinese" }
+            ],
+            "Week 2 Breakfasts": [
+                { name: "Egg White & Veggie Scramble", type: "Breakfast", servings: 1, protein: "Egg Whites", cuisine: "American" },
+                { name: "Cottage Cheese Protein Bowl", type: "Breakfast", servings: 1, protein: "Cottage Cheese", cuisine: "American" },
+                { name: "High-Protein Oatmeal", type: "Breakfast", servings: 1, protein: "Protein Powder", cuisine: "American" },
+                { name: "Breakfast Burrito Bowl", type: "Breakfast", servings: 1, protein: "Eggs", cuisine: "Mexican" }
+            ],
+            "Week 3 Meals": [
+                { name: "Teriyaki Shrimp & Vegetables", type: "Lunch", servings: 4, protein: "Shrimp", cuisine: "Japanese" },
+                { name: "Green Curry Chicken", type: "Lunch", servings: 3, protein: "Chicken Breast", cuisine: "Thai" },
+                { name: "Mapo Tofu Beef Bowl", type: "Dinner", servings: 4, protein: "Ground Beef", cuisine: "Sichuan" },
+                { name: "Mongolian Beef Stir-Fry", type: "Dinner", servings: 3, protein: "Flank Steak", cuisine: "Mongolian" }
+            ],
+            "Week 3 Breakfasts": [
+                { name: "Savory Oats with Egg", type: "Breakfast", servings: 1, protein: "Eggs", cuisine: "Asian-inspired" },
+                { name: "Berry Protein Smoothie", type: "Breakfast", servings: 1, protein: "Protein Powder", cuisine: "American" },
+                { name: "Peanut Butter Protein Oats", type: "Breakfast", servings: 1, protein: "Protein Powder", cuisine: "American" },
+                { name: "Spicy Breakfast Wrap", type: "Breakfast", servings: 1, protein: "Eggs", cuisine: "Mexican" }
+            ]
+        };
+
+        // Generate recipe cards on page load
+        function generateRecipeCards() {
+            const directory = document.getElementById('recipe-directory');
+            directory.innerHTML = '';
+
+            Object.entries(recipesByPlan).forEach(([planName, recipes]) => {
+                const planSection = document.createElement('div');
+                planSection.className = 'recipe-plan-section bg-white rounded-xl shadow-md p-6';
+                planSection.dataset.plan = planName.toLowerCase();
+
+                const planHeader = document.createElement('div');
+                planHeader.className = 'mb-4 pb-3 border-b border-slate-200';
+                planHeader.innerHTML = `
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">${planName}</h2>
+                    <a href="meals/${getPlanFile(planName)}" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm font-semibold">
+                        View Full Plan
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                `;
+
+                const recipeGrid = document.createElement('div');
+                recipeGrid.className = 'grid md:grid-cols-2 gap-4 mt-4';
+
+                recipes.forEach(recipe => {
+                    const recipeCard = document.createElement('div');
+                    recipeCard.className = 'recipe-card bg-slate-50 p-4 rounded-lg border border-slate-200';
+                    recipeCard.dataset.recipeName = recipe.name.toLowerCase();
+                    recipeCard.dataset.protein = recipe.protein.toLowerCase();
+                    recipeCard.dataset.cuisine = recipe.cuisine.toLowerCase();
+
+                    recipeCard.innerHTML = `
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">${recipe.name}</h3>
+                        <div class="space-y-1 text-sm text-slate-600">
+                            <div class="flex items-center">
+                                <span class="font-semibold w-20">Type:</span>
+                                <span>${recipe.type}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="font-semibold w-20">Protein:</span>
+                                <span>${recipe.protein}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="font-semibold w-20">Servings:</span>
+                                <span>${recipe.servings}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="font-semibold w-20">Cuisine:</span>
+                                <span>${recipe.cuisine}</span>
+                            </div>
+                        </div>
+                    `;
+
+                    recipeGrid.appendChild(recipeCard);
+                });
+
+                planSection.appendChild(planHeader);
+                planSection.appendChild(recipeGrid);
+                directory.appendChild(planSection);
+            });
+        }
+
+        // Get plan filename from plan name
+        function getPlanFile(planName) {
+            const plan = mealPlans.find(p => p.title === planName);
+            return plan ? plan.file : '#';
+        }
+
+        // Filter recipes based on search
+        function filterRecipes() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const recipeCards = document.querySelectorAll('.recipe-card');
+            const planSections = document.querySelectorAll('.recipe-plan-section');
+            let visibleCount = 0;
+
+            planSections.forEach(section => {
+                const cards = section.querySelectorAll('.recipe-card');
+                let sectionHasVisible = false;
+
+                cards.forEach(card => {
+                    const recipeName = card.dataset.recipeName;
+                    const protein = card.dataset.protein;
+                    const cuisine = card.dataset.cuisine;
+
+                    const matches = recipeName.includes(searchTerm) ||
+                                  protein.includes(searchTerm) ||
+                                  cuisine.includes(searchTerm);
+
+                    if (matches) {
+                        card.classList.remove('hidden');
+                        sectionHasVisible = true;
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                if (sectionHasVisible) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+
+            // Show/hide no results message
+            const noResults = document.getElementById('no-results');
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', generateRecipeCards);
+    </script>
+
+</body>
+</html>

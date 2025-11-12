@@ -6,6 +6,7 @@
     <title>Meal Plans - Quick Reference</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="meals/plans.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
         .meal-card {
@@ -46,7 +47,7 @@
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <!-- Info Banner -->
+        <!-- Info Banner with Quick Links -->
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8 rounded-r-lg">
             <div class="flex">
                 <div class="flex-shrink-0">
@@ -54,10 +55,14 @@
                         <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
                     </svg>
                 </div>
-                <div class="ml-3">
-                    <p class="text-sm text-blue-700">
+                <div class="ml-3 flex-1">
+                    <p class="text-sm text-blue-700 mb-2">
                         <strong>Tip:</strong> Bookmark this page for quick access to all your meal plans. Each plan opens in a new view with full recipes and shopping lists.
                     </p>
+                    <div class="flex gap-3 text-sm">
+                        <a href="all-recipes.html" class="text-blue-800 hover:text-blue-900 font-semibold underline">📖 Browse All Recipes</a>
+                        <a href="shopping-helper.html" class="text-blue-800 hover:text-blue-900 font-semibold underline">🛒 Shopping Helper</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,236 +80,8 @@
         </div>
 
         <!-- Meal Plans Grid -->
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <!-- Meal Plan Card 1 -->
-            <a href="meals/3-month-plan.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="meals">
-                <div class="bg-gradient-to-r from-emerald-500 to-emerald-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 1 Meals</h2>
-                    <p class="text-emerald-50 text-sm mt-1">205 → 180 lbs</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            High protein, Asian-inspired
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Batch prep focused
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                            ~2 lbs/week loss
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-emerald-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Meal Plan Card 2 -->
-            <a href="meals/breakfast-plan.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="breakfast">
-                <div class="bg-gradient-to-r from-amber-500 to-amber-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 1 Breakfasts</h2>
-                    <p class="text-amber-50 text-sm mt-1">Morning Fuel</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            30-40g protein per meal
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Ready in 10 minutes
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            No batch prep needed
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-amber-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Meal Plan Card 3 -->
-            <a href="meals/week2-breakfast.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="breakfast">
-                <div class="bg-gradient-to-r from-orange-500 to-orange-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 2 Breakfasts</h2>
-                    <p class="text-orange-50 text-sm mt-1">New Morning Options</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            30-40g protein per meal
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Ready in 10 minutes
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            4 new flavor profiles
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-orange-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Meal Plan Card 4 -->
-            <a href="meals/week3-breakfast.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="breakfast">
-                <div class="bg-gradient-to-r from-red-500 to-red-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 3 Breakfasts</h2>
-                    <p class="text-red-50 text-sm mt-1">High-Protein Variety</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                            ~400-450 calories per meal
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Ready in 10 minutes
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Savory oats & smoothie options
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-red-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Meal Plan Card 5 -->
-            <a href="meals/week2-plan.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="meals">
-                <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 2 Meals</h2>
-                    <p class="text-blue-50 text-sm mt-1">New Flavors</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            4 Asian-inspired recipes
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            2-3 hours prep time
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            14 total meals
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-blue-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Meal Plan Card 5 -->
-            <a href="meals/week3-plan.html" class="meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block" data-category="meals">
-                <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-4">
-                    <h2 class="text-xl font-bold text-white">Week 3 Meals</h2>
-                    <p class="text-purple-50 text-sm mt-1">Shrimp, Curry & Mapo</p>
-                </div>
-                <div class="p-5">
-                    <div class="space-y-2 mb-4">
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Green curry & teriyaki
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            2-3 hours prep time
-                        </div>
-                        <div class="flex items-center text-sm text-slate-600">
-                            <svg class="w-4 h-4 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            14 total meals
-                        </div>
-                    </div>
-                    <div class="pt-4 border-t border-slate-100">
-                        <span class="text-purple-600 text-sm font-semibold flex items-center">
-                            View Plan
-                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-            </a>
-
+        <div id="meal-plans-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be dynamically generated here -->
         </div>
 
         <!-- Instructions Section -->
@@ -322,11 +99,11 @@
                 </li>
                 <li class="flex items-start">
                     <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">2</span>
-                    <span>Add a new card to this index.html (copy the existing card template above)</span>
+                    <span>Add a new entry to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">meals/plans.js</code> with your plan details (file, title, subtitle, category, color, features)</span>
                 </li>
                 <li class="flex items-start">
                     <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">3</span>
-                    <span>Update the link href, title, and description to match your new plan</span>
+                    <span>The card will automatically appear on this page - no need to edit index.html!</span>
                 </li>
                 <li class="flex items-start">
                     <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">4</span>
@@ -343,6 +120,78 @@
     </footer>
 
     <script>
+        // Icon SVG strings for reuse
+        const icons = {
+            check: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+            clock: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+            trending: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>',
+            users: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>',
+            lightning: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>',
+            arrow: '<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>'
+        };
+
+        // Generate meal plan cards from plans.js data
+        function generateCards() {
+            const grid = document.getElementById('meal-plans-grid');
+            grid.innerHTML = '';
+
+            mealPlans.forEach(plan => {
+                const card = document.createElement('a');
+                card.href = `meals/${plan.file}`;
+                card.className = 'meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block';
+                card.dataset.category = plan.category;
+
+                const colorMap = {
+                    emerald: { from: 'emerald-500', to: 'emerald-600', text: 'emerald-50', icon: 'emerald-500', link: 'emerald-600' },
+                    amber: { from: 'amber-500', to: 'amber-600', text: 'amber-50', icon: 'amber-500', link: 'amber-600' },
+                    orange: { from: 'orange-500', to: 'orange-600', text: 'orange-50', icon: 'orange-500', link: 'orange-600' },
+                    red: { from: 'red-500', to: 'red-600', text: 'red-50', icon: 'red-500', link: 'red-600' },
+                    blue: { from: 'blue-500', to: 'blue-600', text: 'blue-50', icon: 'blue-500', link: 'blue-600' },
+                    purple: { from: 'purple-500', to: 'purple-600', text: 'purple-50', icon: 'purple-500', link: 'purple-600' }
+                };
+
+                const colors = colorMap[plan.color] || colorMap.emerald;
+
+                // Choose icons based on feature keywords
+                const featureIcons = plan.features.map(feature => {
+                    if (feature.toLowerCase().includes('time') || feature.toLowerCase().includes('minutes') || feature.toLowerCase().includes('hours')) {
+                        return icons.clock;
+                    } else if (feature.toLowerCase().includes('protein') || feature.toLowerCase().includes('calories')) {
+                        return icons.lightning;
+                    } else if (feature.toLowerCase().includes('meal')) {
+                        return icons.users;
+                    } else {
+                        return icons.check;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="bg-gradient-to-r from-${colors.from} to-${colors.to} p-4">
+                        <h2 class="text-xl font-bold text-white">${plan.title}</h2>
+                        <p class="text-${colors.text} text-sm mt-1">${plan.subtitle}</p>
+                    </div>
+                    <div class="p-5">
+                        <div class="space-y-2 mb-4">
+                            ${plan.features.map((feature, idx) => `
+                                <div class="flex items-center text-sm text-slate-600">
+                                    <span class="text-${colors.icon}">${featureIcons[idx]}</span>
+                                    ${feature}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="pt-4 border-t border-slate-100">
+                            <span class="text-${colors.link} text-sm font-semibold flex items-center">
+                                View Plan
+                                ${icons.arrow}
+                            </span>
+                        </div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
         function showCategory(category) {
             // Get all meal cards
             const cards = document.querySelectorAll('.meal-card');
@@ -373,8 +222,9 @@
             }
         }
 
-        // Initialize by showing meals on page load
+        // Initialize by generating cards and showing meals on page load
         document.addEventListener('DOMContentLoaded', function() {
+            generateCards();
             showCategory('meals');
         });
     </script>
