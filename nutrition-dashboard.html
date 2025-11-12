@@ -5,9 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutrition Dashboard - Meal Plans</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        /* Custom terracotta/orange color palette */
+        :root {
+            --terracotta: #d4735e;
+            --terracotta-dark: #b85c47;
+            --warm-orange: #e88d67;
+        }
+
+        .bg-terracotta { background-color: var(--terracotta); }
+        .text-terracotta { color: var(--terracotta); }
+        .border-terracotta { border-color: var(--terracotta); }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
+        }
 
         /* Smooth animations */
         @keyframes fadeIn {
@@ -110,25 +125,35 @@
     </style>
     <script src="meals/plans.js"></script>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen antialiased">
+<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
 
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <header class="hero-gradient shadow-xl relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
-                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    📊 Nutrition Dashboard
+                <div class="inline-block mb-4">
+                    <span class="text-5xl">📊</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+                    Nutrition Dashboard
                 </h1>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                <p class="text-xl text-white/95 max-w-2xl mx-auto mb-6 font-light">
                     Compare meal plans • Track macros • Visualize your weekly nutrition
                 </p>
-                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                <a href="index.html" class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold rounded-xl transition-all duration-200 border-2 border-white/40">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Back to Home
+                    Back to Dashboard
                 </a>
             </div>
+        </div>
+
+        <!-- Wave separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <path d="M0 0L60 8C120 16 240 32 360 37.3C480 43 600 37 720 34.7C840 32 960 32 1080 37.3C1200 43 1320 53 1380 58.7L1440 64V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0V0Z" fill="#fef7f5" fill-opacity="0.9"/>
+            </svg>
         </div>
     </header>
 
