@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Dashboard - Meal Plans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+    <script src="meals/plans.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen antialiased">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+                    📊 Nutrition Dashboard
+                </h1>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                    Compare meal plans • Track macros • Visualize your weekly nutrition
+                </p>
+                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Plan Selector -->
+        <div class="bg-white shadow rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Select Plans to Compare</h2>
+            <div id="plan-selector" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Dynamically generated -->
+            </div>
+        </div>
+
+        <!-- Nutrition Summary -->
+        <div id="nutrition-summary" class="hidden">
+            <!-- Weekly Totals -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-r-xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4">📈 Weekly Nutrition Summary</h2>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-sm text-slate-600 mb-1">Daily Calories</div>
+                        <div id="total-calories" class="text-3xl font-bold text-blue-600">-</div>
+                        <div class="text-xs text-slate-500 mt-1">Average per day</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-sm text-slate-600 mb-1">Protein</div>
+                        <div id="total-protein" class="text-3xl font-bold text-red-600">-</div>
+                        <div class="text-xs text-slate-500 mt-1">grams per day</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-sm text-slate-600 mb-1">Carbs</div>
+                        <div id="total-carbs" class="text-3xl font-bold text-amber-600">-</div>
+                        <div class="text-xs text-slate-500 mt-1">grams per day</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                        <div class="text-sm text-slate-600 mb-1">Fat</div>
+                        <div id="total-fat" class="text-3xl font-bold text-emerald-600">-</div>
+                        <div class="text-xs text-slate-500 mt-1">grams per day</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macro Distribution -->
+            <div class="bg-white shadow rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">🥗 Macro Distribution</h2>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-semibold text-red-700">Protein</span>
+                            <span id="protein-percent" class="text-slate-600">-</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3">
+                            <div id="protein-bar" class="progress-bar bg-red-500 h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-semibold text-amber-700">Carbohydrates</span>
+                            <span id="carbs-percent" class="text-slate-600">-</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3">
+                            <div id="carbs-bar" class="progress-bar bg-amber-500 h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <span class="font-semibold text-emerald-700">Fat</span>
+                            <span id="fat-percent" class="text-slate-600">-</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-3">
+                            <div id="fat-bar" class="progress-bar bg-emerald-500 h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plan Comparison Table -->
+            <div class="bg-white shadow rounded-xl p-6 mb-8">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">📋 Plan Comparison</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">Plan</th>
+                                <th class="text-right py-3 px-4 font-semibold text-slate-700">Calories</th>
+                                <th class="text-right py-3 px-4 font-semibold text-slate-700">Protein</th>
+                                <th class="text-right py-3 px-4 font-semibold text-slate-700">Carbs</th>
+                                <th class="text-right py-3 px-4 font-semibold text-slate-700">Fat</th>
+                                <th class="text-right py-3 px-4 font-semibold text-slate-700">Fiber</th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparison-table">
+                            <!-- Dynamically generated -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weekly Goals -->
+            <div class="bg-white shadow rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">🎯 Weekly Goals & Insights</h2>
+                <div id="insights-content" class="space-y-4">
+                    <!-- Dynamically generated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-12 bg-white shadow rounded-xl">
+            <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            <p class="text-slate-500 text-lg">Select meal plans above to see nutritional analysis</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm py-8 mt-12">
+        <p>Nutrition Dashboard • Smart meal planning insights</p>
+    </footer>
+
+    <script>
+        // Nutritional data for each plan (estimated based on meal descriptions)
+        const nutritionData = {
+            'week1-meals.html': {
+                calories: 2000, protein: 180, carbs: 180, fat: 60, fiber: 30,
+                description: 'High protein Asian meals for weight loss'
+            },
+            'week1-breakfast.html': {
+                calories: 450, protein: 38, carbs: 35, fat: 15, fiber: 8,
+                description: 'High-protein breakfast options'
+            },
+            'week2-meals.html': {
+                calories: 1950, protein: 175, carbs: 175, fat: 58, fiber: 28,
+                description: 'Varied Asian-inspired meal prep'
+            },
+            'week2-breakfast.html': {
+                calories: 440, protein: 36, carbs: 38, fat: 14, fiber: 7,
+                description: 'Quick morning protein meals'
+            },
+            'week3-meals.html': {
+                calories: 2050, protein: 185, carbs: 185, fat: 62, fiber: 32,
+                description: 'Shrimp, curry & mapo tofu meals'
+            },
+            'week3-breakfast.html': {
+                calories: 430, protein: 37, carbs: 36, fat: 13, fiber: 9,
+                description: 'Savory oats & smoothie options'
+            }
+        };
+
+        // localStorage key
+        const NUTRITION_STORAGE_KEY = 'meal_plans_nutrition_selections';
+
+        // Load selections
+        function loadSelections() {
+            const saved = localStorage.getItem(NUTRITION_STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        // Save selections
+        function saveSelections(selections) {
+            localStorage.setItem(NUTRITION_STORAGE_KEY, JSON.stringify(selections));
+        }
+
+        // Generate plan selector
+        function generatePlanSelector() {
+            const container = document.getElementById('plan-selector');
+            const savedSelections = loadSelections();
+
+            mealPlans.forEach(plan => {
+                const isChecked = savedSelections.includes(plan.file);
+                const colorClass = `bg-${plan.color}-50 border-${plan.color}-200 hover:bg-${plan.color}-100`;
+
+                const card = document.createElement('div');
+                card.className = `${colorClass} border-2 rounded-lg p-4 transition cursor-pointer`;
+                card.innerHTML = `
+                    <div class="flex items-start">
+                        <input
+                            type="checkbox"
+                            id="nutrition-${plan.file}"
+                            value="${plan.file}"
+                            ${isChecked ? 'checked' : ''}
+                            onchange="updateNutritionSummary()"
+                            class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 mr-3 mt-0.5"
+                        >
+                        <div class="flex-1">
+                            <label for="nutrition-${plan.file}" class="cursor-pointer">
+                                <h3 class="font-bold text-slate-800 mb-1">${plan.title}</h3>
+                                <p class="text-sm text-slate-600">${plan.subtitle}</p>
+                            </label>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Calculate nutrition totals
+        function calculateTotals(selectedPlans) {
+            let totals = { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
+
+            selectedPlans.forEach(file => {
+                const data = nutritionData[file];
+                if (data) {
+                    totals.calories += data.calories;
+                    totals.protein += data.protein;
+                    totals.carbs += data.carbs;
+                    totals.fat += data.fat;
+                    totals.fiber += data.fiber;
+                }
+            });
+
+            return totals;
+        }
+
+        // Update nutrition summary
+        function updateNutritionSummary() {
+            const checkboxes = document.querySelectorAll('#plan-selector input[type="checkbox"]:checked');
+            const selectedFiles = Array.from(checkboxes).map(cb => cb.value);
+
+            // Save selections
+            saveSelections(selectedFiles);
+
+            const summarySection = document.getElementById('nutrition-summary');
+            const emptyState = document.getElementById('empty-state');
+
+            if (selectedFiles.length === 0) {
+                summarySection.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            summarySection.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            // Calculate totals
+            const totals = calculateTotals(selectedFiles);
+
+            // Update summary cards
+            document.getElementById('total-calories').textContent = Math.round(totals.calories);
+            document.getElementById('total-protein').textContent = Math.round(totals.protein);
+            document.getElementById('total-carbs').textContent = Math.round(totals.carbs);
+            document.getElementById('total-fat').textContent = Math.round(totals.fat);
+
+            // Calculate macro percentages (based on calories)
+            const proteinCals = totals.protein * 4;
+            const carbsCals = totals.carbs * 4;
+            const fatCals = totals.fat * 9;
+            const totalMacroCals = proteinCals + carbsCals + fatCals;
+
+            const proteinPercent = (proteinCals / totalMacroCals * 100).toFixed(0);
+            const carbsPercent = (carbsCals / totalMacroCals * 100).toFixed(0);
+            const fatPercent = (fatCals / totalMacroCals * 100).toFixed(0);
+
+            document.getElementById('protein-percent').textContent = `${proteinPercent}% (${Math.round(totals.protein)}g)`;
+            document.getElementById('carbs-percent').textContent = `${carbsPercent}% (${Math.round(totals.carbs)}g)`;
+            document.getElementById('fat-percent').textContent = `${fatPercent}% (${Math.round(totals.fat)}g)`;
+
+            document.getElementById('protein-bar').style.width = proteinPercent + '%';
+            document.getElementById('carbs-bar').style.width = carbsPercent + '%';
+            document.getElementById('fat-bar').style.width = fatPercent + '%';
+
+            // Update comparison table
+            const tableBody = document.getElementById('comparison-table');
+            tableBody.innerHTML = '';
+
+            selectedFiles.forEach(file => {
+                const plan = mealPlans.find(p => p.file === file);
+                const data = nutritionData[file];
+
+                if (plan && data) {
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-slate-100 hover:bg-slate-50';
+                    row.innerHTML = `
+                        <td class="py-3 px-4 font-medium text-slate-700">${plan.title}</td>
+                        <td class="py-3 px-4 text-right text-slate-600">${data.calories}</td>
+                        <td class="py-3 px-4 text-right text-slate-600">${data.protein}g</td>
+                        <td class="py-3 px-4 text-right text-slate-600">${data.carbs}g</td>
+                        <td class="py-3 px-4 text-right text-slate-600">${data.fat}g</td>
+                        <td class="py-3 px-4 text-right text-slate-600">${data.fiber}g</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            });
+
+            // Update insights
+            updateInsights(totals, selectedFiles);
+        }
+
+        // Generate insights
+        function updateInsights(totals, selectedFiles) {
+            const insightsContent = document.getElementById('insights-content');
+            const insights = [];
+
+            // Protein analysis
+            const proteinPerKgBW = (totals.protein / 82).toFixed(1); // Assuming 180 lbs = 82 kg target
+            if (proteinPerKgBW >= 2.0) {
+                insights.push({
+                    type: 'success',
+                    icon: '✓',
+                    text: `Excellent protein intake: ${proteinPerKgBW}g/kg body weight. Perfect for muscle preservation during weight loss.`
+                });
+            } else if (proteinPerKgBW >= 1.6) {
+                insights.push({
+                    type: 'info',
+                    icon: 'ℹ',
+                    text: `Good protein intake: ${proteinPerKgBW}g/kg body weight. Consider adding 20-30g more for optimal muscle retention.`
+                });
+            }
+
+            // Calorie deficit
+            if (totals.calories < 2200) {
+                const deficit = 2500 - totals.calories; // Assuming 2500 maintenance
+                const weeklyLoss = (deficit * 7 / 3500).toFixed(1);
+                insights.push({
+                    type: 'success',
+                    icon: '📉',
+                    text: `Calorie deficit of ${deficit} calories/day. Projected weight loss: ~${weeklyLoss} lbs/week.`
+                });
+            }
+
+            // Fiber analysis
+            if (totals.fiber >= 25) {
+                insights.push({
+                    type: 'success',
+                    icon: '🌾',
+                    text: `Great fiber intake: ${totals.fiber}g/day. Excellent for satiety and gut health.`
+                });
+            } else {
+                insights.push({
+                    type: 'warning',
+                    icon: '⚠',
+                    text: `Fiber intake: ${totals.fiber}g/day. Consider adding vegetables or whole grains to reach 25-30g.`
+                });
+            }
+
+            // Meal combo analysis
+            const hasMeals = selectedFiles.some(f => f.includes('meals'));
+            const hasBreakfast = selectedFiles.some(f => f.includes('breakfast'));
+
+            if (hasMeals && hasBreakfast) {
+                insights.push({
+                    type: 'info',
+                    icon: '🍽️',
+                    text: `Complete meal plan selected. Remember to account for snacks and adjust portions based on your hunger levels.`
+                });
+            }
+
+            // Render insights
+            insightsContent.innerHTML = insights.map(insight => {
+                const colors = {
+                    success: 'bg-green-50 border-green-400 text-green-800',
+                    info: 'bg-blue-50 border-blue-400 text-blue-800',
+                    warning: 'bg-amber-50 border-amber-400 text-amber-800'
+                };
+
+                return `
+                    <div class="${colors[insight.type]} border-l-4 p-4 rounded-r-lg">
+                        <div class="flex items-start">
+                            <span class="text-xl mr-3">${insight.icon}</span>
+                            <p class="text-sm">${insight.text}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePlanSelector();
+            updateNutritionSummary();
+        });
+    </script>
+
+</body>
+</html>

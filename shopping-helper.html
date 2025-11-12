@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .consolidated-list ul { column-count: 2; column-gap: 20px; }
+        }
     </style>
     <script src="meals/plans.js"></script>
 </head>
@@ -15,15 +20,15 @@
 
     <!-- Header -->
     <header class="bg-white shadow-sm border-b border-slate-200">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center">
                 <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Shopping Helper
+                    🛒 Smart Shopping Helper
                 </h1>
                 <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
-                    Select which meal plans you're prepping this week
+                    Auto-merge ingredients across weeks • Export to CSV • Never lose your selections
                 </p>
-                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold">
+                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold no-print">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
@@ -34,10 +39,10 @@
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <!-- Instructions -->
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8 rounded-r-lg">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-400 p-4 mb-8 rounded-r-lg no-print">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
@@ -46,7 +51,7 @@
                 </div>
                 <div class="ml-3">
                     <p class="text-sm text-blue-700">
-                        <strong>How to use:</strong> Select the meal plans you want to prep, then click the links below to view and print each shopping list. You can open multiple plans in new tabs to compare ingredients.
+                        <strong>✨ New Features:</strong> Automatically combines ingredient quantities • Remembers your selections • Export to CSV, Markdown, or plain text • Mark items you already have • Print-optimized layout
                     </p>
                 </div>
             </div>
@@ -54,39 +59,65 @@
 
         <!-- Plan Selection -->
         <div class="bg-white shadow rounded-xl p-6 mb-8">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Select Your Meal Plans</h2>
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+                <h2 class="text-2xl font-bold text-slate-800">Select Your Meal Plans</h2>
+                <button onclick="clearSelections()" class="no-print text-sm text-slate-500 hover:text-red-600 font-medium transition">
+                    Clear All
+                </button>
+            </div>
 
             <div id="plan-checkboxes" class="space-y-3">
                 <!-- Dynamically generated checkboxes -->
             </div>
         </div>
 
-        <!-- Shopping Links -->
-        <div id="shopping-links" class="bg-white shadow rounded-xl p-6 hidden">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Your Shopping Lists</h2>
-
-            <div class="mb-4">
-                <p class="text-slate-600 text-sm mb-4">
-                    Click on each link to view the shopping list. Use the "Print List" button on each page to get a printable version.
-                </p>
+        <!-- Consolidated Shopping List -->
+        <div id="consolidated-section" class="bg-white shadow rounded-xl p-6 mb-8 hidden">
+            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+                <h2 class="text-2xl font-bold text-slate-800">🎯 Consolidated Shopping List</h2>
+                <div class="flex gap-2 no-print">
+                    <button onclick="exportCSV()" class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        CSV
+                    </button>
+                    <button onclick="exportMarkdown()" class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Markdown
+                    </button>
+                    <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                        </svg>
+                        Print
+                    </button>
+                </div>
             </div>
 
-            <div id="selected-plans" class="space-y-3">
-                <!-- Dynamically generated links -->
+            <div class="mb-4 text-sm text-slate-600 no-print">
+                <span class="font-semibold">Selected:</span> <span id="selected-count">0</span> plan(s) •
+                <span class="font-semibold">Total Items:</span> <span id="total-items">0</span>
             </div>
 
-            <div class="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <div id="consolidated-list" class="consolidated-list grid md:grid-cols-3 gap-6">
+                <!-- Dynamically generated -->
+            </div>
+
+            <div class="mt-6 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-lg no-print">
                 <h3 class="font-semibold text-amber-900 mb-2 flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                     </svg>
-                    Shopping Tips
+                    Pro Tips
                 </h3>
                 <ul class="text-sm text-amber-800 space-y-1 ml-7">
-                    <li>• Check your pantry before shopping to avoid duplicates</li>
-                    <li>• Some ingredients (like soy sauce, garlic, ginger) appear in multiple plans</li>
-                    <li>• Consider buying in bulk for common ingredients across weeks</li>
-                    <li>• Fresh proteins should be used within 3-5 days or frozen</li>
+                    <li>✓ Click items to mark as "already have" - they'll be grayed out</li>
+                    <li>✓ Quantities are automatically combined (e.g., "2 lbs + 3 lbs = 5 lbs")</li>
+                    <li>✓ Your selections are saved automatically and persist across visits</li>
+                    <li>✓ Export to CSV to import into your favorite shopping app</li>
                 </ul>
             </div>
         </div>
@@ -96,22 +127,59 @@
             <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
             </svg>
-            <p class="text-slate-500 text-lg">Select meal plans above to see your shopping lists</p>
+            <p class="text-slate-500 text-lg">Select meal plans above to see your consolidated shopping list</p>
         </div>
 
     </main>
 
-    <footer class="text-center text-slate-400 text-sm py-8 mt-12">
-        <p>Happy shopping and meal prepping!</p>
+    <footer class="text-center text-slate-400 text-sm py-8 mt-12 no-print">
+        <p>Smart Shopping Helper • Auto-saves your progress</p>
     </footer>
 
     <script>
+        // localStorage keys
+        const STORAGE_KEY = 'meal_plans_selections';
+        const ALREADY_HAVE_KEY = 'meal_plans_already_have';
+
+        // Load saved selections from localStorage
+        function loadSelections() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        // Save selections to localStorage
+        function saveSelections(selections) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+        }
+
+        // Load "already have" items
+        function loadAlreadyHave() {
+            const saved = localStorage.getItem(ALREADY_HAVE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        // Save "already have" items
+        function saveAlreadyHave(items) {
+            localStorage.setItem(ALREADY_HAVE_KEY, JSON.stringify(items));
+        }
+
+        // Clear all selections
+        function clearSelections() {
+            if (confirm('Clear all selections and start fresh?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(ALREADY_HAVE_KEY);
+                location.reload();
+            }
+        }
+
         // Generate checkboxes for each meal plan
         function generatePlanCheckboxes() {
             const container = document.getElementById('plan-checkboxes');
             container.innerHTML = '';
+            const savedSelections = loadSelections();
 
             mealPlans.forEach(plan => {
+                const isChecked = savedSelections.includes(plan.file);
                 const checkbox = document.createElement('div');
                 checkbox.className = 'flex items-center p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition';
                 checkbox.innerHTML = `
@@ -119,7 +187,8 @@
                         type="checkbox"
                         id="plan-${plan.file}"
                         value="${plan.file}"
-                        onchange="updateShoppingLinks()"
+                        ${isChecked ? 'checked' : ''}
+                        onchange="updateConsolidatedList()"
                         class="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 mr-3"
                     >
                     <label for="plan-${plan.file}" class="flex-1 cursor-pointer">
@@ -131,53 +200,294 @@
             });
         }
 
-        // Update shopping links based on selected plans
-        function updateShoppingLinks() {
+        // Parse ingredient text to extract quantity and unit
+        function parseIngredient(text) {
+            // Examples: "Garlic (3-4 heads)", "Lean Ground Beef (1.25 lbs)", "Broccoli (5 heads/2lbs)"
+            const match = text.match(/^(.+?)\s*\((.+?)\)$/);
+            if (match) {
+                return {
+                    name: match[1].trim(),
+                    quantity: match[2].trim(),
+                    original: text
+                };
+            }
+            return {
+                name: text.trim(),
+                quantity: '',
+                original: text
+            };
+        }
+
+        // Combine quantities (simple text concatenation for complex units)
+        function combineQuantities(quantities) {
+            if (quantities.length === 1) return quantities[0];
+
+            // For numeric quantities, try to sum
+            const numeric = quantities.map(q => {
+                const match = q.match(/^([\d.]+)\s*(.*)$/);
+                if (match) return { num: parseFloat(match[1]), unit: match[2] };
+                return null;
+            }).filter(x => x !== null);
+
+            if (numeric.length === quantities.length && numeric.every(n => n.unit === numeric[0].unit)) {
+                const sum = numeric.reduce((acc, n) => acc + n.num, 0);
+                return `${sum} ${numeric[0].unit}`;
+            }
+
+            // Otherwise, just list them
+            return quantities.join(' + ');
+        }
+
+        // Fetch shopping list from a meal plan HTML file
+        async function fetchShoppingList(filename) {
+            try {
+                const response = await fetch(`meals/${filename}`);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                const items = [];
+                const shoppingSection = doc.getElementById('shopping-list');
+                if (shoppingSection) {
+                    const listItems = shoppingSection.querySelectorAll('li');
+                    listItems.forEach(li => {
+                        const checkbox = li.querySelector('input[type="checkbox"]');
+                        if (checkbox) {
+                            // Get category from the header color
+                            const categoryHeader = li.closest('ul').previousElementSibling;
+                            let category = 'Other';
+                            if (categoryHeader && categoryHeader.tagName === 'H4') {
+                                const text = categoryHeader.textContent.toLowerCase();
+                                if (text.includes('produce')) category = 'Produce';
+                                else if (text.includes('protein')) category = 'Protein';
+                                else if (text.includes('pantry')) category = 'Pantry';
+                            }
+
+                            items.push({
+                                text: li.textContent.trim(),
+                                category: category
+                            });
+                        }
+                    });
+                }
+                return items;
+            } catch (error) {
+                console.error(`Error fetching ${filename}:`, error);
+                return [];
+            }
+        }
+
+        // Update consolidated shopping list
+        async function updateConsolidatedList() {
             const checkboxes = document.querySelectorAll('#plan-checkboxes input[type="checkbox"]:checked');
-            const shoppingLinks = document.getElementById('shopping-links');
+            const consolidatedSection = document.getElementById('consolidated-section');
             const emptyState = document.getElementById('empty-state');
-            const selectedPlans = document.getElementById('selected-plans');
+            const consolidatedList = document.getElementById('consolidated-list');
+
+            // Save selections
+            const selectedFiles = Array.from(checkboxes).map(cb => cb.value);
+            saveSelections(selectedFiles);
 
             if (checkboxes.length === 0) {
-                shoppingLinks.classList.add('hidden');
+                consolidatedSection.classList.add('hidden');
                 emptyState.classList.remove('hidden');
                 return;
             }
 
-            shoppingLinks.classList.remove('hidden');
+            consolidatedSection.classList.remove('hidden');
             emptyState.classList.add('hidden');
-            selectedPlans.innerHTML = '';
 
-            checkboxes.forEach(checkbox => {
-                const planFile = checkbox.value;
-                const plan = mealPlans.find(p => p.file === planFile);
+            // Show loading state
+            consolidatedList.innerHTML = '<div class="col-span-3 text-center py-8 text-slate-500">Loading shopping lists...</div>';
 
-                if (plan) {
-                    const linkCard = document.createElement('div');
-                    linkCard.className = 'flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200';
-                    linkCard.innerHTML = `
-                        <div>
-                            <h3 class="font-bold text-slate-800">${plan.title}</h3>
-                            <p class="text-sm text-slate-500">${plan.subtitle}</p>
-                        </div>
-                        <a
-                            href="meals/${plan.file}#shopping-list"
-                            target="_blank"
-                            class="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition"
-                        >
-                            View List
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-                            </svg>
-                        </a>
-                    `;
-                    selectedPlans.appendChild(linkCard);
+            // Fetch all shopping lists
+            const allItems = [];
+            for (const checkbox of checkboxes) {
+                const items = await fetchShoppingList(checkbox.value);
+                allItems.push(...items);
+            }
+
+            // Consolidate by ingredient name
+            const consolidated = {};
+            allItems.forEach(item => {
+                const parsed = parseIngredient(item.text);
+                const key = parsed.name.toLowerCase();
+
+                if (!consolidated[key]) {
+                    consolidated[key] = {
+                        name: parsed.name,
+                        quantities: [],
+                        category: item.category
+                    };
+                }
+                if (parsed.quantity) {
+                    consolidated[key].quantities.push(parsed.quantity);
                 }
             });
+
+            // Group by category
+            const byCategory = { Produce: [], Protein: [], Pantry: [] };
+            Object.values(consolidated).forEach(item => {
+                const combined = combineQuantities(item.quantities);
+                byCategory[item.category].push({
+                    name: item.name,
+                    quantity: combined,
+                    key: item.name.toLowerCase()
+                });
+            });
+
+            // Sort each category
+            Object.keys(byCategory).forEach(cat => {
+                byCategory[cat].sort((a, b) => a.name.localeCompare(b.name));
+            });
+
+            // Load "already have" items
+            const alreadyHave = loadAlreadyHave();
+
+            // Render
+            const categoryColors = {
+                Produce: { bg: 'emerald', text: 'emerald-700' },
+                Protein: { bg: 'red', text: 'red-700' },
+                Pantry: { bg: 'amber', text: 'amber-700' }
+            };
+
+            consolidatedList.innerHTML = '';
+            let totalItems = 0;
+
+            ['Produce', 'Protein', 'Pantry'].forEach(category => {
+                const items = byCategory[category];
+                if (items.length === 0) return;
+                totalItems += items.length;
+
+                const color = categoryColors[category];
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h4 class="font-bold text-${color.text} uppercase text-sm tracking-wider mb-3">${category}</h4>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        ${items.map(item => {
+                            const isAlreadyHave = alreadyHave.includes(item.key);
+                            const displayText = item.quantity ? `${item.name} (${item.quantity})` : item.name;
+                            return `
+                                <li class="flex items-start cursor-pointer hover:bg-slate-50 p-1 rounded transition ${isAlreadyHave ? 'line-through text-slate-400' : ''}"
+                                    onclick="toggleAlreadyHave('${item.key.replace(/'/g, "\\'")}')">
+                                    <span class="w-2 h-2 bg-${color.bg}-400 rounded-full mr-2 mt-1.5"></span>
+                                    <span>${displayText}</span>
+                                </li>
+                            `;
+                        }).join('')}
+                    </ul>
+                `;
+                consolidatedList.appendChild(div);
+            });
+
+            // Update counts
+            document.getElementById('selected-count').textContent = checkboxes.length;
+            document.getElementById('total-items').textContent = totalItems;
         }
 
+        // Toggle "already have" status
+        function toggleAlreadyHave(key) {
+            const alreadyHave = loadAlreadyHave();
+            const index = alreadyHave.indexOf(key);
+
+            if (index > -1) {
+                alreadyHave.splice(index, 1);
+            } else {
+                alreadyHave.push(key);
+            }
+
+            saveAlreadyHave(alreadyHave);
+            updateConsolidatedList();
+        }
+
+        // Export to CSV
+        function exportCSV() {
+            const items = getConsolidatedItems();
+            const alreadyHave = loadAlreadyHave();
+
+            let csv = 'Category,Item,Quantity,Already Have\n';
+            ['Produce', 'Protein', 'Pantry'].forEach(category => {
+                items[category].forEach(item => {
+                    const hasIt = alreadyHave.includes(item.key) ? 'Yes' : 'No';
+                    csv += `${category},"${item.name}","${item.quantity}",${hasIt}\n`;
+                });
+            });
+
+            downloadFile(csv, 'shopping-list.csv', 'text/csv');
+        }
+
+        // Export to Markdown
+        function exportMarkdown() {
+            const items = getConsolidatedItems();
+            const alreadyHave = loadAlreadyHave();
+
+            let md = '# Shopping List\n\n';
+            ['Produce', 'Protein', 'Pantry'].forEach(category => {
+                md += `## ${category}\n\n`;
+                items[category].forEach(item => {
+                    const checkbox = alreadyHave.includes(item.key) ? '[x]' : '[ ]';
+                    const displayText = item.quantity ? `${item.name} (${item.quantity})` : item.name;
+                    md += `- ${checkbox} ${displayText}\n`;
+                });
+                md += '\n';
+            });
+
+            downloadFile(md, 'shopping-list.md', 'text/markdown');
+        }
+
+        // Get consolidated items (helper for exports)
+        function getConsolidatedItems() {
+            const items = { Produce: [], Protein: [], Pantry: [] };
+            ['Produce', 'Protein', 'Pantry'].forEach(category => {
+                const section = document.querySelector(`h4:contains('${category}')`);
+                if (section) {
+                    const ul = section.nextElementSibling;
+                    if (ul) {
+                        ul.querySelectorAll('li').forEach(li => {
+                            const text = li.textContent.trim();
+                            const match = text.match(/^(.+?)\s*\((.+?)\)$/);
+                            items[category].push({
+                                name: match ? match[1].trim() : text,
+                                quantity: match ? match[2].trim() : '',
+                                key: (match ? match[1].trim() : text).toLowerCase()
+                            });
+                        });
+                    }
+                }
+            });
+            return items;
+        }
+
+        // Helper to download a file
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // CSS selector helper
+        HTMLElement.prototype.querySelector = function(selector) {
+            if (selector.includes(':contains(')) {
+                const match = selector.match(/:contains\('([^']+)'\)/);
+                if (match) {
+                    const text = match[1];
+                    return Array.from(this.querySelectorAll('*')).find(el => el.textContent.includes(text));
+                }
+            }
+            return Element.prototype.querySelector.call(this, selector);
+        };
+
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', generatePlanCheckboxes);
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePlanCheckboxes();
+            updateConsolidatedList();
+        });
     </script>
 
 </body>
