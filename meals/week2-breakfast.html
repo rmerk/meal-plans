@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Breakfast Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-slate-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0 font-bold text-xl text-amber-400">
+                    Week 2 Morning Fuel
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="../index.html" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Home
+                        </a>
+                        <a href="#strategy" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Strategy</a>
+                        <a href="#shopping" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Shopping</a>
+                        <a href="#recipes" class="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition">Recipes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Bottom Nav -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around py-3 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50 text-xs font-medium text-slate-600">
+        <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            Home
+        </a>
+        <a href="#strategy" class="flex flex-col items-center gap-1 hover:text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Strategy
+        </a>
+        <a href="#shopping" class="flex flex-col items-center gap-1 hover:text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            Shop
+        </a>
+        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-amber-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="m4 8 16-4"/><path d="m8.86 6.78-.45-1.81a2 2 0 0 1 1.45-2.43l1.94-.55a2 2 0 0 1 2.43 1.46l.45 1.8"/></svg>
+            Cook
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">Week 2: High-Protein Breakfasts</h1>
+            <p class="text-lg text-slate-600">~400-450 Calories • Ready in 10 Minutes</p>
+        </header>
+
+        <!-- Strategy Section -->
+        <section id="strategy" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+            <div class="flex items-center mb-4">
+                <div class="p-2 bg-amber-100 rounded-lg mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800">Week 2 Strategy</h2>
+            </div>
+
+            <div class="prose text-slate-600">
+                <p class="mb-4">Same as Week 1: these recipes are designed to be made fresh in under 10 minutes. The goal is to start the day with <strong>30-40g of protein</strong> to keep you full until lunch.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> <strong>Variety:</strong> Four new flavors to prevent boredom.</li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> <strong>Rotation:</strong> Pick 1-2 favorites for the week to simplify shopping.</li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> <strong>Speed:</strong> All recipes are fast. You can pre-boil eggs for the Cottage Cheese bowl to make it a 1-minute meal.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Shopping List Section -->
+        <section id="shopping" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Shopping Lists</h2>
+            <p class="text-sm text-slate-500 mb-4 italic">Choose the list based on which breakfast you plan to eat this week.</p>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- List 1 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-amber-700 mb-3">For "Soy Omelet"</h3>
+                    <ul class="text-sm text-slate-700 space-y-2">
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Eggs (3 per day)</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Mushrooms</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Green Onions</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Avocados</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Low-Sodium Soy Sauce</li>
+                    </ul>
+                </div>
+
+                <!-- List 2 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-amber-700 mb-3">For "Almond Butter Yogurt"</h3>
+                    <ul class="text-sm text-slate-700 space-y-2">
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Non-Fat Greek Yogurt</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Vanilla Whey Protein</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Natural Almond Butter</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Chia Seeds</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Frozen Berries</li>
+                    </ul>
+                </div>
+
+                <!-- List 3 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-amber-700 mb-3">For "Chili Crisp Bowl"</h3>
+                    <ul class="text-sm text-slate-700 space-y-2">
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Cottage Cheese (2% or 4%)</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Eggs (for hard-boiling)</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Chili Crisp (jar)</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Green Onions</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Toasted Sesame Seeds</li>
+                    </ul>
+                </div>
+
+                <!-- List 4 -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <h3 class="font-bold text-amber-700 mb-3">For "Banana Protein Oats"</h3>
+                    <ul class="text-sm text-slate-700 space-y-2">
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Rolled Oats</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Vanilla Whey Protein</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Natural Peanut Butter</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Bananas</li>
+                        <li><input type="checkbox" class="accent-amber-600 mr-2">Cinnamon</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recipes Section -->
+        <section id="recipes" class="space-y-8 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">The Recipes</h2>
+
+            <!-- Recipe 1 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden border-l-4 border-red-400">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">1. Soy Sauce & Mushroom Omelet</h3>
+                        <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">High Protein</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm">A savory, umami-packed omelet. Serve with avocado on the side.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                <li>3 whole eggs</li>
+                                <li>1 tsp low-sodium soy sauce</li>
+                                <li>1/2 cup sliced mushrooms</li>
+                                <li>1 green onion, sliced</li>
+                                <li>1/2 avocado (on the side)</li>
+                                <li>1 tsp cooking oil/butter</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
+                                <li>Sauté mushrooms in a hot pan (3-4 mins).</li>
+                                <li>Whisk eggs and soy sauce.</li>
+                                <li>Add eggs and green onions to the pan.</li>
+                                <li>Cook gently, fold, and serve with avocado.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 2 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden border-l-4 border-yellow-400">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">2. Almond Butter Protein Yogurt</h3>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Fastest (2 Mins)</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm">A protein, fat, and fiber-packed bowl that keeps you full all morning.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                <li>1 cup (220g) Non-Fat Greek Yogurt</li>
+                                <li>1 scoop Vanilla Whey Protein</li>
+                                <li>1 tbsp natural almond butter</li>
+                                <li>1 tbsp chia seeds</li>
+                                <li>1/4 cup berries</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
+                                <li>Mix yogurt and protein powder until smooth.</li>
+                                <li>Stir in almond butter and chia seeds.</li>
+                                <li>Top with berries.</li>
+                                <li><em>(Optional: Add 1 tsp water if too thick).</em></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 3 -->
+            <div class="bg-white shadow rounded-xl overflow-hidden border-l-4 border-green-400">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">3. Chili Crisp Cottage Cheese</h3>
+                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">1-Min Prep</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm">The fastest option. Prep hard-boiled eggs ahead of time for the week.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                <li>1 cup (220g) Cottage Cheese</li>
+                                <li>2 hard-boiled eggs, halved</li>
+                                <li>1 tbsp chili crisp</li>
+                                <li>1 green onion, sliced</li>
+                                <li>1 tsp toasted sesame seeds</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
+                                <li>Add cottage cheese to a bowl.</li>
+                                <li>Top with hard-boiled eggs.</li>
+                                <li>Drizzle with chili crisp.</li>
+                                <li>Garnish with green onion and sesame seeds.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe 4 - NEW -->
+            <div class="bg-white shadow rounded-xl overflow-hidden border-l-4 border-blue-400">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-slate-900">4. Peanut Butter Banana Protein Oats</h3>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded">Make-Ahead Option</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm">Warm, comforting oats with massive protein. Can be made as overnight oats or cooked fresh.</p>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                                <li>1/2 cup rolled oats</li>
+                                <li>1 cup unsweetened almond milk</li>
+                                <li>1 scoop Vanilla Whey Protein</li>
+                                <li>1 tbsp natural peanut butter</li>
+                                <li>1 medium banana, sliced</li>
+                                <li>1/2 tsp cinnamon</li>
+                                <li>Pinch of salt</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
+                                <li>Cook oats with almond milk and salt (5 mins).</li>
+                                <li>Remove from heat. Let cool 1-2 mins.</li>
+                                <li>Stir in protein powder until smooth.</li>
+                                <li>Mix in peanut butter and half the banana.</li>
+                                <li>Top with remaining banana and cinnamon.</li>
+                                <li><em>Overnight option: Mix all ingredients, refrigerate overnight.</em></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <footer class="text-center text-slate-400 text-sm py-8">
+            <p>Week 2 breakfasts are set. Keep up the consistency!</p>
+        </footer>
+
+    </div>
+</body>
+</html>
