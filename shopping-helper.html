@@ -3,11 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Helper - Meal Plans</title>
+    <title>Smart Shopping Helper - Meal Plans</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        /* Custom terracotta/orange color palette */
+        :root {
+            --terracotta: #d4735e;
+            --terracotta-dark: #b85c47;
+            --warm-orange: #e88d67;
+        }
+
+        .bg-terracotta { background-color: var(--terracotta); }
+        .text-terracotta { color: var(--terracotta); }
+        .border-terracotta { border-color: var(--terracotta); }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
+        }
 
         /* Smooth animations */
         @keyframes fadeIn {
@@ -83,25 +98,35 @@
     </style>
     <script src="meals/plans.js"></script>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen antialiased">
+<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
 
     <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <header class="hero-gradient shadow-xl relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="text-center">
-                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    🛒 Smart Shopping Helper
+                <div class="inline-block mb-4">
+                    <span class="text-5xl">🛒</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+                    Smart Shopping Helper
                 </h1>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-4">
+                <p class="text-xl text-white/95 max-w-2xl mx-auto mb-6 font-light">
                     Auto-merge ingredients across weeks • Export to CSV • Never lose your selections
                 </p>
-                <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold no-print">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                <a href="index.html" class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold rounded-xl transition-all duration-200 border-2 border-white/40 no-print">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                     </svg>
-                    Back to Home
+                    Back to Dashboard
                 </a>
             </div>
+        </div>
+
+        <!-- Wave separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <path d="M0 0L60 8C120 16 240 32 360 37.3C480 43 600 37 720 34.7C840 32 960 32 1080 37.3C1200 43 1320 53 1380 58.7L1440 64V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0V0Z" fill="#fef7f5" fill-opacity="0.9"/>
+            </svg>
         </div>
     </header>
 
@@ -109,27 +134,32 @@
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <!-- Instructions -->
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-400 p-4 mb-8 rounded-r-lg no-print">
-            <div class="flex">
+        <div class="bg-gradient-to-r from-orange-50 to-rose-50 border-l-4 border-terracotta p-6 mb-10 rounded-2xl shadow-md no-print">
+            <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
+                    <div class="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-2xl shadow-lg">
+                        ✨
+                    </div>
                 </div>
-                <div class="ml-3">
-                    <p class="text-sm text-blue-700">
-                        <strong>✨ New Features:</strong> Automatically combines ingredient quantities • Remembers your selections • Export to CSV, Markdown, or plain text • Mark items you already have • Print-optimized layout
+                <div class="ml-4">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">How It Works</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Automatically combines ingredient quantities • Remembers your selections • Export to CSV, Markdown, or plain text • Mark items you already have • Print-optimized layout
                     </p>
                 </div>
             </div>
         </div>
 
         <!-- Plan Selection -->
-        <div class="bg-white shadow-lg rounded-xl p-6 mb-8 card-shadow fade-in">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                <h2 class="text-2xl font-bold text-slate-800 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Select Your Meal Plans</h2>
-                <button onclick="clearSelections()" class="no-print text-sm text-slate-500 hover:text-red-600 font-medium transition hover:scale-105">
-                    🗑️ Clear All
+        <div class="bg-white shadow-xl rounded-2xl p-8 mb-10 border-2 border-orange-100 fade-in">
+            <div class="flex justify-between items-center mb-6 border-b-2 border-orange-50 pb-4">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 flex items-center">
+                    <span class="text-3xl mr-3">📋</span>
+                    Select Your Meal Plans
+                </h2>
+                <button onclick="clearSelections()" class="no-print text-sm text-slate-500 hover:text-red-600 font-semibold transition hover:scale-105 flex items-center gap-1">
+                    <span class="text-lg">🗑️</span>
+                    Clear All
                 </button>
             </div>
 
@@ -139,23 +169,26 @@
         </div>
 
         <!-- Consolidated Shopping List -->
-        <div id="consolidated-section" class="bg-white shadow-lg rounded-xl p-6 mb-8 hidden card-shadow">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">🎯 Consolidated Shopping List</h2>
+        <div id="consolidated-section" class="bg-white shadow-xl rounded-2xl p-8 mb-10 border-2 border-orange-100 hidden">
+            <div class="flex justify-between items-center mb-6 border-b-2 border-orange-50 pb-4 flex-wrap gap-4">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800 flex items-center">
+                    <span class="text-3xl mr-3">🎯</span>
+                    Your Shopping List
+                </h2>
                 <div class="flex gap-2 no-print flex-wrap">
-                    <button onclick="exportCSV()" class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                    <button onclick="exportCSV()" class="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-md hover:shadow-lg flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         CSV
                     </button>
-                    <button onclick="exportMarkdown()" class="bg-purple-500 hover:bg-purple-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                    <button onclick="exportMarkdown()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-md hover:shadow-lg flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         Markdown
                     </button>
-                    <button onclick="window.print()" class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
+                    <button onclick="window.print()" class="bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white text-sm font-bold px-4 py-2 rounded-xl transition shadow-md hover:shadow-lg flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                         </svg>
