@@ -287,6 +287,7 @@
 
         // Combine quantities (simple text concatenation for complex units)
         function combineQuantities(quantities) {
+            if (quantities.length === 0) return '';
             if (quantities.length === 1) return quantities[0];
 
             // For numeric quantities, try to sum
@@ -296,7 +297,7 @@
                 return null;
             }).filter(x => x !== null);
 
-            if (numeric.length === quantities.length && numeric.every(n => n.unit === numeric[0].unit)) {
+            if (numeric.length > 0 && numeric.length === quantities.length && numeric.every(n => n.unit === numeric[0].unit)) {
                 const sum = numeric.reduce((acc, n) => acc + n.num, 0);
                 return `${sum} ${numeric[0].unit}`;
             }
