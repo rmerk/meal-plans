@@ -8,6 +8,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
+
+        /* Smooth animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Hover effects */
+        .plan-checkbox:hover {
+            transform: scale(1.02);
+            transition: transform 0.2s ease;
+        }
+
+        .ingredient-item {
+            transition: all 0.2s ease;
+        }
+
+        .ingredient-item:hover {
+            background: linear-gradient(to right, rgba(241, 245, 249, 0.5), rgba(248, 250, 252, 0.5));
+        }
+
+        /* Button animations */
+        button {
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Enhanced shadows */
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card-shadow:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        }
+
         @media print {
             .no-print { display: none !important; }
             body { background: white; }
@@ -58,11 +125,11 @@
         </div>
 
         <!-- Plan Selection -->
-        <div class="bg-white shadow rounded-xl p-6 mb-8">
+        <div class="bg-white shadow-lg rounded-xl p-6 mb-8 card-shadow fade-in">
             <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                <h2 class="text-2xl font-bold text-slate-800">Select Your Meal Plans</h2>
-                <button onclick="clearSelections()" class="no-print text-sm text-slate-500 hover:text-red-600 font-medium transition">
-                    Clear All
+                <h2 class="text-2xl font-bold text-slate-800 bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Select Your Meal Plans</h2>
+                <button onclick="clearSelections()" class="no-print text-sm text-slate-500 hover:text-red-600 font-medium transition hover:scale-105">
+                    🗑️ Clear All
                 </button>
             </div>
 
@@ -72,10 +139,10 @@
         </div>
 
         <!-- Consolidated Shopping List -->
-        <div id="consolidated-section" class="bg-white shadow rounded-xl p-6 mb-8 hidden">
+        <div id="consolidated-section" class="bg-white shadow-lg rounded-xl p-6 mb-8 hidden card-shadow">
             <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                <h2 class="text-2xl font-bold text-slate-800">🎯 Consolidated Shopping List</h2>
-                <div class="flex gap-2 no-print">
+                <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">🎯 Consolidated Shopping List</h2>
+                <div class="flex gap-2 no-print flex-wrap">
                     <button onclick="exportCSV()" class="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -181,7 +248,7 @@
             mealPlans.forEach(plan => {
                 const isChecked = savedSelections.includes(plan.file);
                 const checkbox = document.createElement('div');
-                checkbox.className = 'flex items-center p-3 bg-slate-50 rounded-lg hover:bg-slate-100 transition';
+                checkbox.className = 'flex items-center p-3 bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg hover:from-slate-100 hover:to-slate-50 transition plan-checkbox border border-slate-200';
                 checkbox.innerHTML = `
                     <input
                         type="checkbox"
@@ -362,16 +429,20 @@
                 const color = categoryColors[category];
                 const div = document.createElement('div');
                 div.innerHTML = `
-                    <h4 class="font-bold text-${color.text} uppercase text-sm tracking-wider mb-3">${category}</h4>
-                    <ul class="space-y-2 text-sm text-slate-700">
+                    <h4 class="font-bold text-${color.text} uppercase text-sm tracking-wider mb-3 flex items-center">
+                        <span class="w-3 h-3 bg-${color.bg}-400 rounded-full mr-2"></span>
+                        ${category}
+                    </h4>
+                    <ul class="space-y-1 text-sm text-slate-700">
                         ${items.map(item => {
                             const isAlreadyHave = alreadyHave.includes(item.key);
                             const displayText = item.quantity ? `${item.name} (${item.quantity})` : item.name;
                             return `
-                                <li class="flex items-start cursor-pointer hover:bg-slate-50 p-1 rounded transition ${isAlreadyHave ? 'line-through text-slate-400' : ''}"
+                                <li class="flex items-start cursor-pointer ingredient-item p-2 rounded-lg transition ${isAlreadyHave ? 'line-through text-slate-400 bg-slate-50' : 'hover:bg-slate-50'}"
                                     onclick="toggleAlreadyHave('${item.key.replace(/'/g, "\\'")}')">
-                                    <span class="w-2 h-2 bg-${color.bg}-400 rounded-full mr-2 mt-1.5"></span>
-                                    <span>${displayText}</span>
+                                    <span class="w-2 h-2 bg-${color.bg}-400 rounded-full mr-3 mt-1.5 ${isAlreadyHave ? 'opacity-30' : ''}"></span>
+                                    <span class="flex-1">${displayText}</span>
+                                    ${isAlreadyHave ? '<span class="text-xs text-slate-400">✓</span>' : ''}
                                 </li>
                             `;
                         }).join('')}
