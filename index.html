@@ -3,115 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Plans - Quick Reference</title>
+    <title>Meal Plans - Recipe Discovery & Planning Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="meals/plans.js"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom terracotta/orange color palette */
+        :root {
+            --terracotta: #d4735e;
+            --terracotta-dark: #b85c47;
+            --terracotta-light: #e89b87;
+            --warm-orange: #e88d67;
+            --coral: #ff8c69;
+            --peach: #ffa07a;
+        }
+
+        .bg-terracotta { background-color: var(--terracotta); }
+        .bg-terracotta-dark { background-color: var(--terracotta-dark); }
+        .bg-terracotta-light { background-color: var(--terracotta-light); }
+        .text-terracotta { color: var(--terracotta); }
+        .text-terracotta-dark { color: var(--terracotta-dark); }
+        .border-terracotta { border-color: var(--terracotta); }
+
+        /* Hero gradient */
+        .hero-gradient {
+            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
+        }
+
+        /* Card animations */
         .meal-card {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
+
+        .meal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .meal-card:hover::before {
+            left: 100%;
+        }
+
         .meal-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(212, 115, 94, 0.25), 0 15px 30px -15px rgba(0, 0, 0, 0.3);
         }
+
         .meal-card.hidden {
             display: none;
         }
+
+        /* Category buttons */
         .category-btn {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
+
         .category-btn.active {
-            background: linear-gradient(to right, #3b82f6, #2563eb);
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--warm-orange) 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(212, 115, 94, 0.4);
+        }
+
+        .category-btn:not(.active):hover {
+            background: rgba(212, 115, 94, 0.1);
+            color: var(--terracotta-dark);
+        }
+
+        /* Floating animation for hero icons */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Fade in animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .fade-in-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+        /* Tool cards hover effect */
+        .tool-card {
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(212, 115, 94, 0.15);
+            background: linear-gradient(135deg, #fff 0%, #fef7f5 100%);
+        }
+
+        /* Search bar styling */
+        .search-bar {
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 0 3px rgba(212, 115, 94, 0.1);
+            border-color: var(--terracotta);
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen antialiased">
+<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-slate-200">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center">
-                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
-                    Meal Plans
+    <!-- Hero Section -->
+    <header class="hero-gradient relative overflow-hidden">
+        <!-- Decorative background pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-10 left-10 text-8xl">🍳</div>
+            <div class="absolute top-20 right-20 text-6xl float-animation" style="animation-delay: 0.5s;">🥗</div>
+            <div class="absolute bottom-10 left-1/4 text-7xl float-animation" style="animation-delay: 1s;">🥘</div>
+            <div class="absolute bottom-20 right-1/3 text-5xl float-animation" style="animation-delay: 1.5s;">🍲</div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
+            <div class="text-center fade-in">
+                <div class="inline-block mb-4">
+                    <span class="text-6xl">🍽️</span>
+                </div>
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 drop-shadow-lg">
+                    Your Meal Planning
+                    <span class="block mt-2">Dashboard</span>
                 </h1>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                    Your quick reference for batch prep meal planning
+                <p class="text-xl sm:text-2xl text-white/95 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+                    Discover delicious recipes, organize your weekly meals, and simplify batch cooking with smart planning tools
                 </p>
+
+                <!-- Quick search bar -->
+                <div class="max-w-2xl mx-auto fade-in-delay-1">
+                    <div class="relative">
+                        <input
+                            type="text"
+                            id="quick-search"
+                            placeholder="Search all recipes... (e.g., chicken, curry, breakfast)"
+                            class="search-bar w-full px-6 py-4 rounded-2xl border-2 border-white/30 bg-white/95 backdrop-blur-sm text-slate-800 placeholder-slate-400 focus:outline-none text-lg shadow-xl"
+                        />
+                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-terracotta hover:bg-terracotta-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl">
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-10 grid grid-cols-3 gap-6 max-w-3xl mx-auto fade-in-delay-2">
+                    <div class="text-center">
+                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">${mealPlans.length}</div>
+                        <div class="text-white/80 text-sm sm:text-base">Meal Plans</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">50+</div>
+                        <div class="text-white/80 text-sm sm:text-base">Recipes</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">3</div>
+                        <div class="text-white/80 text-sm sm:text-base">Power Tools</div>
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- Wave separator -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#fef7f5" fill-opacity="0.9"/>
+            </svg>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        <!-- Efficiency Tools Banner -->
-        <div class="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 p-6 mb-8 rounded-r-xl shadow-sm">
+        <!-- Power Tools Section -->
+        <div class="mb-12 fade-in">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Power Up Your Meal Prep</h2>
+                <p class="text-slate-600 text-lg">Smart tools to save time and stay organized</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="shopping-helper.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            🛒
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Smart Shopping</h3>
+                    </div>
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        Automatically consolidate ingredients across multiple weeks, merge quantities, and export your shopping list.
+                    </p>
+                    <div class="flex items-center text-terracotta font-semibold text-sm">
+                        <span>Explore tool</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
+
+                <a href="nutrition-dashboard.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            📊
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Nutrition Dashboard</h3>
+                    </div>
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        Compare meal plans, track your macros, and visualize your weekly nutrition with beautiful charts.
+                    </p>
+                    <div class="flex items-center text-terracotta font-semibold text-sm">
+                        <span>Explore tool</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
+
+                <a href="recipe-scaler.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-rose-400 to-red-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            ⚖️
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Recipe Scaler</h3>
+                    </div>
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        Scale any recipe to your desired serving size with smart fraction handling and instant calculations.
+                    </p>
+                    <div class="flex items-center text-terracotta font-semibold text-sm">
+                        <span>Explore tool</span>
+                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recipe Discovery Section -->
+        <div class="bg-gradient-to-r from-orange-50 to-rose-50 border-l-4 border-terracotta p-6 mb-12 rounded-2xl shadow-md">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <svg class="h-6 w-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
+                    <div class="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-2xl shadow-lg">
+                        📖
+                    </div>
                 </div>
                 <div class="ml-4 flex-1">
-                    <h3 class="text-lg font-bold text-purple-900 mb-3">⚡ New Efficiency Tools</h3>
-                    <div class="grid md:grid-cols-3 gap-3">
-                        <a href="shopping-helper.html" class="block bg-white hover:bg-purple-50 rounded-lg p-4 border border-purple-200 transition group">
-                            <div class="flex items-center mb-2">
-                                <span class="text-2xl mr-2">🛒</span>
-                                <h4 class="font-bold text-slate-800 group-hover:text-purple-700">Smart Shopping</h4>
-                            </div>
-                            <p class="text-xs text-slate-600">Auto-merge ingredients across weeks • Export to CSV • Save progress</p>
-                        </a>
-                        <a href="nutrition-dashboard.html" class="block bg-white hover:bg-purple-50 rounded-lg p-4 border border-purple-200 transition group">
-                            <div class="flex items-center mb-2">
-                                <span class="text-2xl mr-2">📊</span>
-                                <h4 class="font-bold text-slate-800 group-hover:text-purple-700">Nutrition Dashboard</h4>
-                            </div>
-                            <p class="text-xs text-slate-600">Compare plans • Track macros • Visualize weekly nutrition</p>
-                        </a>
-                        <a href="recipe-scaler.html" class="block bg-white hover:bg-purple-50 rounded-lg p-4 border border-purple-200 transition group">
-                            <div class="flex items-center mb-2">
-                                <span class="text-2xl mr-2">⚖️</span>
-                                <h4 class="font-bold text-slate-800 group-hover:text-purple-700">Recipe Scaler</h4>
-                            </div>
-                            <p class="text-xs text-slate-600">Scale recipes instantly • Adjust servings • Auto-calculate ingredients</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Info Banner with Quick Links -->
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8 rounded-r-lg">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1 a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3 flex-1">
-                    <p class="text-sm text-blue-700 mb-2">
-                        <strong>Tip:</strong> Bookmark this page for quick access to all your meal plans. Each plan opens in a new view with full recipes and shopping lists.
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Explore Our Recipe Collection</h3>
+                    <p class="text-slate-600 mb-4 leading-relaxed">
+                        Browse our complete recipe library to find your next favorite meal. From Asian-inspired stir-fries to high-protein breakfasts, discover dishes that fit your lifestyle.
                     </p>
-                    <div class="flex gap-3 text-sm">
-                        <a href="all-recipes.html" class="text-blue-800 hover:text-blue-900 font-semibold underline">📖 Browse All Recipes</a>
-                    </div>
+                    <a href="all-recipes.html" class="inline-flex items-center px-5 py-2.5 bg-terracotta hover:bg-terracotta-dark text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
+                        <span>Browse All Recipes</span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- Category Toggle -->
-        <div class="flex justify-center mb-8">
-            <div class="inline-flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
-                <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-6 py-2.5 rounded-md text-sm font-semibold">
-                    Meals
-                </button>
-                <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn px-6 py-2.5 rounded-md text-sm font-semibold text-slate-600">
-                    Breakfasts
-                </button>
+        <!-- Meal Plans Section Header & Category Toggle -->
+        <div class="mb-10">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Your Meal Plans</h2>
+                <p class="text-slate-600 text-lg">Organized weekly plans with recipes, prep guides, and shopping lists</p>
+            </div>
+
+            <div class="flex justify-center">
+                <div class="inline-flex rounded-2xl border-2 border-orange-100 bg-white p-1.5 shadow-lg">
+                    <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-8 py-3 rounded-xl text-base font-bold flex items-center gap-2">
+                        <span>🍽️</span>
+                        <span>Meals</span>
+                    </button>
+                    <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn px-8 py-3 rounded-xl text-base font-bold text-slate-600 flex items-center gap-2">
+                        <span>🍳</span>
+                        <span>Breakfasts</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -121,105 +318,179 @@
         </div>
 
         <!-- Instructions Section -->
-        <div class="mt-12 bg-white rounded-xl shadow-md p-6 border border-slate-200">
-            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                How to Add More Meal Plans
-            </h3>
-            <ol class="space-y-2 text-sm text-slate-600">
-                <li class="flex items-start">
-                    <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">1</span>
-                    <span>Save your meal plan HTML file in the <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">meals/</code> directory</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">2</span>
-                    <span>Add a new entry to <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">meals/plans.js</code> with your plan details (file, title, subtitle, category, color, features)</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">3</span>
-                    <span>The card will automatically appear on this page - no need to edit index.html!</span>
-                </li>
-                <li class="flex items-start">
-                    <span class="bg-blue-100 text-blue-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold mr-3 mt-0.5 flex-shrink-0">4</span>
-                    <span>Commit and push to GitHub - changes will be live within minutes!</span>
-                </li>
-            </ol>
+        <div class="mt-16 bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-100">
+            <div class="flex items-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center shadow-lg">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 ml-4">How to Add More Meal Plans</h3>
+            </div>
+            <div class="space-y-4">
+                <div class="flex items-start group">
+                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">1</span>
+                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Save your meal plan HTML file in the <code class="bg-orange-50 text-terracotta px-2 py-1 rounded-lg text-sm font-mono border border-orange-200">meals/</code> directory</span>
+                </div>
+                <div class="flex items-start group">
+                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">2</span>
+                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Add a new entry to <code class="bg-orange-50 text-terracotta px-2 py-1 rounded-lg text-sm font-mono border border-orange-200">meals/plans.js</code> with your plan details</span>
+                </div>
+                <div class="flex items-start group">
+                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">3</span>
+                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">The card will automatically appear on this page - no need to edit index.html!</span>
+                </div>
+                <div class="flex items-start group">
+                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">4</span>
+                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Commit and push to GitHub - changes will be live within minutes!</span>
+                </div>
+            </div>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="text-center text-slate-400 text-sm py-8 mt-12">
-        <p>Built for quick meal prep reference • Stay consistent 💪</p>
+    <footer class="text-center py-12 mt-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-center mb-6">
+                <div class="text-5xl">🍽️</div>
+            </div>
+            <p class="text-slate-600 text-lg font-medium mb-2">
+                Built with care for your meal prep journey
+            </p>
+            <p class="text-slate-400 text-sm">
+                Stay consistent, eat well, and enjoy the process
+            </p>
+        </div>
     </footer>
 
     <script>
         // Icon SVG strings for reuse
         const icons = {
-            check: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
-            clock: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
-            trending: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>',
-            users: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>',
-            lightning: '<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>',
-            arrow: '<svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>'
+            check: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>',
+            clock: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+            trending: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>',
+            fire: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>',
+            star: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>',
+            arrow: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>'
         };
+
+        // Quick search handler
+        function handleQuickSearch() {
+            const searchTerm = document.getElementById('quick-search').value;
+            if (searchTerm) {
+                window.location.href = `all-recipes.html?search=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+
+        // Allow Enter key to trigger search
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('quick-search').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleQuickSearch();
+                }
+            });
+        });
 
         // Generate meal plan cards from plans.js data
         function generateCards() {
             const grid = document.getElementById('meal-plans-grid');
             grid.innerHTML = '';
 
-            mealPlans.forEach(plan => {
+            mealPlans.forEach((plan, index) => {
                 const card = document.createElement('a');
                 card.href = `meals/${plan.file}`;
-                card.className = 'meal-card bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 block';
+                card.className = 'meal-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-orange-100 block group';
                 card.dataset.category = plan.category;
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
 
+                // Updated warm color palette mapping
                 const colorMap = {
-                    emerald: { from: 'emerald-500', to: 'emerald-600', text: 'emerald-50', icon: 'emerald-500', link: 'emerald-600' },
-                    amber: { from: 'amber-500', to: 'amber-600', text: 'amber-50', icon: 'amber-500', link: 'amber-600' },
-                    orange: { from: 'orange-500', to: 'orange-600', text: 'orange-50', icon: 'orange-500', link: 'orange-600' },
-                    red: { from: 'red-500', to: 'red-600', text: 'red-50', icon: 'red-500', link: 'red-600' },
-                    blue: { from: 'blue-500', to: 'blue-600', text: 'blue-50', icon: 'blue-500', link: 'blue-600' },
-                    purple: { from: 'purple-500', to: 'purple-600', text: 'purple-50', icon: 'purple-500', link: 'purple-600' }
+                    emerald: {
+                        gradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+                        iconBg: 'from-orange-400 to-orange-500',
+                        accentColor: '#f97316',
+                        emoji: '🥗'
+                    },
+                    amber: {
+                        gradient: 'linear-gradient(135deg, #fb923c 0%, #fdba74 100%)',
+                        iconBg: 'from-amber-400 to-orange-400',
+                        accentColor: '#fb923c',
+                        emoji: '🍳'
+                    },
+                    orange: {
+                        gradient: 'linear-gradient(135deg, #ea580c 0%, #f97316 100%)',
+                        iconBg: 'from-orange-500 to-red-400',
+                        accentColor: '#ea580c',
+                        emoji: '🍲'
+                    },
+                    red: {
+                        gradient: 'linear-gradient(135deg, #dc2626 0%, #f97316 100%)',
+                        iconBg: 'from-red-500 to-orange-500',
+                        accentColor: '#dc2626',
+                        emoji: '🌶️'
+                    },
+                    blue: {
+                        gradient: 'linear-gradient(135deg, #d4735e 0%, #e88d67 100%)',
+                        iconBg: 'from-orange-400 to-rose-400',
+                        accentColor: '#d4735e',
+                        emoji: '🥘'
+                    },
+                    purple: {
+                        gradient: 'linear-gradient(135deg, #e88d67 0%, #ffa07a 100%)',
+                        iconBg: 'from-rose-400 to-orange-300',
+                        accentColor: '#e88d67',
+                        emoji: '🍜'
+                    }
                 };
 
-                const colors = colorMap[plan.color] || colorMap.emerald;
+                const colors = colorMap[plan.color] || colorMap.orange;
 
                 // Choose icons based on feature keywords
                 const featureIcons = plan.features.map(feature => {
-                    if (feature.toLowerCase().includes('time') || feature.toLowerCase().includes('minutes') || feature.toLowerCase().includes('hours')) {
+                    if (feature.toLowerCase().includes('time') || feature.toLowerCase().includes('minutes') || feature.toLowerCase().includes('hours') || feature.toLowerCase().includes('prep')) {
                         return icons.clock;
-                    } else if (feature.toLowerCase().includes('protein') || feature.toLowerCase().includes('calories')) {
-                        return icons.lightning;
-                    } else if (feature.toLowerCase().includes('meal')) {
-                        return icons.users;
+                    } else if (feature.toLowerCase().includes('protein') || feature.toLowerCase().includes('calories') || feature.toLowerCase().includes('high')) {
+                        return icons.fire;
+                    } else if (feature.toLowerCase().includes('loss') || feature.toLowerCase().includes('weight')) {
+                        return icons.trending;
                     } else {
                         return icons.check;
                     }
                 });
 
                 card.innerHTML = `
-                    <div class="bg-gradient-to-r from-${colors.from} to-${colors.to} p-4">
-                        <h2 class="text-xl font-bold text-white">${plan.title}</h2>
-                        <p class="text-${colors.text} text-sm mt-1">${plan.subtitle}</p>
+                    <div style="background: ${colors.gradient};" class="p-6 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 text-6xl opacity-20 transform rotate-12">${colors.emoji}</div>
+                        <div class="relative z-10">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl shadow-lg">
+                                    ${colors.emoji}
+                                </div>
+                            </div>
+                            <h2 class="text-2xl font-extrabold text-white mb-1 tracking-tight">${plan.title}</h2>
+                            <p class="text-white/90 text-sm font-medium">${plan.subtitle}</p>
+                        </div>
                     </div>
-                    <div class="p-5">
-                        <div class="space-y-2 mb-4">
+                    <div class="p-6">
+                        <div class="space-y-3 mb-6">
                             ${plan.features.map((feature, idx) => `
-                                <div class="flex items-center text-sm text-slate-600">
-                                    <span class="text-${colors.icon}">${featureIcons[idx]}</span>
-                                    ${feature}
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br ${colors.iconBg} flex items-center justify-center text-white shadow-sm">
+                                        ${featureIcons[idx]}
+                                    </div>
+                                    <span class="ml-3 text-slate-700 leading-relaxed font-medium">${feature}</span>
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="pt-4 border-t border-slate-100">
-                            <span class="text-${colors.link} text-sm font-semibold flex items-center">
-                                View Plan
-                                ${icons.arrow}
-                            </span>
+                        <div class="pt-4 border-t-2 border-orange-50">
+                            <div class="flex items-center justify-between text-terracotta font-bold group-hover:text-terracotta-dark transition-colors">
+                                <span>View Full Plan</span>
+                                <div class="transform group-hover:translate-x-2 transition-transform duration-300">
+                                    ${icons.arrow}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `;
