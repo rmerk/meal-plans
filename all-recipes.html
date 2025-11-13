@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#d4735e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Recipe Library - Browse All Recipes</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="mobile-utils.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
 
@@ -23,6 +28,44 @@
         .hero-gradient {
             background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
         }
+
+        /* Mobile optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for iPhone notch */
+        nav.sticky {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .fixed.bottom-0 {
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+
+        /* Animations for toast/notifications */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        .animate-fade-out { animation: fade-out 0.3s ease-out; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
         .search-bar {
             transition: all 0.3s ease;

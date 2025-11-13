@@ -2,8 +2,13 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#d4735e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Week 1 meal plan with Asian-inspired, high protein recipes. Batch prep focused for weight loss goals.">
     <title>My Week One Meals</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +24,44 @@
         .bg-terracotta { background-color: var(--terracotta); }
         .text-terracotta { color: var(--terracotta); }
         .border-terracotta { border-color: var(--terracotta); }
+
+        /* Mobile optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for iPhone notch */
+        nav.sticky {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .fixed.bottom-0 {
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+
+        /* Animations for toast/notifications */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        .animate-fade-out { animation: fade-out 0.3s ease-out; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
         /* Print styles */
         @media print {
@@ -62,6 +105,7 @@
         }
     </style>
     <script src="meal-utils.js"></script>
+    <script src="../mobile-utils.js"></script>
     <!--
       Meal Plan Website
       Generated for user goal: 205lbs -> 180lbs
@@ -821,6 +865,7 @@
             renderStep();
             updateProgress();
             requestWakeLock(); // Keep screen awake while cooking
+            initCookingSwipeGestures(); // Enable swipe navigation
         }
 
         function exitCookingMode() {
@@ -866,6 +911,9 @@
             stepCompletions[currentStep] = document.getElementById('step-checkbox').checked;
             saveCookingProgress();
             updateProgress();
+            if (window.hapticMedium && stepCompletions[currentStep]) {
+                hapticMedium(); // Satisfying feedback for completing a step
+            }
         }
 
         function updateProgress() {
@@ -881,6 +929,7 @@
                 currentStep--;
                 saveCookingProgress();
                 renderStep();
+                if (window.hapticLight) hapticLight();
             }
         }
 
@@ -889,10 +938,12 @@
                 currentStep++;
                 saveCookingProgress();
                 renderStep();
+                if (window.hapticLight) hapticLight();
             } else {
                 // All done!
                 if (confirm('Congratulations! You completed all steps. Reset progress?')) {
                     localStorage.removeItem(COOKING_PROGRESS_KEY);
+                    if (window.hapticSuccess) hapticSuccess();
                     exitCookingMode();
                 }
             }
@@ -933,6 +984,32 @@
                 : `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
             document.getElementById('elapsed-time').textContent = display;
+        }
+
+        // Initialize swipe gestures for cooking mode
+        let cookingSwipeDetector = null;
+
+        function initCookingSwipeGestures() {
+            const cookingModeElement = document.getElementById('cooking-mode');
+            if (cookingModeElement && window.SwipeDetector) {
+                cookingSwipeDetector = new SwipeDetector(cookingModeElement, {
+                    threshold: 60,
+                    onSwipeLeft: () => {
+                        // Swipe left = next step
+                        if (currentStep < cookingSteps.length - 1) {
+                            nextStep();
+                            showToast('Next step →');
+                        }
+                    },
+                    onSwipeRight: () => {
+                        // Swipe right = previous step
+                        if (currentStep > 0) {
+                            previousStep();
+                            showToast('← Previous step');
+                        }
+                    }
+                });
+            }
         }
 
         // Initialize timer display
