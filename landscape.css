@@ -1,0 +1,373 @@
+/**
+ * Landscape Mode Optimizations
+ * Enhanced layouts for horizontal phone orientation
+ */
+
+/* ============================================================================
+   LANDSCAPE MODE DETECTION
+   ============================================================================ */
+
+body.orientation-landscape {
+  /* Body class added by mobile-utils.js */
+}
+
+/* ============================================================================
+   GENERAL LANDSCAPE OPTIMIZATIONS
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Reduce vertical padding to maximize content visibility */
+  .py-16 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .py-12 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .py-8 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .pb-24 {
+    padding-bottom: 1rem !important;
+  }
+
+  /* Compact navigation */
+  nav {
+    min-height: 3.5rem !important;
+  }
+
+  nav .h-16 {
+    height: 3.5rem !important;
+  }
+
+  /* Reduce heading sizes */
+  h1.text-4xl,
+  h1.text-5xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+
+  h2.text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  /* Compact cards */
+  .rounded-2xl {
+    padding: 1rem !important;
+  }
+}
+
+/* ============================================================================
+   COOKING MODE IN LANDSCAPE - SPLIT LAYOUT
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Cooking mode full height optimization */
+  #cooking-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #cooking-mode > div {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  /* Header stays compact at top */
+  #cooking-mode .sticky {
+    position: relative;
+    padding: 0.75rem 1rem;
+  }
+
+  #cooking-mode .text-4xl {
+    font-size: 1.25rem !important;
+  }
+
+  /* Main content area - split into columns */
+  #cooking-mode .max-w-2xl {
+    max-width: 100%;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  /* Step info on left */
+  #cooking-mode .bg-white\\/10 {
+    grid-column: 1;
+  }
+
+  /* Progress bar across top */
+  #cooking-mode .bg-white\\/10:has(#progress-bar) {
+    grid-column: 1 / -1;
+  }
+
+  /* Navigation buttons on right */
+  #cooking-mode .flex.items-center.justify-between {
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+  }
+
+  /* Reduce text sizes */
+  #cooking-mode .text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  #cooking-mode .text-xl {
+    font-size: 1.125rem !important;
+  }
+
+  #cooking-mode .text-lg {
+    font-size: 1rem !important;
+  }
+
+  /* Compact buttons */
+  #cooking-mode button {
+    padding: 0.5rem 1rem !important;
+  }
+
+  /* Compact checkbox area */
+  #cooking-mode .w-6.h-6 {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+  }
+}
+
+/* ============================================================================
+   SHOPPING LIST IN LANDSCAPE - COLUMNS
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-width: 1024px) {
+  #consolidated-list.grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem;
+  }
+
+  .consolidated-list h4 {
+    font-size: 1rem;
+  }
+
+  .consolidated-list ul {
+    font-size: 0.875rem;
+  }
+}
+
+/* ============================================================================
+   MEAL PLAN CARDS IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Show meal cards in a horizontal row */
+  .grid.md\\:grid-cols-2.lg\\:grid-cols-3 {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  }
+
+  /* Compact meal card content */
+  .meal-card {
+    padding: 1rem !important;
+  }
+
+  .meal-card h2 {
+    font-size: 1.125rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .meal-card p {
+    font-size: 0.875rem !important;
+  }
+}
+
+/* ============================================================================
+   RECIPE SCALER IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .recipe-scaler-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+  }
+
+  .recipe-scaler-controls {
+    grid-column: 1;
+  }
+
+  .recipe-scaler-results {
+    grid-column: 2;
+  }
+}
+
+/* ============================================================================
+   FORMS & INPUTS IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  input,
+  textarea,
+  select {
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  button {
+    padding: 0.5rem 1rem !important;
+  }
+
+  .text-sm {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* ============================================================================
+   BOTTOM NAVIGATION IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .fixed.bottom-0.md\\:hidden {
+    padding-top: 0.5rem;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+
+  .fixed.bottom-0 svg {
+    width: 1rem !important;
+    height: 1rem !important;
+  }
+
+  .fixed.bottom-0 .text-xs {
+    font-size: 0.65rem !important;
+  }
+}
+
+/* ============================================================================
+   SEARCH BAR IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .search-container {
+    max-width: 80%;
+    margin: 0 auto 1rem;
+  }
+
+  input[type="search"] {
+    padding: 0.75rem 1rem !important;
+  }
+}
+
+/* ============================================================================
+   MODAL/OVERLAY IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+}
+
+/* ============================================================================
+   RATING STARS IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .rating-stars {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .rating-stars svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+}
+
+/* ============================================================================
+   HERO SECTIONS IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero-section {
+    padding: 2rem 1rem !important;
+  }
+
+  .hero-section h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-section p {
+    font-size: 0.875rem !important;
+    margin-bottom: 1rem !important;
+  }
+}
+
+/* ============================================================================
+   STAT CARDS IN LANDSCAPE
+   ============================================================================ */
+
+@media (orientation: landscape) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+  }
+
+  .stat-card {
+    padding: 1rem !important;
+  }
+
+  .stat-card .text-3xl {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ============================================================================
+   SPECIFIC LANDSCAPE ENHANCEMENTS FOR TABLETS
+   ============================================================================ */
+
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+  /* Tablet landscape - more spacious layout */
+  .max-w-4xl {
+    max-width: 90%;
+  }
+
+  .grid.md\\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid.lg\\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================================================
+   ORIENTATION CHANGE TRANSITIONS
+   ============================================================================ */
+
+body {
+  transition: padding 0.3s ease;
+}
+
+@media (orientation: landscape) {
+  /* Smooth transition when switching orientations */
+  .max-w-4xl,
+  .max-w-2xl,
+  .container {
+    transition: max-width 0.3s ease, padding 0.3s ease;
+  }
+}

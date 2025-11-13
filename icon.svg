@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="115" fill="#d4735e"/>
+
+  <!-- Fork Icon (left) -->
+  <g fill="white">
+    <rect x="140" y="120" width="20" height="280" rx="10"/>
+    <rect x="120" y="120" width="15" height="100" rx="7.5"/>
+    <rect x="145" y="120" width="15" height="100" rx="7.5"/>
+  </g>
+
+  <!-- Spoon Icon (right) -->
+  <g fill="white">
+    <rect x="352" y="120" width="20" height="280" rx="10"/>
+    <ellipse cx="362" cy="150" rx="35" ry="45"/>
+  </g>
+
+  <!-- Plate Icon (center) -->
+  <circle cx="256" cy="280" r="90" fill="none" stroke="white" stroke-width="18"/>
+  <circle cx="256" cy="280" r="60" fill="white" opacity="0.3"/>
+
+  <!-- Decorative elements - food icons -->
+  <g fill="white" opacity="0.4">
+    <circle cx="240" cy="265" r="8"/>
+    <circle cx="256" cy="270" r="8"/>
+    <circle cx="272" cy="265" r="8"/>
+    <circle cx="248" cy="285" r="8"/>
+    <circle cx="264" cy="290" r="8"/>
+  </g>
+</svg>

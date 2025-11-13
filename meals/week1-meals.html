@@ -2,8 +2,13 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#d4735e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Week 1 meal plan with Asian-inspired, high protein recipes. Batch prep focused for weight loss goals.">
     <title>My Week One Meals</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -19,6 +24,44 @@
         .bg-terracotta { background-color: var(--terracotta); }
         .text-terracotta { color: var(--terracotta); }
         .border-terracotta { border-color: var(--terracotta); }
+
+        /* Mobile optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for iPhone notch */
+        nav.sticky {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .fixed.bottom-0 {
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+
+        /* Animations for toast/notifications */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        .animate-fade-out { animation: fade-out 0.3s ease-out; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
         /* Print styles */
         @media print {
@@ -62,6 +105,9 @@
         }
     </style>
     <script src="meal-utils.js"></script>
+    <script src="../mobile-utils.js"></script>
+    <link rel="stylesheet" href="../dark-mode.css">
+    <link rel="stylesheet" href="../landscape.css">
     <!--
       Meal Plan Website
       Generated for user goal: 205lbs -> 180lbs
@@ -152,6 +198,19 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 Start Cooking
+            </button>
+            <button onclick="openCameraCapture('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                Take Photo
+            </button>
+            <button onclick="openPhotoGallery('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+                View Photos
             </button>
         </div>
 
@@ -821,6 +880,7 @@
             renderStep();
             updateProgress();
             requestWakeLock(); // Keep screen awake while cooking
+            initCookingSwipeGestures(); // Enable swipe navigation
         }
 
         function exitCookingMode() {
@@ -866,6 +926,9 @@
             stepCompletions[currentStep] = document.getElementById('step-checkbox').checked;
             saveCookingProgress();
             updateProgress();
+            if (window.hapticMedium && stepCompletions[currentStep]) {
+                hapticMedium(); // Satisfying feedback for completing a step
+            }
         }
 
         function updateProgress() {
@@ -881,6 +944,7 @@
                 currentStep--;
                 saveCookingProgress();
                 renderStep();
+                if (window.hapticLight) hapticLight();
             }
         }
 
@@ -889,10 +953,12 @@
                 currentStep++;
                 saveCookingProgress();
                 renderStep();
+                if (window.hapticLight) hapticLight();
             } else {
                 // All done!
                 if (confirm('Congratulations! You completed all steps. Reset progress?')) {
                     localStorage.removeItem(COOKING_PROGRESS_KEY);
+                    if (window.hapticSuccess) hapticSuccess();
                     exitCookingMode();
                 }
             }
@@ -935,11 +1001,157 @@
             document.getElementById('elapsed-time').textContent = display;
         }
 
+        // Initialize swipe gestures for cooking mode
+        let cookingSwipeDetector = null;
+
+        function initCookingSwipeGestures() {
+            const cookingModeElement = document.getElementById('cooking-mode');
+            if (cookingModeElement && window.SwipeDetector) {
+                cookingSwipeDetector = new SwipeDetector(cookingModeElement, {
+                    threshold: 60,
+                    onSwipeLeft: () => {
+                        // Swipe left = next step
+                        if (currentStep < cookingSteps.length - 1) {
+                            nextStep();
+                            showToast('Next step →');
+                        }
+                    },
+                    onSwipeRight: () => {
+                        // Swipe right = previous step
+                        if (currentStep > 0) {
+                            previousStep();
+                            showToast('← Previous step');
+                        }
+                    }
+                });
+            }
+        }
+
         // Initialize timer display
         document.addEventListener('DOMContentLoaded', () => {
             updateTimerDisplay();
         });
     </script>
+
+<!-- Dark Mode Toggle Button - Include in all pages -->
+<button
+    id="dark-mode-toggle"
+    onclick="toggleDarkMode()"
+    class="fixed top-4 right-4 z-[100] w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border-2 border-transparent hover:border-orange-400 no-print"
+    aria-label="Toggle dark mode"
+    title="Toggle dark mode"
+>
+    <!-- Sun Icon (visible in dark mode) -->
+    <svg
+        class="w-6 h-6 text-yellow-500 dark-mode-icon-sun hidden"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+    </svg>
+
+    <!-- Moon Icon (visible in light mode) -->
+    <svg
+        class="w-6 h-6 text-slate-700 dark-mode-icon-moon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+
+<style>
+    /* Dark mode toggle icon visibility */
+    [data-theme="dark"] .dark-mode-icon-moon {
+        display: none;
+    }
+
+    [data-theme="dark"] .dark-mode-icon-sun {
+        display: block;
+    }
+
+    [data-theme="light"] .dark-mode-icon-sun {
+        display: none;
+    }
+
+    [data-theme="light"] .dark-mode-icon-moon {
+        display: block;
+    }
+
+    /* Pulse animation on first load */
+    @keyframes pulse-once {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    #dark-mode-toggle.first-load {
+        animation: pulse-once 0.5s ease-out;
+    }
+
+    /* Rotate animation on click */
+    @keyframes rotate-icon {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #dark-mode-toggle.rotating svg {
+        animation: rotate-icon 0.5s ease-out;
+    }
+
+    /* Position adjustment for mobile bottom nav */
+    @media (max-width: 767px) {
+        #dark-mode-toggle {
+            top: auto;
+            bottom: 5rem;
+            right: 1rem;
+        }
+    }
+
+    /* Print mode - hide toggle */
+    @media print {
+        #dark-mode-toggle {
+            display: none !important;
+        }
+    }
+</style>
+
+<script>
+    // Add rotating animation on click
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('dark-mode-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', () => {
+                toggle.classList.add('rotating');
+                setTimeout(() => {
+                    toggle.classList.remove('rotating');
+                }, 500);
+            });
+
+            // Pulse animation on first load to draw attention
+            if (!localStorage.getItem('dark-mode-toggle-seen')) {
+                setTimeout(() => {
+                    toggle.classList.add('first-load');
+                    setTimeout(() => {
+                        toggle.classList.remove('first-load');
+                        localStorage.setItem('dark-mode-toggle-seen', 'true');
+                    }, 500);
+                }, 1000);
+            }
+        }
+    });
+</script>
 
 </body>
 </html>

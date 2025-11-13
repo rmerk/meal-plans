@@ -1,0 +1,324 @@
+/**
+ * Dark Mode Styles
+ * Applied when data-theme="dark" is set on the html element
+ */
+
+/* ============================================================================
+   DARK MODE THEME VARIABLES
+   ============================================================================ */
+
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+
+  --border-primary: #334155;
+  --border-secondary: #475569;
+
+  --terracotta: #e88d67;
+  --terracotta-dark: #d4735e;
+  --warm-orange: #ffa07a;
+
+  color-scheme: dark;
+}
+
+/* ============================================================================
+   GLOBAL DARK MODE STYLES
+   ============================================================================ */
+
+[data-theme="dark"] body {
+  background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] * {
+  border-color: var(--border-primary);
+}
+
+/* ============================================================================
+   NAVIGATION & HEADER
+   ============================================================================ */
+
+[data-theme="dark"] nav {
+  background: linear-gradient(to right, #1e293b, #334155) !important;
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+[data-theme="dark"] .hero-gradient {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%) !important;
+}
+
+/* ============================================================================
+   CARDS & CONTAINERS
+   ============================================================================ */
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-slate-50 {
+  background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-br {
+  background: linear-gradient(to bottom right, #1e293b, #334155) !important;
+}
+
+[data-theme="dark"] .border-orange-100,
+[data-theme="dark"] .border-orange-200 {
+  border-color: var(--border-secondary) !important;
+}
+
+/* ============================================================================
+   TEXT COLORS
+   ============================================================================ */
+
+[data-theme="dark"] .text-slate-800,
+[data-theme="dark"] .text-slate-900 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .text-slate-600,
+[data-theme="dark"] .text-slate-700 {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .text-slate-500 {
+  color: var(--text-tertiary) !important;
+}
+
+/* ============================================================================
+   FORMS & INPUTS
+   ============================================================================ */
+
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="search"],
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-secondary);
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  border-color: var(--terracotta);
+  background-color: var(--bg-secondary);
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+
+[data-theme="dark"] button:not([class*="bg-gradient"]):not([class*="bg-emerald"]):not([class*="bg-purple"]):not([class*="bg-orange"]):not([class*="bg-blue"]):not([class*="bg-slate"]) {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] button:hover:not([class*="bg-gradient"]) {
+  background-color: var(--bg-hover);
+}
+
+/* ============================================================================
+   LISTS & CHECKBOXES
+   ============================================================================ */
+
+[data-theme="dark"] li {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] li:hover {
+  background-color: var(--bg-hover);
+}
+
+[data-theme="dark"] .already-have {
+  opacity: 0.4;
+}
+
+/* ============================================================================
+   TABLES
+   ============================================================================ */
+
+[data-theme="dark"] table {
+  background-color: var(--bg-card);
+}
+
+[data-theme="dark"] th {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] td {
+  border-color: var(--border-primary);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] tr:hover {
+  background-color: var(--bg-hover);
+}
+
+/* ============================================================================
+   MODAL & OVERLAYS
+   ============================================================================ */
+
+[data-theme="dark"] .modal,
+[data-theme="dark"] .overlay {
+  background-color: rgba(15, 23, 42, 0.95);
+}
+
+/* Cooking mode is already dark, keep it consistent */
+[data-theme="dark"] #cooking-mode {
+  background: linear-gradient(to bottom, #0f172a, #1e293b);
+}
+
+/* ============================================================================
+   BOTTOM NAVIGATION
+   ============================================================================ */
+
+[data-theme="dark"] .fixed.bottom-0 {
+  background-color: var(--bg-secondary);
+  border-top-color: var(--border-secondary);
+}
+
+[data-theme="dark"] .fixed.bottom-0 a {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .fixed.bottom-0 a:hover {
+  color: var(--terracotta);
+}
+
+/* ============================================================================
+   SHADOWS
+   ============================================================================ */
+
+[data-theme="dark"] .shadow-lg,
+[data-theme="dark"] .shadow-xl,
+[data-theme="dark"] .shadow-2xl {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================================
+   BADGES & CHIPS
+   ============================================================================ */
+
+[data-theme="dark"] .badge,
+[data-theme="dark"] .chip {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* ============================================================================
+   SCROLLBARS (Webkit browsers)
+   ============================================================================ */
+
+[data-theme="dark"] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 6px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-hover);
+}
+
+/* ============================================================================
+   LANDSCAPE MODE OPTIMIZATIONS
+   ============================================================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Reduce vertical spacing in landscape */
+  [data-theme="dark"] .py-16 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  [data-theme="dark"] .py-8 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  [data-theme="dark"] nav {
+    height: 3rem !important;
+  }
+
+  [data-theme="dark"] nav .h-16 {
+    height: 3rem !important;
+  }
+}
+
+/* ============================================================================
+   COOKING MODE IN LANDSCAPE
+   ============================================================================ */
+
+body.orientation-landscape #cooking-mode .max-w-2xl {
+  max-width: 100%;
+  padding: 1rem;
+}
+
+body.orientation-landscape #cooking-mode .grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+body.orientation-landscape #cooking-mode .text-3xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+body.orientation-landscape #cooking-mode .py-4 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* ============================================================================
+   PRINT MODE (Disable dark mode for printing)
+   ============================================================================ */
+
+@media print {
+  [data-theme="dark"] body,
+  [data-theme="dark"] .bg-white,
+  [data-theme="dark"] .bg-slate-50 {
+    background: white !important;
+    color: black !important;
+  }
+
+  [data-theme="dark"] * {
+    color: black !important;
+    border-color: #e2e8f0 !important;
+  }
+}
+
+/* ============================================================================
+   TRANSITION FOR SMOOTH THEME SWITCHING
+   ============================================================================ */
+
+body,
+nav,
+.bg-white,
+.bg-slate-50,
+button,
+input,
+textarea,
+select {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

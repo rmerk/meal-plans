@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#d4735e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Recipe Library - Browse All Recipes</title>
+    <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="mobile-utils.js"></script>
+    <link rel="stylesheet" href="/dark-mode.css">
+    <link rel="stylesheet" href="/landscape.css">
     <style>
         body { font-family: 'Inter', sans-serif; }
 
@@ -23,6 +30,44 @@
         .hero-gradient {
             background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
         }
+
+        /* Mobile optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for iPhone notch */
+        nav.sticky {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .fixed.bottom-0 {
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+
+        /* Animations for toast/notifications */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in { animation: fade-in 0.3s ease-out; }
+        .animate-fade-out { animation: fade-out 0.3s ease-out; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
         .search-bar {
             transition: all 0.3s ease;
@@ -110,12 +155,29 @@
                         type="text"
                         id="search"
                         placeholder="Search by name, protein type, cuisine, or meal..."
-                        class="search-bar w-full px-5 py-4 pl-12 border-2 border-orange-100 rounded-xl focus:outline-none text-slate-700 placeholder-slate-400"
+                        class="search-bar w-full px-5 py-4 pl-12 pr-14 border-2 border-orange-100 rounded-xl focus:outline-none text-slate-700 placeholder-slate-400"
                         oninput="filterRecipes()"
+                        list="recipe-suggestions"
+                        autocomplete="off"
                     >
+                    <datalist id="recipe-suggestions">
+                        <!-- Dynamically populated by JavaScript -->
+                    </datalist>
                     <svg class="absolute left-4 top-4.5 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
+                    <!-- Voice Search Button -->
+                    <button
+                        onclick="startRecipeVoiceSearch()"
+                        id="voice-search-btn"
+                        class="absolute right-3 top-3 w-10 h-10 flex items-center justify-center bg-gradient-to-br from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:scale-95"
+                        aria-label="Voice search"
+                        title="Voice search (click and speak)"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </button>
                 </div>
                 <p class="text-sm text-slate-500 mt-3">
                     <span class="font-semibold text-slate-600">💡 Try:</span> "chicken", "Korean", "breakfast", "tofu"
@@ -312,6 +374,41 @@
             return plan ? plan.file : '#';
         }
 
+        // Voice search for recipes
+        function startRecipeVoiceSearch() {
+            if (window.startVoiceSearch) {
+                const searchInput = document.getElementById('search');
+                const voiceBtn = document.getElementById('voice-search-btn');
+
+                // Add listening state
+                voiceBtn.classList.add('animate-pulse', 'bg-red-500');
+                voiceBtn.title = 'Listening...';
+
+                startVoiceSearch((transcript) => {
+                    // Set the search input with the transcript
+                    searchInput.value = transcript;
+                    filterRecipes();
+
+                    // Show success feedback
+                    if (window.showToast) {
+                        showToast(`🎤 Searching for "${transcript}"`);
+                    }
+
+                    // Remove listening state
+                    voiceBtn.classList.remove('animate-pulse', 'bg-red-500');
+                    voiceBtn.title = 'Voice search (click and speak)';
+                });
+
+                // Handle errors by removing listening state
+                setTimeout(() => {
+                    voiceBtn.classList.remove('animate-pulse', 'bg-red-500');
+                    voiceBtn.title = 'Voice search (click and speak)';
+                }, 10000); // 10 second timeout
+            } else {
+                alert('Voice search is not supported in this browser. Please try Chrome or Safari.');
+            }
+        }
+
         // Filter recipes based on search
         function filterRecipes() {
             const searchTerm = document.getElementById('search').value.toLowerCase();
@@ -357,9 +454,163 @@
             }
         }
 
+        // Populate autocomplete suggestions
+        function populateAutocompleteSuggestions() {
+            const datalist = document.getElementById('recipe-suggestions');
+            const suggestions = new Set();
+
+            // Add all recipe names, proteins, and cuisines
+            Object.values(recipesByPlan).forEach(recipes => {
+                recipes.forEach(recipe => {
+                    suggestions.add(recipe.name);
+                    if (recipe.protein) suggestions.add(recipe.protein);
+                    if (recipe.cuisine) suggestions.add(recipe.cuisine);
+                });
+            });
+
+            // Populate datalist
+            suggestions.forEach(suggestion => {
+                const option = document.createElement('option');
+                option.value = suggestion;
+                datalist.appendChild(option);
+            });
+        }
+
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', generateRecipeCards);
+        document.addEventListener('DOMContentLoaded', () => {
+            generateRecipeCards();
+            populateAutocompleteSuggestions();
+
+            // Initialize pull-to-refresh if available
+            if (window.MobileUtils && window.MobileUtils.initPullToRefresh) {
+                MobileUtils.initPullToRefresh(() => {
+                    // Refresh recipe display
+                    generateRecipeCards();
+                    showToast('Recipes refreshed!');
+                });
+            }
+        });
     </script>
+
+<!-- Dark Mode Toggle Button - Include in all pages -->
+<button
+    id="dark-mode-toggle"
+    onclick="toggleDarkMode()"
+    class="fixed top-4 right-4 z-[100] w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border-2 border-transparent hover:border-orange-400 no-print"
+    aria-label="Toggle dark mode"
+    title="Toggle dark mode"
+>
+    <!-- Sun Icon (visible in dark mode) -->
+    <svg
+        class="w-6 h-6 text-yellow-500 dark-mode-icon-sun hidden"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+    </svg>
+
+    <!-- Moon Icon (visible in light mode) -->
+    <svg
+        class="w-6 h-6 text-slate-700 dark-mode-icon-moon"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+
+<style>
+    /* Dark mode toggle icon visibility */
+    [data-theme="dark"] .dark-mode-icon-moon {
+        display: none;
+    }
+
+    [data-theme="dark"] .dark-mode-icon-sun {
+        display: block;
+    }
+
+    [data-theme="light"] .dark-mode-icon-sun {
+        display: none;
+    }
+
+    [data-theme="light"] .dark-mode-icon-moon {
+        display: block;
+    }
+
+    /* Pulse animation on first load */
+    @keyframes pulse-once {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    #dark-mode-toggle.first-load {
+        animation: pulse-once 0.5s ease-out;
+    }
+
+    /* Rotate animation on click */
+    @keyframes rotate-icon {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #dark-mode-toggle.rotating svg {
+        animation: rotate-icon 0.5s ease-out;
+    }
+
+    /* Position adjustment for mobile bottom nav */
+    @media (max-width: 767px) {
+        #dark-mode-toggle {
+            top: auto;
+            bottom: 5rem;
+            right: 1rem;
+        }
+    }
+
+    /* Print mode - hide toggle */
+    @media print {
+        #dark-mode-toggle {
+            display: none !important;
+        }
+    }
+</style>
+
+<script>
+    // Add rotating animation on click
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('dark-mode-toggle');
+        if (toggle) {
+            toggle.addEventListener('click', () => {
+                toggle.classList.add('rotating');
+                setTimeout(() => {
+                    toggle.classList.remove('rotating');
+                }, 500);
+            });
+
+            // Pulse animation on first load to draw attention
+            if (!localStorage.getItem('dark-mode-toggle-seen')) {
+                setTimeout(() => {
+                    toggle.classList.add('first-load');
+                    setTimeout(() => {
+                        toggle.classList.remove('first-load');
+                        localStorage.setItem('dark-mode-toggle-seen', 'true');
+                    }, 500);
+                }, 1000);
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
