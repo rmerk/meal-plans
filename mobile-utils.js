@@ -379,6 +379,222 @@ window.nativeShare = nativeShare;
 window.showToast = showToast;
 
 // ============================================================================
+// LANDSCAPE MODE DETECTION & HANDLING
+// ============================================================================
+
+let currentOrientation = 'portrait';
+
+function detectOrientation() {
+  const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+  const newOrientation = isLandscape ? 'landscape' : 'portrait';
+
+  if (newOrientation !== currentOrientation) {
+    currentOrientation = newOrientation;
+    document.body.classList.remove('orientation-portrait', 'orientation-landscape');
+    document.body.classList.add(`orientation-${newOrientation}`);
+
+    // Dispatch custom event for pages to react
+    window.dispatchEvent(new CustomEvent('orientationchange', {
+      detail: { orientation: newOrientation }
+    }));
+
+    console.log('[MobileUtils] Orientation changed to:', newOrientation);
+  }
+}
+
+function initOrientationDetection() {
+  detectOrientation();
+  window.addEventListener('resize', detectOrientation);
+  window.addEventListener('orientationchange', detectOrientation);
+}
+
+// ============================================================================
+// DARK MODE
+// ============================================================================
+
+function initDarkMode() {
+  // Check saved preference or system preference
+  const savedTheme = localStorage.getItem('theme');
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  let theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+
+  // Apply theme
+  setTheme(theme);
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      setTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+
+  // Dispatch event for custom reactions
+  window.dispatchEvent(new CustomEvent('themechange', {
+    detail: { theme }
+  }));
+}
+
+function toggleDarkMode() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+  haptic('medium');
+  return newTheme;
+}
+
+window.toggleDarkMode = toggleDarkMode;
+
+// ============================================================================
+// VOICE SEARCH (WEB SPEECH API)
+// ============================================================================
+
+function startVoiceSearch(callback) {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    showToast('Voice search not supported in this browser');
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    showToast('🎤 Listening...', 5000);
+    haptic('medium');
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    haptic('success');
+    if (callback) callback(transcript);
+  };
+
+  recognition.onerror = (event) => {
+    console.error('[VoiceSearch] Error:', event.error);
+    haptic('error');
+    showToast('Voice search failed. Please try again.');
+  };
+
+  recognition.onend = () => {
+    console.log('[VoiceSearch] Ended');
+  };
+
+  try {
+    recognition.start();
+  } catch (error) {
+    console.error('[VoiceSearch] Start failed:', error);
+    showToast('Could not start voice search');
+  }
+
+  return recognition;
+}
+
+window.startVoiceSearch = startVoiceSearch;
+
+// ============================================================================
+// NOTIFICATION SYSTEM
+// ============================================================================
+
+async function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    console.log('[Notifications] Not supported');
+    return false;
+  }
+
+  if (Notification.permission === 'granted') {
+    return true;
+  }
+
+  if (Notification.permission !== 'denied') {
+    const permission = await Notification.requestPermission();
+    return permission === 'granted';
+  }
+
+  return false;
+}
+
+async function showNotification(title, options = {}) {
+  const hasPermission = await requestNotificationPermission();
+
+  if (!hasPermission) {
+    console.log('[Notifications] Permission denied');
+    return;
+  }
+
+  const defaultOptions = {
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
+    vibrate: [200, 100, 200],
+    requireInteraction: false,
+    ...options
+  };
+
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    // Use service worker for better control
+    const registration = await navigator.serviceWorker.ready;
+    return registration.showNotification(title, defaultOptions);
+  } else {
+    // Fallback to regular notification
+    return new Notification(title, defaultOptions);
+  }
+}
+
+function scheduleMealPrepReminder(dayOfWeek = 0, hour = 9, minute = 0) {
+  // Save reminder preference
+  const reminder = { dayOfWeek, hour, minute, enabled: true };
+  localStorage.setItem('meal_prep_reminder', JSON.stringify(reminder));
+
+  showToast('Meal prep reminder set!');
+  haptic('success');
+
+  // Note: Actual scheduling requires service worker with periodic background sync
+  // For now, we'll check on page load and show reminders
+}
+
+function checkMealPrepReminder() {
+  const reminderData = localStorage.getItem('meal_prep_reminder');
+  if (!reminderData) return;
+
+  const reminder = JSON.parse(reminderData);
+  if (!reminder.enabled) return;
+
+  const now = new Date();
+  const lastShown = localStorage.getItem('last_reminder_shown');
+  const lastShownDate = lastShown ? new Date(lastShown) : null;
+
+  // Only show once per day
+  if (lastShownDate && now.toDateString() === lastShownDate.toDateString()) {
+    return;
+  }
+
+  // Check if it's the right day and time
+  if (now.getDay() === reminder.dayOfWeek && now.getHours() >= reminder.hour) {
+    showNotification('Time to Meal Prep! 🍳', {
+      body: 'Your weekly meal prep reminder. Start cooking to stay on track!',
+      tag: 'meal-prep-reminder',
+      actions: [
+        { action: 'start-cooking', title: 'Start Cooking' },
+        { action: 'dismiss', title: 'Later' }
+      ]
+    });
+
+    localStorage.setItem('last_reminder_shown', now.toISOString());
+  }
+}
+
+window.scheduleMealPrepReminder = scheduleMealPrepReminder;
+window.showNotification = showNotification;
+
+// ============================================================================
 // INITIALIZE ON PAGE LOAD
 // ============================================================================
 
@@ -394,6 +610,15 @@ function initMobileFeatures() {
 
   // Initialize PWA install prompt
   initPWAInstallPrompt();
+
+  // Initialize orientation detection
+  initOrientationDetection();
+
+  // Initialize dark mode
+  initDarkMode();
+
+  // Check for meal prep reminders
+  checkMealPrepReminder();
 
   // Add haptic feedback to all buttons (opt-in via class)
   document.querySelectorAll('button, a, .haptic').forEach(element => {
@@ -418,5 +643,9 @@ window.MobileUtils = {
   SwipeDetector,
   nativeShare,
   showToast,
-  initPullToRefresh
+  initPullToRefresh,
+  startVoiceSearch,
+  toggleDarkMode,
+  showNotification,
+  scheduleMealPrepReminder
 };
