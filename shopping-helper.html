@@ -163,6 +163,24 @@
                 </button>
             </div>
 
+            <!-- Smart Suggestions -->
+            <div id="smart-suggestions" class="hidden mb-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl no-print">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-blue-900 mb-1 flex items-center text-sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            Smart Suggestion
+                        </h3>
+                        <p class="text-sm text-blue-800" id="suggestion-text"></p>
+                    </div>
+                    <button onclick="applyFrequentSelections()" class="ml-4 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow-sm hover:shadow-md">
+                        Use My Usual
+                    </button>
+                </div>
+            </div>
+
             <div id="plan-checkboxes" class="space-y-3">
                 <!-- Dynamically generated checkboxes -->
             </div>
@@ -206,6 +224,17 @@
                 <!-- Dynamically generated -->
             </div>
 
+            <!-- Meal Fatigue Warning -->
+            <div id="fatigue-warning" class="hidden mt-6 p-4 bg-gradient-to-r from-orange-50 to-red-50 border-l-4 border-orange-500 rounded-r-lg no-print">
+                <div class="flex items-start">
+                    <span class="text-2xl mr-3">⚠️</span>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-orange-900 mb-1">Meal Fatigue Alert</h3>
+                        <p class="text-sm text-orange-800" id="fatigue-message"></p>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-6 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-lg no-print">
                 <h3 class="font-semibold text-amber-900 mb-2 flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,6 +269,7 @@
         // localStorage keys
         const STORAGE_KEY = 'meal_plans_selections';
         const ALREADY_HAVE_KEY = 'meal_plans_already_have';
+        const FREQUENCY_KEY = 'meal_plans_selection_frequency';
 
         // Load saved selections from localStorage
         function loadSelections() {
@@ -263,12 +293,128 @@
             localStorage.setItem(ALREADY_HAVE_KEY, JSON.stringify(items));
         }
 
+        // Track selection frequency
+        function trackSelectionFrequency(selections) {
+            const frequency = loadFrequency();
+            selections.forEach(file => {
+                frequency[file] = (frequency[file] || 0) + 1;
+            });
+            localStorage.setItem(FREQUENCY_KEY, JSON.stringify(frequency));
+        }
+
+        // Load frequency data
+        function loadFrequency() {
+            const saved = localStorage.getItem(FREQUENCY_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Get most frequent selections
+        function getFrequentSelections(topN = 3) {
+            const frequency = loadFrequency();
+            return Object.entries(frequency)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, topN)
+                .map(([file, count]) => file);
+        }
+
+        // Apply frequent selections
+        function applyFrequentSelections() {
+            const frequent = getFrequentSelections();
+            if (frequent.length === 0) return;
+
+            // Check the frequent checkboxes
+            frequent.forEach(file => {
+                const checkbox = document.getElementById(`plan-${file}`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            updateConsolidatedList();
+        }
+
+        // Analyze protein variety and detect meal fatigue
+        function analyzeMealFatigue(selectedFiles) {
+            const fatigueWarning = document.getElementById('fatigue-warning');
+            const fatigueMessage = document.getElementById('fatigue-message');
+
+            // Only analyze meal plans (not breakfasts)
+            const mealPlansSelected = selectedFiles.filter(file => file.includes('meals.html'));
+
+            if (mealPlansSelected.length < 2) {
+                fatigueWarning.classList.add('hidden');
+                return;
+            }
+
+            // Count protein occurrences across selected plans
+            const proteinCounts = {};
+            const plansByProtein = {};
+
+            mealPlansSelected.forEach(file => {
+                const plan = mealPlans.find(p => p.file === file);
+                if (plan && plan.proteins) {
+                    plan.proteins.forEach(protein => {
+                        proteinCounts[protein] = (proteinCounts[protein] || 0) + 1;
+                        if (!plansByProtein[protein]) plansByProtein[protein] = [];
+                        plansByProtein[protein].push(plan.title);
+                    });
+                }
+            });
+
+            // Find proteins that appear in multiple plans
+            const repetitiveProteins = Object.entries(proteinCounts)
+                .filter(([protein, count]) => count >= 2)
+                .sort((a, b) => b[1] - a[1]);
+
+            if (repetitiveProteins.length > 0) {
+                const [topProtein, count] = repetitiveProteins[0];
+                const plans = plansByProtein[topProtein].join(' and ');
+
+                let message = `You've selected multiple weeks with ${topProtein} (in ${plans}). `;
+
+                // Suggest alternatives
+                const alternatives = [];
+                if (topProtein === 'chicken') alternatives.push('Week 3 (shrimp & tofu)');
+                if (topProtein === 'beef') alternatives.push('Week 2 or 3 (pork & tofu)');
+                if (topProtein === 'pork') alternatives.push('Week 1 (chicken & beef)');
+
+                if (alternatives.length > 0) {
+                    message += `Consider mixing with ${alternatives.join(' or ')} for more variety!`;
+                } else {
+                    message += `Consider mixing different weeks for more protein variety!`;
+                }
+
+                fatigueMessage.textContent = message;
+                fatigueWarning.classList.remove('hidden');
+            } else {
+                fatigueWarning.classList.add('hidden');
+            }
+        }
+
         // Clear all selections
         function clearSelections() {
             if (confirm('Clear all selections and start fresh?')) {
                 localStorage.removeItem(STORAGE_KEY);
                 localStorage.removeItem(ALREADY_HAVE_KEY);
                 location.reload();
+            }
+        }
+
+        // Show smart suggestions
+        function showSmartSuggestions() {
+            const frequent = getFrequentSelections();
+            const savedSelections = loadSelections();
+
+            // Only show if we have frequent selections and current selection is empty
+            if (frequent.length > 0 && savedSelections.length === 0) {
+                const suggestionDiv = document.getElementById('smart-suggestions');
+                const suggestionText = document.getElementById('suggestion-text');
+
+                const planNames = frequent.map(file => {
+                    const plan = mealPlans.find(p => p.file === file);
+                    return plan ? plan.title : file;
+                }).join(', ');
+
+                suggestionText.textContent = `You usually select: ${planNames}`;
+                suggestionDiv.classList.remove('hidden');
             }
         }
 
@@ -298,6 +444,9 @@
                 `;
                 container.appendChild(checkbox);
             });
+
+            // Show smart suggestions after checkboxes are generated
+            showSmartSuggestions();
         }
 
         // Parse ingredient text to extract quantity and unit
@@ -385,9 +534,12 @@
             const emptyState = document.getElementById('empty-state');
             const consolidatedList = document.getElementById('consolidated-list');
 
-            // Save selections
+            // Save selections and track frequency
             const selectedFiles = Array.from(checkboxes).map(cb => cb.value);
             saveSelections(selectedFiles);
+            if (selectedFiles.length > 0) {
+                trackSelectionFrequency(selectedFiles);
+            }
 
             if (checkboxes.length === 0) {
                 consolidatedSection.classList.add('hidden');
@@ -488,6 +640,9 @@
             // Update counts
             document.getElementById('selected-count').textContent = checkboxes.length;
             document.getElementById('total-items').textContent = totalItems;
+
+            // Analyze meal fatigue
+            analyzeMealFatigue(selectedFiles);
         }
 
         // Toggle "already have" status
@@ -588,9 +743,36 @@
             return Element.prototype.querySelector.call(this, selector);
         };
 
+        // Check for preselected plan from meal plan page
+        function checkPreselection() {
+            const preselectPlan = localStorage.getItem('preselect_plan');
+            if (preselectPlan) {
+                // Clear the preselect flag
+                localStorage.removeItem('preselect_plan');
+
+                // Check if this plan isn't already selected
+                const savedSelections = loadSelections();
+                if (!savedSelections.includes(preselectPlan)) {
+                    // Add it to selections
+                    savedSelections.push(preselectPlan);
+                    saveSelections(savedSelections);
+
+                    // Check the checkbox
+                    const checkbox = document.getElementById(`plan-${preselectPlan}`);
+                    if (checkbox) checkbox.checked = true;
+                }
+
+                // Scroll to the consolidated list after a brief delay
+                setTimeout(() => {
+                    document.getElementById('consolidated-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 500);
+            }
+        }
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             generatePlanCheckboxes();
+            checkPreselection();
             updateConsolidatedList();
         });
     </script>

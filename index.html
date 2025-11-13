@@ -133,6 +133,35 @@
             box-shadow: 0 0 0 3px rgba(212, 115, 94, 0.1);
             border-color: var(--terracotta);
         }
+
+        /* View mode styling */
+        .view-mode-btn {
+            color: #64748b;
+        }
+
+        .view-mode-btn.active {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--warm-orange) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(212, 115, 94, 0.3);
+        }
+
+        .view-mode-btn:not(.active):hover {
+            background: rgba(212, 115, 94, 0.1);
+            color: var(--terracotta-dark);
+        }
+
+        .collapsible-section {
+            transition: all 0.4s ease;
+            max-height: 2000px;
+            overflow: hidden;
+        }
+
+        .collapsible-section.hidden {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
@@ -204,8 +233,20 @@
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
+        <!-- View Mode Toggle -->
+        <div class="mb-8 flex justify-center">
+            <div class="inline-flex items-center gap-3 bg-white rounded-2xl border-2 border-orange-100 p-1.5 shadow-lg">
+                <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200">
+                    ⚡ Quick Start
+                </button>
+                <button onclick="setViewMode('detailed')" id="detailed-view-btn" class="view-mode-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200">
+                    📚 Full View
+                </button>
+            </div>
+        </div>
+
         <!-- Power Tools Section -->
-        <div class="mb-12 fade-in">
+        <div id="power-tools-section" class="mb-12 fade-in collapsible-section">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-slate-800 mb-2">Power Up Your Meal Prep</h2>
                 <p class="text-slate-600 text-lg">Smart tools to save time and stay organized</p>
@@ -269,7 +310,7 @@
         </div>
 
         <!-- Recipe Discovery Section -->
-        <div class="bg-gradient-to-r from-orange-50 to-rose-50 border-l-4 border-terracotta p-6 mb-12 rounded-2xl shadow-md">
+        <div id="recipe-discovery-section" class="bg-gradient-to-r from-orange-50 to-rose-50 border-l-4 border-terracotta p-6 mb-12 rounded-2xl shadow-md collapsible-section">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
                     <div class="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-2xl shadow-lg">
@@ -318,7 +359,7 @@
         </div>
 
         <!-- Instructions Section -->
-        <div class="mt-16 bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-100">
+        <div id="instructions-section" class="mt-16 bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-100 collapsible-section">
             <div class="flex items-center mb-6">
                 <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center shadow-lg">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -529,10 +570,46 @@
             }
         }
 
+        // View mode management
+        const VIEW_MODE_KEY = 'meal_plans_view_mode';
+
+        function setViewMode(mode) {
+            // Save preference
+            localStorage.setItem(VIEW_MODE_KEY, mode);
+
+            // Update button states
+            const simpleBtn = document.getElementById('simple-view-btn');
+            const detailedBtn = document.getElementById('detailed-view-btn');
+
+            if (mode === 'simple') {
+                simpleBtn.classList.add('active');
+                detailedBtn.classList.remove('active');
+
+                // Hide collapsible sections
+                document.getElementById('power-tools-section').classList.add('hidden');
+                document.getElementById('recipe-discovery-section').classList.add('hidden');
+                document.getElementById('instructions-section').classList.add('hidden');
+            } else {
+                detailedBtn.classList.add('active');
+                simpleBtn.classList.remove('active');
+
+                // Show collapsible sections
+                document.getElementById('power-tools-section').classList.remove('hidden');
+                document.getElementById('recipe-discovery-section').classList.remove('hidden');
+                document.getElementById('instructions-section').classList.remove('hidden');
+            }
+        }
+
+        function loadViewMode() {
+            const savedMode = localStorage.getItem(VIEW_MODE_KEY) || 'simple';
+            setViewMode(savedMode);
+        }
+
         // Initialize by generating cards and showing meals on page load
         document.addEventListener('DOMContentLoaded', function() {
             generateCards();
             showCategory('meals');
+            loadViewMode();
         });
     </script>
 

@@ -13,7 +13,8 @@ const mealPlans = [
             "High protein, Asian-inspired",
             "Batch prep focused",
             "~2 lbs/week loss"
-        ]
+        ],
+        proteins: ["chicken", "beef"]
     },
     {
         file: "week1-breakfast.html",
@@ -25,7 +26,8 @@ const mealPlans = [
             "30-40g protein per meal",
             "Ready in 10 minutes",
             "No batch prep needed"
-        ]
+        ],
+        proteins: ["eggs", "yogurt", "protein powder"]
     },
     {
         file: "week2-meals.html",
@@ -37,7 +39,8 @@ const mealPlans = [
             "4 Asian-inspired recipes",
             "2-3 hours prep time",
             "14 total meals"
-        ]
+        ],
+        proteins: ["chicken", "pork", "tofu"]
     },
     {
         file: "week2-breakfast.html",
@@ -49,7 +52,8 @@ const mealPlans = [
             "30-40g protein per meal",
             "Ready in 10 minutes",
             "4 new flavor profiles"
-        ]
+        ],
+        proteins: ["eggs", "cottage cheese", "turkey"]
     },
     {
         file: "week3-meals.html",
@@ -61,7 +65,8 @@ const mealPlans = [
             "Green curry & teriyaki",
             "2-3 hours prep time",
             "14 total meals"
-        ]
+        ],
+        proteins: ["shrimp", "tofu", "pork"]
     },
     {
         file: "week3-breakfast.html",
@@ -73,6 +78,7 @@ const mealPlans = [
             "~400-450 calories per meal",
             "Ready in 10 minutes",
             "Savory oats & smoothie options"
-        ]
+        ],
+        proteins: ["eggs", "chicken sausage", "protein powder"]
     }
 ];

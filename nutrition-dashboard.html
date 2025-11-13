@@ -163,6 +163,25 @@
         <!-- Plan Selector -->
         <div class="bg-white shadow-lg rounded-xl p-6 mb-8 fade-in hover:shadow-xl transition-shadow duration-300">
             <h2 class="text-2xl font-bold mb-4 border-b border-slate-100 pb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Select Plans to Compare</h2>
+
+            <!-- Smart Suggestions -->
+            <div id="smart-suggestions" class="hidden mb-4 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <h3 class="font-bold text-purple-900 mb-1 flex items-center text-sm">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            Smart Suggestion
+                        </h3>
+                        <p class="text-sm text-purple-800" id="suggestion-text"></p>
+                    </div>
+                    <button onclick="applyFrequentSelections()" class="ml-4 bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow-sm hover:shadow-md">
+                        Use My Usual
+                    </button>
+                </div>
+            </div>
+
             <div id="plan-selector" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Dynamically generated -->
             </div>
@@ -329,8 +348,9 @@
             }
         };
 
-        // localStorage key
+        // localStorage keys
         const NUTRITION_STORAGE_KEY = 'meal_plans_nutrition_selections';
+        const NUTRITION_FREQUENCY_KEY = 'meal_plans_nutrition_frequency';
 
         // Load selections
         function loadSelections() {
@@ -341,6 +361,64 @@
         // Save selections
         function saveSelections(selections) {
             localStorage.setItem(NUTRITION_STORAGE_KEY, JSON.stringify(selections));
+        }
+
+        // Track selection frequency
+        function trackSelectionFrequency(selections) {
+            const frequency = loadFrequency();
+            selections.forEach(file => {
+                frequency[file] = (frequency[file] || 0) + 1;
+            });
+            localStorage.setItem(NUTRITION_FREQUENCY_KEY, JSON.stringify(frequency));
+        }
+
+        // Load frequency data
+        function loadFrequency() {
+            const saved = localStorage.getItem(NUTRITION_FREQUENCY_KEY);
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Get most frequent selections
+        function getFrequentSelections(topN = 3) {
+            const frequency = loadFrequency();
+            return Object.entries(frequency)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, topN)
+                .map(([file, count]) => file);
+        }
+
+        // Apply frequent selections
+        function applyFrequentSelections() {
+            const frequent = getFrequentSelections();
+            if (frequent.length === 0) return;
+
+            // Check the frequent checkboxes
+            frequent.forEach(file => {
+                const checkbox = document.getElementById(`nutrition-${file}`);
+                if (checkbox) checkbox.checked = true;
+            });
+
+            updateNutritionSummary();
+        }
+
+        // Show smart suggestions
+        function showSmartSuggestions() {
+            const frequent = getFrequentSelections();
+            const savedSelections = loadSelections();
+
+            // Only show if we have frequent selections and current selection is empty
+            if (frequent.length > 0 && savedSelections.length === 0) {
+                const suggestionDiv = document.getElementById('smart-suggestions');
+                const suggestionText = document.getElementById('suggestion-text');
+
+                const planNames = frequent.map(file => {
+                    const plan = mealPlans.find(p => p.file === file);
+                    return plan ? plan.title : file;
+                }).join(', ');
+
+                suggestionText.textContent = `You usually compare: ${planNames}`;
+                suggestionDiv.classList.remove('hidden');
+            }
         }
 
         // Generate plan selector
@@ -374,6 +452,9 @@
                 `;
                 container.appendChild(card);
             });
+
+            // Show smart suggestions after selector is generated
+            showSmartSuggestions();
         }
 
         // Calculate nutrition totals
@@ -399,8 +480,11 @@
             const checkboxes = document.querySelectorAll('#plan-selector input[type="checkbox"]:checked');
             const selectedFiles = Array.from(checkboxes).map(cb => cb.value);
 
-            // Save selections
+            // Save selections and track frequency
             saveSelections(selectedFiles);
+            if (selectedFiles.length > 0) {
+                trackSelectionFrequency(selectedFiles);
+            }
 
             const summarySection = document.getElementById('nutrition-summary');
             const emptyState = document.getElementById('empty-state');
@@ -546,9 +630,36 @@
             }).join('');
         }
 
+        // Check for preselected plan from meal plan page
+        function checkPreselection() {
+            const preselectPlan = localStorage.getItem('preselect_plan');
+            if (preselectPlan) {
+                // Clear the preselect flag
+                localStorage.removeItem('preselect_plan');
+
+                // Check if this plan isn't already selected
+                const savedSelections = loadSelections();
+                if (!savedSelections.includes(preselectPlan)) {
+                    // Add it to selections
+                    savedSelections.push(preselectPlan);
+                    saveSelections(savedSelections);
+
+                    // Check the checkbox
+                    const checkbox = document.getElementById(`nutrition-${preselectPlan}`);
+                    if (checkbox) checkbox.checked = true;
+                }
+
+                // Scroll to the summary after a brief delay
+                setTimeout(() => {
+                    document.getElementById('nutrition-summary')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 500);
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             generatePlanSelector();
+            checkPreselection();
             updateNutritionSummary();
         });
     </script>
