@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#d4735e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Settings - Meal Plans</title>
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="mobile-utils.js"></script>
+    <script src="notifications.js"></script>
+    <link rel="stylesheet" href="/dark-mode.css">
+    <link rel="stylesheet" href="/landscape.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+
+        :root {
+            --terracotta: #d4735e;
+            --terracotta-dark: #b85c47;
+            --warm-orange: #e88d67;
+        }
+
+        .bg-terracotta { background-color: var(--terracotta); }
+        .text-terracotta { color: var(--terracotta); }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
+        }
+
+        .setting-card {
+            transition: all 0.2s ease;
+        }
+
+        .setting-card:hover {
+            transform: translateX(4px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--terracotta);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
+
+    <!-- Header -->
+    <header class="hero-gradient shadow-xl relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center">
+                <div class="inline-block mb-4">
+                    <span class="text-5xl">⚙️</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+                    Settings
+                </h1>
+                <p class="text-xl text-white/95 max-w-2xl mx-auto mb-6 font-light">
+                    Customize your experience • Configure notifications • Manage data
+                </p>
+                <a href="index.html" class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold rounded-xl transition-all duration-200 border-2 border-white/40">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
+                <path d="M0 0L60 8C120 16 240 32 360 37.3C480 43 600 37 720 34.7C840 32 960 32 1080 37.3C1200 43 1320 53 1380 58.7L1440 64V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0V0Z" fill="#fef7f5" fill-opacity="0.9"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Appearance Settings -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+                <span class="text-2xl mr-3">🎨</span>
+                Appearance
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Theme Selection -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Theme</div>
+                        <div class="text-sm text-slate-600">Choose your color theme</div>
+                    </div>
+                    <select id="theme-select" onchange="changeTheme(this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                        <option value="auto">Auto</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                </div>
+
+                <!-- Haptic Feedback -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Haptic Feedback</div>
+                        <div class="text-sm text-slate-600">Vibration on button taps</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="haptic-toggle" onchange="toggleHaptic(this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.1s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+                <span class="text-2xl mr-3">🔔</span>
+                Notifications
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Enable Notifications -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Enable Notifications</div>
+                        <div class="text-sm text-slate-600">Receive meal prep reminders</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="notifications-enabled" onchange="updateNotificationSettings()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Meal Prep Reminders -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Meal Prep Reminders</div>
+                        <div class="text-sm text-slate-600">Weekly prep day notifications</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="meal-prep-reminders" onchange="updateNotificationSettings()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Weekly Prep Day -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Weekly Prep Day</div>
+                        <div class="text-sm text-slate-600">Day to receive prep reminders</div>
+                    </div>
+                    <select id="prep-day" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                        <option value="0">Sunday</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                    </select>
+                </div>
+
+                <!-- Prep Time -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Prep Time</div>
+                        <div class="text-sm text-slate-600">Time to receive reminders</div>
+                    </div>
+                    <input type="time" id="prep-time" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                </div>
+
+                <!-- Cooking Timers -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Cooking Timer Alerts</div>
+                        <div class="text-sm text-slate-600">Notify when timers complete</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cooking-timers" onchange="updateNotificationSettings()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Quiet Hours -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Quiet Hours</div>
+                        <div class="text-sm text-slate-600">Silence notifications during set hours</div>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="quiet-hours-enabled" onchange="updateNotificationSettings(); toggleQuietHoursInputs()">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Quiet Hours Time Range -->
+                <div id="quiet-hours-inputs" class="hidden space-y-4 pl-4 border-l-2 border-slate-300">
+                    <div class="setting-card flex items-center justify-between p-4 bg-white rounded-lg">
+                        <div>
+                            <div class="font-semibold text-slate-700">Start Time</div>
+                        </div>
+                        <input type="time" id="quiet-start" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    </div>
+                    <div class="setting-card flex items-center justify-between p-4 bg-white rounded-lg">
+                        <div>
+                            <div class="font-semibold text-slate-700">End Time</div>
+                        </div>
+                        <input type="time" id="quiet-end" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    </div>
+                </div>
+
+                <!-- Test Notification -->
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <button onclick="testNotification()" class="w-full bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg transition shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        Test Notification
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.2s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+                <span class="text-2xl mr-3">🎯</span>
+                Preferences
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Default Servings -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Default Servings</div>
+                        <div class="text-sm text-slate-600">Standard serving size for recipes</div>
+                    </div>
+                    <input type="number" id="default-servings" min="1" max="10" value="4" onchange="savePreference('defaultServings', this.value)" class="w-20 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent text-center">
+                </div>
+
+                <!-- Units -->
+                <div class="setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg">
+                    <div>
+                        <div class="font-semibold text-slate-800">Measurement Units</div>
+                        <div class="text-sm text-slate-600">Preferred unit system</div>
+                    </div>
+                    <select id="units-preference" onchange="savePreference('units', this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                        <option value="imperial">Imperial (cups, oz, lbs)</option>
+                        <option value="metric">Metric (ml, g, kg)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.3s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+                <span class="text-2xl mr-3">💾</span>
+                Data Management
+            </h2>
+
+            <div class="space-y-4">
+                <!-- Export Data -->
+                <button onclick="exportAllData()" class="w-full setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition">
+                    <div class="text-left">
+                        <div class="font-semibold text-slate-800">Export Data</div>
+                        <div class="text-sm text-slate-600">Download all your data as JSON</div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                </button>
+
+                <!-- Import Data -->
+                <button onclick="document.getElementById('import-file').click()" class="w-full setting-card flex items-center justify-between p-4 bg-slate-50 rounded-lg hover:bg-slate-100 transition">
+                    <div class="text-left">
+                        <div class="font-semibold text-slate-800">Import Data</div>
+                        <div class="text-sm text-slate-600">Restore from backup file</div>
+                    </div>
+                    <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                </button>
+                <input type="file" id="import-file" accept=".json" onchange="importData(this)" class="hidden">
+
+                <!-- Clear Cache -->
+                <button onclick="clearCache()" class="w-full setting-card flex items-center justify-between p-4 bg-red-50 rounded-lg hover:bg-red-100 transition border border-red-200">
+                    <div class="text-left">
+                        <div class="font-semibold text-red-800">Clear Cache</div>
+                        <div class="text-sm text-red-600">Remove all stored data</div>
+                    </div>
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- About -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mt-6 border-2 border-orange-100 text-center fade-in" style="animation-delay: 0.4s">
+            <h3 class="font-bold text-slate-800 mb-2">Meal Planning App</h3>
+            <p class="text-sm text-slate-600 mb-2">Version 2.0.0</p>
+            <p class="text-xs text-slate-500">Built with ❤️ for healthy eating</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm py-8 mt-12">
+        <p>Settings • Your data is stored locally on your device</p>
+    </footer>
+
+    <script>
+        const PREFERENCES_KEY = 'meal_plan_preferences';
+
+        // Load settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllSettings();
+        });
+
+        // Load all settings
+        function loadAllSettings() {
+            // Load notification settings
+            if (window.notificationManager) {
+                const settings = notificationManager.settings;
+                document.getElementById('notifications-enabled').checked = settings.enabled;
+                document.getElementById('meal-prep-reminders').checked = settings.mealPrepReminders;
+                document.getElementById('cooking-timers').checked = settings.cookingTimers;
+                document.getElementById('prep-day').value = settings.weeklyPrepDay;
+                document.getElementById('prep-time').value = settings.weeklyPrepTime;
+                document.getElementById('quiet-hours-enabled').checked = settings.quietHoursEnabled;
+                document.getElementById('quiet-start').value = settings.quietHoursStart;
+                document.getElementById('quiet-end').value = settings.quietHoursEnd;
+
+                toggleQuietHoursInputs();
+            }
+
+            // Load theme
+            const theme = localStorage.getItem('theme-preference') || 'auto';
+            document.getElementById('theme-select').value = theme;
+
+            // Load haptic feedback preference
+            const hapticEnabled = localStorage.getItem('haptic-enabled') !== 'false';
+            document.getElementById('haptic-toggle').checked = hapticEnabled;
+
+            // Load preferences
+            loadPreferences();
+        }
+
+        // Update notification settings
+        function updateNotificationSettings() {
+            if (!window.notificationManager) return;
+
+            notificationManager.saveSettings({
+                enabled: document.getElementById('notifications-enabled').checked,
+                mealPrepReminders: document.getElementById('meal-prep-reminders').checked,
+                cookingTimers: document.getElementById('cooking-timers').checked,
+                weeklyPrepDay: parseInt(document.getElementById('prep-day').value),
+                weeklyPrepTime: document.getElementById('prep-time').value,
+                quietHoursEnabled: document.getElementById('quiet-hours-enabled').checked,
+                quietHoursStart: document.getElementById('quiet-start').value,
+                quietHoursEnd: document.getElementById('quiet-end').value
+            });
+        }
+
+        // Toggle quiet hours inputs
+        function toggleQuietHoursInputs() {
+            const enabled = document.getElementById('quiet-hours-enabled').checked;
+            const inputs = document.getElementById('quiet-hours-inputs');
+            if (enabled) {
+                inputs.classList.remove('hidden');
+            } else {
+                inputs.classList.add('hidden');
+            }
+        }
+
+        // Change theme
+        function changeTheme(theme) {
+            localStorage.setItem('theme-preference', theme);
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+            } else {
+                // Auto mode
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            }
+        }
+
+        // Toggle haptic feedback
+        function toggleHaptic(enabled) {
+            localStorage.setItem('haptic-enabled', enabled);
+            if (enabled && navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+
+        // Load preferences
+        function loadPreferences() {
+            const saved = localStorage.getItem(PREFERENCES_KEY);
+            if (saved) {
+                const prefs = JSON.parse(saved);
+                if (prefs.defaultServings) document.getElementById('default-servings').value = prefs.defaultServings;
+                if (prefs.units) document.getElementById('units-preference').value = prefs.units;
+            }
+        }
+
+        // Save preference
+        function savePreference(key, value) {
+            const saved = localStorage.getItem(PREFERENCES_KEY);
+            const prefs = saved ? JSON.parse(saved) : {};
+            prefs[key] = value;
+            localStorage.setItem(PREFERENCES_KEY, JSON.stringify(prefs));
+        }
+
+        // Export all data
+        function exportAllData() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                data[key] = localStorage.getItem(key);
+            }
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `meal-plans-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert('Data exported successfully!');
+        }
+
+        // Import data
+        function importData(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    Object.entries(data).forEach(([key, value]) => {
+                        localStorage.setItem(key, value);
+                    });
+                    alert('Data imported successfully! Page will refresh.');
+                    location.reload();
+                } catch (error) {
+                    alert('Error importing data. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Clear cache
+        function clearCache() {
+            if (!confirm('This will delete all your data including meal plans, shopping lists, and settings. Are you sure?')) {
+                return;
+            }
+
+            if (!confirm('This cannot be undone. Really clear all data?')) {
+                return;
+            }
+
+            localStorage.clear();
+            alert('All data cleared. Page will refresh.');
+            location.reload();
+        }
+    </script>
+
+    <!-- Dark Mode Toggle Button -->
+    <button
+        id="dark-mode-toggle"
+        onclick="toggleDarkMode()"
+        class="fixed top-4 right-4 z-[100] w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border-2 border-transparent hover:border-orange-400"
+        aria-label="Toggle dark mode"
+        title="Toggle dark mode"
+    >
+        <svg
+            class="w-6 h-6 text-yellow-500 dark-mode-icon-sun hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+        </svg>
+        <svg
+            class="w-6 h-6 text-slate-700 dark-mode-icon-moon"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+        </svg>
+    </button>
+
+</body>
+</html>
