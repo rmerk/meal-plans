@@ -172,6 +172,12 @@
                 </svg>
                 Check Nutrition
             </a>
+            <button onclick="startCookingMode()" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Start Cooking
+            </button>
             <button onclick="openCameraCapture('Week 2 Meals')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
@@ -472,6 +478,337 @@
         </footer>
 
     </div>
+
+    <!-- Cooking Mode Modal -->
+    <div id="cooking-mode" class="hidden fixed inset-0 bg-slate-900 z-[100] overflow-y-auto">
+        <div class="min-h-screen flex flex-col">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-emerald-600 to-green-600 text-white p-4 shadow-lg sticky top-0 z-10">
+                <div class="max-w-4xl mx-auto flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <button onclick="exitCookingMode()" class="hover:bg-white/20 p-2 rounded-lg transition">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                        <div>
+                            <h2 class="text-xl font-bold">Cooking Mode</h2>
+                            <p class="text-sm text-white/80" id="cooking-progress">Step 1 of 6</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <!-- Timer -->
+                        <div class="text-center">
+                            <div class="text-2xl font-mono font-bold" id="elapsed-time">00:00</div>
+                            <div class="text-xs text-white/80">Elapsed</div>
+                        </div>
+                        <button onclick="toggleTimer()" id="timer-btn" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg font-semibold text-sm transition">
+                            ⏱️ Start Timer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step Content -->
+            <div class="flex-1 bg-gradient-to-br from-slate-800 to-slate-900 p-8">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Current Step -->
+                    <div class="bg-white rounded-2xl shadow-2xl p-8 mb-6">
+                        <div class="flex items-start gap-4 mb-6">
+                            <div class="flex-shrink-0">
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center text-white text-2xl font-bold shadow-lg" id="step-number">
+                                    1
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-3xl font-bold text-slate-900 mb-3" id="step-title">Prep Carbs</h3>
+                                <p class="text-lg text-slate-700 leading-relaxed" id="step-description">
+                                    Cook 7 cups of dry brown rice. This is your base for all 14 meals. Let it cool.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step Checkbox -->
+                        <div class="border-t-2 border-slate-100 pt-6">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input
+                                    type="checkbox"
+                                    id="step-checkbox"
+                                    onclick="markStepComplete()"
+                                    class="w-6 h-6 rounded-lg text-emerald-600 focus:ring-2 focus:ring-emerald-500 cursor-pointer"
+                                />
+                                <span class="text-lg font-semibold text-slate-700 group-hover:text-emerald-600 transition">
+                                    Mark this step as complete
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-white text-sm font-semibold">Overall Progress</span>
+                            <span class="text-white text-sm font-semibold" id="progress-percentage">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-3 overflow-hidden">
+                            <div id="progress-bar" class="bg-gradient-to-r from-emerald-500 to-green-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="flex items-center justify-between gap-4">
+                        <button
+                            onclick="previousStep()"
+                            id="prev-btn"
+                            class="flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold px-6 py-4 rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Previous
+                        </button>
+
+                        <button
+                            onclick="nextStep()"
+                            id="next-btn"
+                            class="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+                        >
+                            Next Step
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const COOKING_PROGRESS_KEY = 'week2_meals_cooking_progress';
+
+        const cookingSteps = [
+            { title: "Prep Carbs", description: "Cook 7 cups of dry brown rice. This is your base for all 14 meals. Let it cool." },
+            { title: "Prep Tofu", description: "Press, cube, and toss tofu with cornstarch. Pan-fry, bake, or air-fry until crispy. Set aside." },
+            { title: "Veggies & Aromatics", description: "Mince all garlic/ginger. Slice all green onions, peppers, etc. Blanch all green beans." },
+            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars so they are ready to go." },
+            { title: "Cook & Assemble", description: "Work one recipe at a time. Cook the protein, add veggies and sauce. Portion over 1 cup of rice per container." },
+            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Stack and refrigerate." }
+        ];
+
+        let currentStep = 0;
+        let stepCompletions = [];
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+        let timerRunning = false;
+        let wakeLock = null;
+
+        // Request wake lock to keep screen awake during cooking
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    console.log('Wake Lock activated');
+
+                    wakeLock.addEventListener('release', () => {
+                        console.log('Wake Lock released');
+                    });
+                }
+            } catch (err) {
+                console.error(`Wake Lock error: ${err.name}, ${err.message}`);
+            }
+        }
+
+        async function releaseWakeLock() {
+            if (wakeLock !== null) {
+                try {
+                    await wakeLock.release();
+                    wakeLock = null;
+                } catch (err) {
+                    console.error('Wake Lock release error:', err);
+                }
+            }
+        }
+
+        function loadCookingProgress() {
+            const saved = localStorage.getItem(COOKING_PROGRESS_KEY);
+            if (saved) {
+                const data = JSON.parse(saved);
+                currentStep = data.currentStep || 0;
+                stepCompletions = data.stepCompletions || Array(cookingSteps.length).fill(false);
+                elapsedSeconds = data.elapsedSeconds || 0;
+            } else {
+                stepCompletions = Array(cookingSteps.length).fill(false);
+            }
+        }
+
+        function saveCookingProgress() {
+            localStorage.setItem(COOKING_PROGRESS_KEY, JSON.stringify({
+                currentStep,
+                stepCompletions,
+                elapsedSeconds
+            }));
+        }
+
+        function startCookingMode() {
+            loadCookingProgress();
+            document.getElementById('cooking-mode').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            renderStep();
+            updateProgress();
+            requestWakeLock(); // Keep screen awake while cooking
+            initCookingSwipeGestures(); // Enable swipe navigation
+        }
+
+        function exitCookingMode() {
+            if (confirm('Exit cooking mode? Your progress will be saved.')) {
+                document.getElementById('cooking-mode').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                stopTimer();
+                releaseWakeLock(); // Release wake lock
+            }
+        }
+
+        function renderStep() {
+            const step = cookingSteps[currentStep];
+
+            document.getElementById('step-number').textContent = currentStep + 1;
+            document.getElementById('step-title').textContent = step.title;
+            document.getElementById('step-description').textContent = step.description;
+            document.getElementById('cooking-progress').textContent = `Step ${currentStep + 1} of ${cookingSteps.length}`;
+            document.getElementById('step-checkbox').checked = stepCompletions[currentStep];
+
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = currentStep === 0;
+
+            const nextBtn = document.getElementById('next-btn');
+            if (currentStep === cookingSteps.length - 1) {
+                nextBtn.innerHTML = `
+                    ✓ Finish
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+            } else {
+                nextBtn.innerHTML = `
+                    Next Step
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                `;
+            }
+        }
+
+        function markStepComplete() {
+            stepCompletions[currentStep] = document.getElementById('step-checkbox').checked;
+            saveCookingProgress();
+            updateProgress();
+            if (window.hapticMedium && stepCompletions[currentStep]) {
+                hapticMedium(); // Satisfying feedback for completing a step
+            }
+        }
+
+        function updateProgress() {
+            const completed = stepCompletions.filter(Boolean).length;
+            const percentage = Math.round((completed / cookingSteps.length) * 100);
+
+            document.getElementById('progress-bar').style.width = percentage + '%';
+            document.getElementById('progress-percentage').textContent = percentage + '%';
+        }
+
+        function previousStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                saveCookingProgress();
+                renderStep();
+                if (window.hapticLight) hapticLight();
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < cookingSteps.length - 1) {
+                currentStep++;
+                saveCookingProgress();
+                renderStep();
+                if (window.hapticLight) hapticLight();
+            } else {
+                // All done!
+                if (confirm('Congratulations! You completed all steps. Reset progress?')) {
+                    localStorage.removeItem(COOKING_PROGRESS_KEY);
+                    if (window.hapticSuccess) hapticSuccess();
+                    exitCookingMode();
+                }
+            }
+        }
+
+        function toggleTimer() {
+            if (timerRunning) {
+                stopTimer();
+            } else {
+                startTimer();
+            }
+        }
+
+        function startTimer() {
+            timerRunning = true;
+            document.getElementById('timer-btn').textContent = '⏸️ Pause';
+
+            timerInterval = setInterval(() => {
+                elapsedSeconds++;
+                updateTimerDisplay();
+                saveCookingProgress();
+            }, 1000);
+        }
+
+        function stopTimer() {
+            timerRunning = false;
+            document.getElementById('timer-btn').textContent = '▶️ Resume';
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(elapsedSeconds / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+
+            const display = hours > 0
+                ? `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+                : `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            document.getElementById('elapsed-time').textContent = display;
+        }
+
+        // Initialize swipe gestures for cooking mode
+        let cookingSwipeDetector = null;
+
+        function initCookingSwipeGestures() {
+            const cookingModeElement = document.getElementById('cooking-mode');
+            if (cookingModeElement && window.SwipeDetector) {
+                cookingSwipeDetector = new SwipeDetector(cookingModeElement, {
+                    threshold: 60,
+                    onSwipeLeft: () => {
+                        // Swipe left = next step
+                        if (currentStep < cookingSteps.length - 1) {
+                            nextStep();
+                            showToast('Next step →');
+                        }
+                    },
+                    onSwipeRight: () => {
+                        // Swipe right = previous step
+                        if (currentStep > 0) {
+                            previousStep();
+                            showToast('← Previous step');
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize timer display
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTimerDisplay();
+        });
+    </script>
 
 <!-- Dark Mode Toggle Button - Include in all pages -->
 <button
