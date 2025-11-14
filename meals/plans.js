@@ -14,7 +14,14 @@ const mealPlans = [
             "Batch prep focused",
             "~2 lbs/week loss"
         ],
-        proteins: ["chicken", "beef"]
+        proteins: ["chicken", "beef"],
+        cookingSteps: [
+            { title: "Prep Carbs", description: "Start the rice (2 cups dry) and cook soba noodles. Rinse noodles with cold water & oil." },
+            { title: "Vegetables & Aromatics", description: "Chop everything at once. Mince ~30 cloves garlic, grate ginger. Chop broccoli, cabbage, carrots, onions, bok choy." },
+            { title: "Mix Sauces", description: "Make all 4 sauces in separate jars/bowls so they are ready to dump in pan." },
+            { title: "Cook & Assemble", description: "Cook one meal at a time. Portion immediately into containers. Note: Keep salad components separate." },
+            { title: "Cool & Store", description: "Let hot meals cool 30-45 mins before lidding to prevent sogginess." }
+        ]
     },
     {
         file: "week1-breakfast.html",
@@ -40,7 +47,15 @@ const mealPlans = [
             "2-3 hours prep time",
             "14 total meals"
         ],
-        proteins: ["chicken", "pork", "tofu"]
+        proteins: ["chicken", "pork", "tofu"],
+        cookingSteps: [
+            { title: "Prep Carbs", description: "Cook 7 cups of dry brown rice. This is your base for all 14 meals. Let it cool." },
+            { title: "Prep Tofu", description: "Press, cube, and toss tofu with cornstarch. Pan-fry, bake, or air-fry until crispy. Set aside." },
+            { title: "Veggies & Aromatics", description: "Mince all garlic/ginger. Slice all green onions, peppers, etc. Blanch all green beans." },
+            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars so they are ready to go." },
+            { title: "Cook & Assemble", description: "Work one recipe at a time. Cook the protein, add veggies and sauce. Portion over 1 cup of rice per container." },
+            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Stack and refrigerate." }
+        ]
     },
     {
         file: "week2-breakfast.html",
@@ -66,7 +81,15 @@ const mealPlans = [
             "2-3 hours prep time",
             "14 total meals"
         ],
-        proteins: ["shrimp", "tofu", "pork"]
+        proteins: ["shrimp", "tofu", "pork"],
+        cookingSteps: [
+            { title: "Prep Carbs", description: "Cook 7 cups of dry white rice. This is your base for all 14 meals. Let it cool." },
+            { title: "Prep Proteins", description: "Devein shrimp and pat dry. Cube chicken breast. Cube beef for mapo. Portion cod fillets." },
+            { title: "Veggies & Aromatics", description: "Chop broccoli florets. Mince garlic and ginger. Chop green onions, dice bell peppers and onions." },
+            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars (curry sauce, mapo sauce, sesame-ginger glaze, stir-fry sauce)." },
+            { title: "Cook & Assemble", description: "Cook one recipe at a time. Start with seafood (shortest cook time), then chicken, then beef. Portion over 1 cup rice." },
+            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Refrigerate immediately after cooling." }
+        ]
     },
     {
         file: "week3-breakfast.html",

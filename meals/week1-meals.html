@@ -104,6 +104,7 @@
             }
         }
     </style>
+    <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
     <script src="../mobile-utils.js"></script>
     <link rel="stylesheet" href="../dark-mode.css">
@@ -811,13 +812,9 @@
     <script>
         const COOKING_PROGRESS_KEY = 'week1_meals_cooking_progress';
 
-        const cookingSteps = [
-            { title: "Prep Carbs", description: "Start the rice (2 cups dry) and cook soba noodles. Rinse noodles with cold water & oil." },
-            { title: "Vegetables & Aromatics", description: "Chop everything at once. Mince ~30 cloves garlic, grate ginger. Chop broccoli, cabbage, carrots, onions, bok choy." },
-            { title: "Mix Sauces", description: "Make all 4 sauces in separate jars/bowls so they are ready to dump in pan." },
-            { title: "Cook & Assemble", description: "Cook one meal at a time. Portion immediately into containers. Note: Keep salad components separate." },
-            { title: "Cool & Store", description: "Let hot meals cool 30-45 mins before lidding to prevent sogginess." }
-        ];
+        // Get cooking steps from centralized plans.js
+        const currentPlan = mealPlans.find(plan => plan.file === 'week1-meals.html');
+        const cookingSteps = currentPlan.cookingSteps;
 
         let currentStep = 0;
         let stepCompletions = [];

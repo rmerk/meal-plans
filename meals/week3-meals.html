@@ -10,6 +10,7 @@
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
     <script src="../mobile-utils.js"></script>
     <link rel="stylesheet" href="../dark-mode.css">
@@ -587,14 +588,9 @@
     <script>
         const COOKING_PROGRESS_KEY = 'week3_meals_cooking_progress';
 
-        const cookingSteps = [
-            { title: "Prep Carbs", description: "Cook 7 cups of dry white rice. This is your base for all 14 meals. Let it cool." },
-            { title: "Prep Proteins", description: "Devein shrimp and pat dry. Cube chicken breast. Cube beef for mapo. Portion cod fillets." },
-            { title: "Veggies & Aromatics", description: "Chop broccoli florets. Mince garlic and ginger. Chop green onions, dice bell peppers and onions." },
-            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars (curry sauce, mapo sauce, sesame-ginger glaze, stir-fry sauce)." },
-            { title: "Cook & Assemble", description: "Cook one recipe at a time. Start with seafood (shortest cook time), then chicken, then beef. Portion over 1 cup rice." },
-            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Refrigerate immediately after cooling." }
-        ];
+        // Get cooking steps from centralized plans.js
+        const currentPlan = mealPlans.find(plan => plan.file === 'week3-meals.html');
+        const cookingSteps = currentPlan.cookingSteps;
 
         let currentStep = 0;
         let stepCompletions = [];

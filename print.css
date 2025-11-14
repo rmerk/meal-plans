@@ -1,0 +1,91 @@
+/**
+ * Shared Print Styles
+ * Optimized print styles for all pages in the meal plans application
+ */
+
+@media print {
+    /* Hide navigation and non-essential elements */
+    nav,
+    .md\:hidden.fixed.bottom-0,
+    footer,
+    .print\:hidden,
+    #dark-mode-toggle {
+        display: none !important;
+    }
+
+    /* Optimize body for print */
+    body {
+        background: white;
+        font-size: 11pt;
+    }
+
+    /* Show all content with clean borders */
+    section {
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* Checkbox styles for print */
+    input[type="checkbox"] {
+        -webkit-appearance: checkbox;
+        appearance: checkbox;
+        width: 14px;
+        height: 14px;
+        border: 1px solid #000;
+    }
+
+    /* Remove background colors for print */
+    .bg-slate-50,
+    .bg-white,
+    .bg-gray-50,
+    .bg-orange-50,
+    .bg-amber-50,
+    .bg-rose-50 {
+        background: white !important;
+    }
+
+    /* Shopping list optimizations */
+    #shopping-list ul {
+        column-count: 2;
+        column-gap: 20px;
+    }
+
+    /* Ensure text is black for print */
+    body,
+    p,
+    li,
+    span,
+    div {
+        color: #000 !important;
+    }
+
+    /* Keep headings bold and clear */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #000 !important;
+        page-break-after: avoid;
+    }
+
+    /* Prevent page breaks inside important elements */
+    ul,
+    ol,
+    table,
+    figure {
+        page-break-inside: avoid;
+    }
+
+    /* Link styles for print */
+    a[href]:after {
+        content: none; /* Don't show URLs in print */
+    }
+
+    /* Ensure buttons are hidden or styled appropriately */
+    button {
+        display: none !important;
+    }
+}

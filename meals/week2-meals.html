@@ -10,6 +10,7 @@
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
     <script src="../mobile-utils.js"></script>
     <link rel="stylesheet" href="../dark-mode.css">
@@ -586,14 +587,9 @@
     <script>
         const COOKING_PROGRESS_KEY = 'week2_meals_cooking_progress';
 
-        const cookingSteps = [
-            { title: "Prep Carbs", description: "Cook 7 cups of dry brown rice. This is your base for all 14 meals. Let it cool." },
-            { title: "Prep Tofu", description: "Press, cube, and toss tofu with cornstarch. Pan-fry, bake, or air-fry until crispy. Set aside." },
-            { title: "Veggies & Aromatics", description: "Mince all garlic/ginger. Slice all green onions, peppers, etc. Blanch all green beans." },
-            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars so they are ready to go." },
-            { title: "Cook & Assemble", description: "Work one recipe at a time. Cook the protein, add veggies and sauce. Portion over 1 cup of rice per container." },
-            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Stack and refrigerate." }
-        ];
+        // Get cooking steps from centralized plans.js
+        const currentPlan = mealPlans.find(plan => plan.file === 'week2-meals.html');
+        const cookingSteps = currentPlan.cookingSteps;
 
         let currentStep = 0;
         let stepCompletions = [];
