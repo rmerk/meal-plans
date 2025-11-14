@@ -126,12 +126,12 @@ class NotificationManager {
 
                 this.sendNotification(
                     '🍳 Meal Prep Time!',
-                    'It\'s time to prep your meals for the week. Check your calendar to get started.',
+                    'It\'s time to prep your meals for the week. Check your meal plans to get started.',
                     {
                         tag: 'weekly-meal-prep',
                         requireInteraction: true,
                         onClick: () => {
-                            window.location.href = '/meal-calendar.html';
+                            window.location.href = '/index.html';
                         }
                     }
                 );
@@ -181,7 +181,7 @@ class NotificationManager {
                 {
                     tag: 'cooking-reminder',
                     onClick: () => {
-                        window.location.href = '/meal-calendar.html';
+                        window.location.href = '/index.html';
                     }
                 }
             );

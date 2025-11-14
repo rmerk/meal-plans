@@ -82,7 +82,6 @@ meal-plans/
 ├── nutrition-dashboard.html      # ⚡ Macro tracking and plan comparison
 ├── recipe-scaler.html            # ⚡ Intelligent recipe scaling calculator
 ├── analytics-dashboard.html      # Usage tracking and meal prep analytics
-├── meal-calendar.html            # Weekly meal scheduling with drag-and-drop
 ├── rating-history.html           # Meal rating and preferences tracker
 ├── settings.html                 # User preferences and data management
 │

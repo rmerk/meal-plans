@@ -11,6 +11,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="meals/plans.js"></script>
+    <script src="analytics-tracker.js"></script>
     <script src="mobile-utils.js"></script>
     <link rel="stylesheet" href="/dark-mode.css">
     <link rel="stylesheet" href="/landscape.css">
@@ -184,110 +186,43 @@
         const ANALYTICS_KEY = 'meal_prep_analytics';
         const CALENDAR_KEY = 'meal_plan_calendar';
 
-        // Load analytics data
+        // Load real analytics data from tracker
         function loadAnalytics() {
-            const saved = localStorage.getItem(ANALYTICS_KEY);
-            if (saved) return JSON.parse(saved);
+            if (!window.analyticsTracker) {
+                return {
+                    mealHistory: [],
+                    nutritionLog: []
+                };
+            }
 
-            // Initialize with sample data for demonstration
             return {
-                mealHistory: generateSampleMealHistory(),
-                nutritionLog: generateSampleNutritionLog()
+                mealHistory: analyticsTracker.getMealHistory(30),
+                nutritionLog: analyticsTracker.getNutritionLog(30)
             };
         }
 
-        // Save analytics data
-        function saveAnalytics(data) {
-            localStorage.setItem(ANALYTICS_KEY, JSON.stringify(data));
-        }
-
-        // Generate sample meal history for demonstration
-        function generateSampleMealHistory() {
-            const history = [];
-            const today = new Date();
-
-            for (let i = 0; i < 30; i++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-
-                const mealsCount = Math.floor(Math.random() * 4); // 0-3 meals per day
-                for (let j = 0; j < mealsCount; j++) {
-                    history.push({
-                        date: date.toISOString().split('T')[0],
-                        mealName: ['Teriyaki Chicken', 'Beef & Broccoli', 'Greek Yogurt Bowl', 'Protein Oats', 'Salmon'][Math.floor(Math.random() * 5)],
-                        rating: Math.floor(Math.random() * 3) + 3 // 3-5 stars
-                    });
-                }
-            }
-
-            return history.sort((a, b) => new Date(b.date) - new Date(a.date));
-        }
-
-        // Generate sample nutrition log
-        function generateSampleNutritionLog() {
-            const log = [];
-            const today = new Date();
-
-            for (let i = 0; i < 30; i++) {
-                const date = new Date(today);
-                date.setDate(date.getDate() - i);
-
-                log.push({
-                    date: date.toISOString().split('T')[0],
-                    calories: Math.floor(Math.random() * 500) + 2000, // 2000-2500
-                    protein: Math.floor(Math.random() * 50) + 150, // 150-200g
-                    carbs: Math.floor(Math.random() * 100) + 200, // 200-300g
-                    fats: Math.floor(Math.random() * 30) + 50 // 50-80g
-                });
-            }
-
-            return log.sort((a, b) => new Date(b.date) - new Date(a.date));
-        }
-
-        // Calculate statistics
+        // Calculate statistics using real tracker data
         function calculateStats() {
-            const analytics = loadAnalytics();
-            const today = new Date();
-            const sevenDaysAgo = new Date(today);
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-            // Meals cooked this week
-            const mealsThisWeek = analytics.mealHistory.filter(m => {
-                const mealDate = new Date(m.date);
-                return mealDate >= sevenDaysAgo;
-            }).length;
-
-            // Calculate streak
-            let streak = 0;
-            const sortedHistory = [...analytics.mealHistory].sort((a, b) => new Date(b.date) - new Date(a.date));
-            const uniqueDates = [...new Set(sortedHistory.map(m => m.date))];
-
-            for (let i = 0; i < uniqueDates.length; i++) {
-                const date = new Date(uniqueDates[i]);
-                const expectedDate = new Date(today);
-                expectedDate.setDate(expectedDate.getDate() - i);
-
-                if (date.toISOString().split('T')[0] === expectedDate.toISOString().split('T')[0]) {
-                    streak++;
-                } else {
-                    break;
-                }
+            if (!window.analyticsTracker) {
+                return {
+                    mealsThisWeek: 0,
+                    streak: 0,
+                    avgRating: 0,
+                    proteinThisWeek: 0
+                };
             }
 
-            // Average rating
-            const ratings = analytics.mealHistory.filter(m => m.rating).map(m => m.rating);
-            const avgRating = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1) : 0;
+            const summary = analyticsTracker.getSummary();
+            const nutritionLog = analyticsTracker.getNutritionLog(7);
 
             // Total protein this week
-            const proteinThisWeek = analytics.nutritionLog
-                .filter(n => new Date(n.date) >= sevenDaysAgo)
-                .reduce((sum, n) => sum + n.protein, 0);
+            const proteinThisWeek = nutritionLog.reduce((sum, n) => sum + n.totalProtein, 0);
 
             return {
-                mealsThisWeek,
-                streak,
-                avgRating,
-                proteinThisWeek
+                mealsThisWeek: summary.mealsThisWeek,
+                streak: summary.currentStreak,
+                avgRating: summary.averageRating,
+                proteinThisWeek: Math.round(proteinThisWeek)
             };
         }
 
@@ -357,9 +292,33 @@
 
             const recentNutrition = analytics.nutritionLog.filter(n => new Date(n.date) >= sevenDaysAgo);
 
-            const avgProtein = recentNutrition.reduce((sum, n) => sum + n.protein, 0) / recentNutrition.length;
-            const avgCarbs = recentNutrition.reduce((sum, n) => sum + n.carbs, 0) / recentNutrition.length;
-            const avgFats = recentNutrition.reduce((sum, n) => sum + n.fats, 0) / recentNutrition.length;
+            if (recentNutrition.length === 0) {
+                // No data - show empty chart
+                const ctx = document.getElementById('macros-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['No Data Yet'],
+                        datasets: [{
+                            data: [1],
+                            backgroundColor: ['rgba(203, 213, 225, 0.5)'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+                return;
+            }
+
+            const avgProtein = recentNutrition.reduce((sum, n) => sum + n.totalProtein, 0) / recentNutrition.length;
+            const avgCarbs = recentNutrition.reduce((sum, n) => sum + n.totalCarbs, 0) / recentNutrition.length;
+            const avgFats = recentNutrition.reduce((sum, n) => sum + n.totalFats, 0) / recentNutrition.length;
 
             const ctx = document.getElementById('macros-chart').getContext('2d');
             new Chart(ctx, {
@@ -408,7 +367,7 @@
                     datasets: [
                         {
                             label: 'Protein (g)',
-                            data: last30Days.map(n => n.protein),
+                            data: last30Days.map(n => n.totalProtein),
                             borderColor: 'rgba(239, 68, 68, 1)',
                             backgroundColor: 'rgba(239, 68, 68, 0.1)',
                             tension: 0.4,
@@ -416,7 +375,7 @@
                         },
                         {
                             label: 'Carbs (g)',
-                            data: last30Days.map(n => n.carbs),
+                            data: last30Days.map(n => n.totalCarbs),
                             borderColor: 'rgba(59, 130, 246, 1)',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             tension: 0.4,
@@ -424,7 +383,7 @@
                         },
                         {
                             label: 'Fats (g)',
-                            data: last30Days.map(n => n.fats),
+                            data: last30Days.map(n => n.totalFats),
                             borderColor: 'rgba(245, 158, 11, 1)',
                             backgroundColor: 'rgba(245, 158, 11, 0.1)',
                             tension: 0.4,

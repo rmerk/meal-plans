@@ -189,31 +189,63 @@ The application uses two types of client-side storage:
 
 ---
 
-### Meal Calendar Data
+### Analytics Events
 
-**Key:** `meal-calendar-data`
+**Key:** `meal_analytics_events`
 
-**Description:** Stores weekly meal calendar assignments.
+**Description:** Stores real user activity events for analytics tracking including meal plan views, cooking sessions, shopping activity, and meal ratings.
 
 **Data Structure:**
 ```javascript
 {
-  "2024-11-14": {
-    breakfast: "Week 1 Breakfasts",
-    lunch: "Week 2 Meals",
-    dinner: "Week 3 Meals"
-  },
-  "2024-11-15": {
-    // ... same structure
-  }
+  mealPlanViews: [
+    {
+      planName: "Week 1 Meals",
+      timestamp: 1699876543210
+    }
+  ],
+  cookingSessions: [
+    {
+      sessionId: "Week 1 Meals-1699876543210",
+      planName: "Week 1 Meals",
+      startTime: 1699876543210,
+      endTime: 1699880000000,
+      completed: true,
+      elapsedSeconds: 3457
+    }
+  ],
+  shoppingActivity: [
+    {
+      planName: "Week 1 Meals",
+      timestamp: 1699876543210,
+      itemsChecked: 12,
+      totalItems: 15,
+      completionPercent: 80
+    }
+  ],
+  mealRatings: [
+    {
+      planName: "Week 1 Meals",
+      rating: 4,
+      timestamp: 1699876543210
+    }
+  ]
 }
 ```
 
-**Type:** Object mapping dates to meal assignments
-- **Keys**: ISO date strings (YYYY-MM-DD)
-- **Values**: Object with breakfast/lunch/dinner assignments
+**Type:** Object with arrays of event objects
 
-**Used by:** `meal-calendar.html`
+**Used by:**
+- `analytics-tracker.js` - Core tracking module
+- `analytics-dashboard.html` - Dashboard visualization
+- All meal plan pages (track page views)
+
+**Functions:**
+- `trackMealPlanView(planName)` - Track page views
+- `trackCookingStart(planName)` - Track cooking session start
+- `trackCookingComplete(sessionId, elapsedSeconds, completed)` - Track completion
+- `trackShoppingActivity(planName, itemsChecked, totalItems)` - Track shopping
+- `trackMealRating(planName, rating)` - Track ratings
 
 ---
 
@@ -261,7 +293,7 @@ The application uses two types of client-side storage:
 | `cooking_progress_*` | ~1 KB each | Static (3 keys max) |
 | `theme` | <1 KB | Static |
 | `notification-settings` | ~1 KB | Static |
-| `meal-calendar-data` | ~10-50 KB | Grows weekly (can be pruned) |
+| `meal_analytics_events` | ~10-50 KB | Grows with usage (auto-pruned after 30 days) |
 | `MealPhotosDB` | Variable | 1-5 MB per photo, unbounded |
 
 **Total Expected Size:** 20-100 KB (excluding photos)
@@ -278,7 +310,7 @@ The application uses two types of client-side storage:
 | Shopping checkboxes | Persists indefinitely until manually cleared |
 | Cooking progress | Persists indefinitely, user can reset |
 | Theme preference | Persists indefinitely |
-| Meal calendar | Recommend pruning entries older than 90 days |
+| Analytics events | Auto-pruned to last 30 days when storage quota exceeded |
 | Photos | User-managed, no automatic cleanup |
 
 ### Clearing Storage

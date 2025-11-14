@@ -87,11 +87,8 @@ Major cleanup initiative to improve code quality, fix bugs, and reduce duplicati
   - Streak counter for consistency
   - Activity feed showing recent actions
   - Meal prep frequency charts
-
-- **Meal Calendar** (`meal-calendar.html`)
-  - Weekly drag-and-drop meal scheduling
-  - Google Calendar export functionality
-  - Visual meal planning interface
+  - Real-time tracking with analytics-tracker.js module
+  - Tracks meal plan views, cooking sessions, and ratings
 
 - **Settings Page** (`settings.html`)
   - Theme preferences (dark mode)
@@ -229,7 +226,6 @@ meal-plans/
 ├── recipe-scaler.html           # Recipe scaling calculator
 ├── nutrition-dashboard.html     # Nutrition tracking
 ├── analytics-dashboard.html     # Usage analytics
-├── meal-calendar.html           # Weekly meal scheduler
 ├── settings.html                # User preferences
 ├── all-recipes.html             # Recipe search
 ├── rating-history.html          # Meal ratings
