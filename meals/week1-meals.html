@@ -106,6 +106,7 @@
     </style>
     <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
+    <script src="../analytics-tracker.js"></script>
     <script src="../mobile-utils.js"></script>
     <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../print.css">
@@ -1029,6 +1030,11 @@
         // Initialize timer display
         document.addEventListener('DOMContentLoaded', () => {
             updateTimerDisplay();
+
+            // Track page view for analytics
+            if (window.analyticsTracker) {
+                analyticsTracker.trackMealPlanView('Week 1 Meals');
+            }
         });
     </script>
 

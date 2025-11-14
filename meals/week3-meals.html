@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
+    <script src="../analytics-tracker.js"></script>
     <script src="../mobile-utils.js"></script>
     <link rel="stylesheet" href="../animations.css">
     <link rel="stylesheet" href="../print.css">
@@ -811,6 +812,11 @@
         // Initialize timer display
         document.addEventListener('DOMContentLoaded', () => {
             updateTimerDisplay();
+
+            // Track page view for analytics
+            if (window.analyticsTracker) {
+                analyticsTracker.trackMealPlanView('Week 3 Meals');
+            }
         });
     </script>
 
