@@ -10,8 +10,11 @@
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="plans.js"></script>
     <script src="meal-utils.js"></script>
     <script src="../mobile-utils.js"></script>
+    <link rel="stylesheet" href="../animations.css">
+    <link rel="stylesheet" href="../print.css">
     <link rel="stylesheet" href="../dark-mode.css">
     <link rel="stylesheet" href="../landscape.css">
     <style>
@@ -107,7 +110,6 @@
             }
         }
     </style>
-    <script src="meal-utils.js"></script>
 </head>
 <body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 text-slate-800 antialiased">
 
@@ -115,11 +117,17 @@
     <nav class="bg-gradient-to-r from-terracotta-dark to-warm-orange text-white sticky top-0 z-50 shadow-lg">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 font-bold text-xl text-white flex items-center gap-2"><span>🎯</span><span">
-                    Week 2 Plan
+                <div class="flex-shrink-0 font-bold text-xl text-white flex items-center gap-2"><span>🎯</span><span>
+                    Week 2 Plan</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="../index.html" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Home
+                        </a>
                         <a href="#prep" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Prep Plan</a>
                         <a href="#shopping-list" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Shopping List</a>
                         <a href="#recipes" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Recipes</a>
@@ -587,14 +595,9 @@
     <script>
         const COOKING_PROGRESS_KEY = 'week2_meals_cooking_progress';
 
-        const cookingSteps = [
-            { title: "Prep Carbs", description: "Cook 7 cups of dry brown rice. This is your base for all 14 meals. Let it cool." },
-            { title: "Prep Tofu", description: "Press, cube, and toss tofu with cornstarch. Pan-fry, bake, or air-fry until crispy. Set aside." },
-            { title: "Veggies & Aromatics", description: "Mince all garlic/ginger. Slice all green onions, peppers, etc. Blanch all green beans." },
-            { title: "Mix Sauces", description: "Make all 4 sauces in separate, labeled jars so they are ready to go." },
-            { title: "Cook & Assemble", description: "Work one recipe at a time. Cook the protein, add veggies and sauce. Portion over 1 cup of rice per container." },
-            { title: "Cool & Store", description: "Let all hot meals cool 30-45 mins before lidding. Stack and refrigerate." }
-        ];
+        // Get cooking steps from centralized plans.js
+        const currentPlan = mealPlans.find(plan => plan.file === 'week2-meals.html');
+        const cookingSteps = currentPlan.cookingSteps;
 
         let currentStep = 0;
         let stepCompletions = [];
