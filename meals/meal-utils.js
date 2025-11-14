@@ -1,36 +1,67 @@
-// Meal Plan Utilities
-// Shared functions for all meal plan pages
+/**
+ * Meal Plan Utilities
+ * Shared functions for all meal plan pages
+ * Provides shopping list management, export functionality, and checkbox persistence
+ */
 
 // localStorage key for checkbox state
 const CHECKBOX_STORAGE_KEY = 'meal_plans_shopping_checkboxes';
 
-// Get page identifier (filename)
+/**
+ * Get the current page identifier from the URL
+ * @returns {string} The page filename without extension
+ */
 function getPageId() {
     return window.location.pathname.split('/').pop().replace('.html', '');
 }
 
-// Load checkbox states from localStorage
+/**
+ * Load checkbox states from localStorage for the current page
+ * @returns {Object} Object mapping item text to checked state, empty object if none saved
+ */
 function loadCheckboxStates() {
-    const saved = localStorage.getItem(CHECKBOX_STORAGE_KEY);
-    const allStates = saved ? JSON.parse(saved) : {};
-    return allStates[getPageId()] || {};
-}
-
-// Save checkbox state to localStorage
-function saveCheckboxState(itemText, isChecked) {
-    const saved = localStorage.getItem(CHECKBOX_STORAGE_KEY);
-    const allStates = saved ? JSON.parse(saved) : {};
-    const pageId = getPageId();
-
-    if (!allStates[pageId]) {
-        allStates[pageId] = {};
+    try {
+        const saved = localStorage.getItem(CHECKBOX_STORAGE_KEY);
+        const allStates = saved ? JSON.parse(saved) : {};
+        return allStates[getPageId()] || {};
+    } catch (error) {
+        console.error('Failed to load checkbox states:', error);
+        return {};
     }
-
-    allStates[pageId][itemText] = isChecked;
-    localStorage.setItem(CHECKBOX_STORAGE_KEY, JSON.stringify(allStates));
 }
 
-// Copy shopping list to clipboard
+/**
+ * Save a single checkbox state to localStorage
+ * @param {string} itemText - The text content of the shopping list item
+ * @param {boolean} isChecked - Whether the checkbox is checked
+ * @returns {boolean} True if save was successful, false otherwise
+ */
+function saveCheckboxState(itemText, isChecked) {
+    try {
+        const saved = localStorage.getItem(CHECKBOX_STORAGE_KEY);
+        const allStates = saved ? JSON.parse(saved) : {};
+        const pageId = getPageId();
+
+        if (!allStates[pageId]) {
+            allStates[pageId] = {};
+        }
+
+        allStates[pageId][itemText] = isChecked;
+        localStorage.setItem(CHECKBOX_STORAGE_KEY, JSON.stringify(allStates));
+        return true;
+    } catch (error) {
+        console.error('Failed to save checkbox state:', error);
+        if (error.name === 'QuotaExceededError') {
+            alert('Storage quota exceeded. Please clear some browser data.');
+        }
+        return false;
+    }
+}
+
+/**
+ * Copy shopping list to clipboard in formatted text
+ * Includes check marks for checked items
+ */
 function copyShoppingList() {
     const section = document.getElementById('shopping-list');
     if (!section) return;
@@ -58,7 +89,10 @@ function copyShoppingList() {
     });
 }
 
-// Show copy confirmation notification
+/**
+ * Show a temporary notification message
+ * @param {string} message - The message to display
+ */
 function showCopyNotification(message = 'Shopping list copied to clipboard!') {
     const notification = document.createElement('div');
     notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
@@ -80,12 +114,17 @@ function showCopyNotification(message = 'Shopping list copied to clipboard!') {
     }, 2000);
 }
 
-// Print shopping list
+/**
+ * Trigger browser print dialog for the shopping list
+ */
 function printShoppingList() {
     window.print();
 }
 
-// Export shopping list to CSV
+/**
+ * Export shopping list to CSV file with categories and checked status
+ * Downloads file as shopping-list-{page-id}.csv
+ */
 function exportShoppingCSV() {
     const section = document.getElementById('shopping-list');
     if (!section) return;
@@ -124,7 +163,10 @@ function exportShoppingCSV() {
     showCopyNotification('Shopping list exported to CSV!');
 }
 
-// Clear all checkboxes
+/**
+ * Clear all checked checkboxes in the shopping list after confirmation
+ * Updates localStorage to reflect the cleared state
+ */
 function clearAllCheckboxes() {
     if (confirm('Clear all checked items?')) {
         const checkboxes = document.querySelectorAll('#shopping-list input[type="checkbox"]');
