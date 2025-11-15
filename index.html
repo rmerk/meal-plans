@@ -3,38 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#d4735e">
+    <meta name="theme-color" content="#D2691E">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Meal Plans - Recipe Discovery & Planning Dashboard</title>
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="meals/plans.js"></script>
     <script src="mobile-utils.js"></script>
     <link rel="stylesheet" href="/dark-mode.css">
     <link rel="stylesheet" href="/landscape.css">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'DM Sans', sans-serif;
         }
 
-        /* Custom terracotta/orange color palette */
+        /* Mid-Century Modern Color Palette */
         :root {
-            --terracotta: #d4735e;
-            --terracotta-dark: #b85c47;
-            --terracotta-light: #e89b87;
-            --warm-orange: #e88d67;
-            --coral: #ff8c69;
-            --peach: #ffa07a;
+            --burnt-orange: #D2691E;
+            --warm-terracotta: #E67E22;
+            --teal: #2C7A7B;
+            --teal-light: #319795;
+            --mustard: #D69E2E;
+            --mustard-light: #ECC94B;
+            --olive: #718096;
+            --warm-brown: #744210;
+            --cream: #F7FAFC;
+            --beige: #FFF5E6;
+            --charcoal: #2D3748;
         }
 
-        .bg-terracotta { background-color: var(--terracotta); }
-        .bg-terracotta-dark { background-color: var(--terracotta-dark); }
-        .bg-terracotta-light { background-color: var(--terracotta-light); }
-        .text-terracotta { color: var(--terracotta); }
-        .text-terracotta-dark { color: var(--terracotta-dark); }
-        .border-terracotta { border-color: var(--terracotta); }
+        .bg-burnt-orange { background-color: var(--burnt-orange); }
+        .bg-teal { background-color: var(--teal); }
+        .bg-mustard { background-color: var(--mustard); }
+        .text-burnt-orange { color: var(--burnt-orange); }
+        .text-teal { color: var(--teal); }
+        .text-mustard { color: var(--mustard); }
+        .border-burnt-orange { border-color: var(--burnt-orange); }
+
+        /* Mid-Century Typography */
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
 
         /* Mobile optimizations */
         * {
@@ -74,57 +86,111 @@
         .animate-fade-out { animation: fade-out 0.3s ease-out; }
         .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
-        /* Hero gradient */
+        /* Mid-Century Hero Section */
         .hero-gradient {
-            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
-        }
-
-        /* Card animations */
-        .meal-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(165deg, var(--burnt-orange) 0%, var(--warm-terracotta) 50%, var(--mustard) 100%);
             position: relative;
-            overflow: hidden;
         }
 
-        .meal-card::before {
+        /* Starburst Pattern */
+        .starburst {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, transparent 30%, var(--teal) 30%, var(--teal) 32%, transparent 32%);
+            opacity: 0.15;
+        }
+
+        .starburst::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
+            top: 50%;
+            left: 50%;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            height: 2px;
+            background: var(--teal);
+            transform: translate(-50%, -50%) rotate(0deg);
+            box-shadow:
+                0 0 0 2px var(--teal),
+                0 0 0 2px var(--teal);
         }
 
-        .meal-card:hover::before {
-            left: 100%;
+        /* Geometric Shapes */
+        .geometric-circle {
+            border-radius: 50%;
+            border: 3px solid var(--teal);
+            background: transparent;
+        }
+
+        .geometric-square {
+            border: 3px solid var(--mustard);
+            background: transparent;
+            transform: rotate(45deg);
+        }
+
+        /* Mid-Century Card Design */
+        .meal-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--charcoal);
+            box-shadow: 8px 8px 0 0 rgba(44, 122, 123, 0.2);
+        }
+
+        .meal-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .meal-card:hover::after {
+            transform: scale(1);
         }
 
         .meal-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(212, 115, 94, 0.25), 0 15px 30px -15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 12px 12px 0 0 rgba(44, 122, 123, 0.3);
         }
 
         .meal-card.hidden {
             display: none;
         }
 
-        /* Category buttons */
+        /* Mid-Century Category Buttons */
         .category-btn {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             position: relative;
+            border: 2px solid transparent;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
         }
 
         .category-btn.active {
-            background: linear-gradient(135deg, var(--terracotta) 0%, var(--warm-orange) 100%);
+            background: var(--burnt-orange);
             color: white;
-            box-shadow: 0 4px 15px rgba(212, 115, 94, 0.4);
+            border-color: var(--warm-brown);
+            box-shadow: 4px 4px 0 0 var(--teal);
+        }
+
+        .category-btn:not(.active) {
+            background: var(--cream);
+            color: var(--charcoal);
+            border-color: var(--olive);
         }
 
         .category-btn:not(.active):hover {
-            background: rgba(212, 115, 94, 0.1);
-            color: var(--terracotta-dark);
+            background: var(--beige);
+            border-color: var(--burnt-orange);
+            transform: translateY(-2px);
         }
 
         /* Floating animation for hero icons */
@@ -157,42 +223,75 @@
         .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
         .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
 
-        /* Tool cards hover effect */
+        /* Mid-Century Tool Cards */
         .tool-card {
             transition: all 0.3s ease;
             background: white;
+            border: 3px solid var(--charcoal);
+            box-shadow: 6px 6px 0 0 var(--mustard);
+            position: relative;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px dashed var(--olive);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .tool-card:hover::before {
+            opacity: 0.3;
         }
 
         .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(212, 115, 94, 0.15);
-            background: linear-gradient(135deg, #fff 0%, #fef7f5 100%);
+            transform: translate(-2px, -2px);
+            box-shadow: 8px 8px 0 0 var(--mustard);
         }
 
-        /* Search bar styling */
+        /* Mid-Century Search Bar */
         .search-bar {
             transition: all 0.3s ease;
+            border: 3px solid var(--charcoal);
+            font-family: 'DM Sans', sans-serif;
         }
 
         .search-bar:focus {
-            box-shadow: 0 0 0 3px rgba(212, 115, 94, 0.1);
-            border-color: var(--terracotta);
+            box-shadow: 6px 6px 0 0 var(--teal);
+            border-color: var(--burnt-orange);
+            outline: none;
         }
 
-        /* View mode styling */
+        /* Mid-Century View Mode Buttons */
         .view-mode-btn {
-            color: #64748b;
+            color: var(--charcoal);
+            border: 2px solid transparent;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.75rem;
         }
 
         .view-mode-btn.active {
-            background: linear-gradient(135deg, var(--terracotta) 0%, var(--warm-orange) 100%);
+            background: var(--teal);
             color: white;
-            box-shadow: 0 4px 12px rgba(212, 115, 94, 0.3);
+            border-color: var(--charcoal);
+            box-shadow: 3px 3px 0 0 var(--mustard);
+        }
+
+        .view-mode-btn:not(.active) {
+            background: var(--cream);
+            border-color: var(--olive);
         }
 
         .view-mode-btn:not(.active):hover {
-            background: rgba(212, 115, 94, 0.1);
-            color: var(--terracotta-dark);
+            background: var(--beige);
+            border-color: var(--teal);
         }
 
         .collapsible-section {
@@ -209,28 +308,41 @@
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
+<body class="min-h-screen antialiased" style="background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 50%, #FFF8DC 100%);">
 
     <!-- Hero Section -->
     <header class="hero-gradient relative overflow-hidden">
-        <!-- Decorative background pattern -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-10 text-8xl">🍳</div>
-            <div class="absolute top-20 right-20 text-6xl float-animation" style="animation-delay: 0.5s;">🥗</div>
-            <div class="absolute bottom-10 left-1/4 text-7xl float-animation" style="animation-delay: 1s;">🥘</div>
-            <div class="absolute bottom-20 right-1/3 text-5xl float-animation" style="animation-delay: 1.5s;">🍲</div>
+        <!-- Mid-Century Geometric Decorations -->
+        <div class="absolute inset-0 opacity-20">
+            <!-- Starburst elements -->
+            <div class="starburst" style="top: 10%; left: 5%; animation: float 6s ease-in-out infinite;"></div>
+            <div class="starburst" style="top: 60%; right: 10%; animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
+
+            <!-- Geometric circles -->
+            <div class="geometric-circle absolute" style="top: 20%; right: 15%; width: 120px; height: 120px; animation: float 7s ease-in-out infinite; animation-delay: 0.5s;"></div>
+            <div class="geometric-circle absolute" style="bottom: 15%; left: 20%; width: 80px; height: 80px; animation: float 9s ease-in-out infinite; animation-delay: 2s;"></div>
+
+            <!-- Geometric squares -->
+            <div class="geometric-square absolute" style="top: 40%; left: 10%; width: 60px; height: 60px; animation: float 5s ease-in-out infinite; animation-delay: 1.5s;"></div>
+            <div class="geometric-square absolute" style="bottom: 30%; right: 25%; width: 90px; height: 90px; animation: float 10s ease-in-out infinite; animation-delay: 0.8s;"></div>
         </div>
 
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
             <div class="text-center fade-in">
-                <div class="inline-block mb-4">
-                    <span class="text-6xl">🍽️</span>
+                <!-- Mid-Century Icon Badge -->
+                <div class="inline-block mb-6">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center text-5xl" style="background: var(--teal); border: 4px solid var(--charcoal); box-shadow: 8px 8px 0 0 rgba(255, 255, 255, 0.3);">
+                            🍽️
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full" style="background: var(--mustard); border: 3px solid var(--charcoal);"></div>
+                    </div>
                 </div>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-4 drop-shadow-lg">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 drop-shadow-lg" style="text-shadow: 3px 3px 0 rgba(0,0,0,0.2);">
                     Your Meal Planning
-                    <span class="block mt-2">Dashboard</span>
+                    <span class="block mt-3">Dashboard</span>
                 </h1>
-                <p class="text-xl sm:text-2xl text-white/95 max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+                <p class="text-xl sm:text-2xl text-white/95 max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
                     Discover delicious recipes, organize your weekly meals, and simplify batch cooking with smart planning tools
                 </p>
 
@@ -241,38 +353,41 @@
                             type="text"
                             id="quick-search"
                             placeholder="Search all recipes... (e.g., chicken, curry, breakfast)"
-                            class="search-bar w-full px-6 py-4 rounded-2xl border-2 border-white/30 bg-white/95 backdrop-blur-sm text-slate-800 placeholder-slate-400 focus:outline-none text-lg shadow-xl"
+                            class="search-bar w-full px-6 py-4 rounded-none bg-white text-slate-800 placeholder-slate-500 text-lg"
+                            style="box-shadow: 6px 6px 0 0 rgba(44, 122, 123, 0.3);"
                         />
-                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 bg-terracotta hover:bg-terracotta-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white px-6 py-2.5 font-bold transition-all duration-200 uppercase tracking-wider text-sm" style="background: var(--burnt-orange); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">
                             Search
                         </button>
                     </div>
                 </div>
 
                 <!-- Stats -->
-                <div class="mt-10 grid grid-cols-3 gap-6 max-w-3xl mx-auto fade-in-delay-2">
+                <div class="mt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto fade-in-delay-2">
                     <div class="text-center">
-                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">${mealPlans.length}</div>
-                        <div class="text-white/80 text-sm sm:text-base">Meal Plans</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--burnt-orange);">${mealPlans.length}</div>
+                        </div>
+                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Meal Plans</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">50+</div>
-                        <div class="text-white/80 text-sm sm:text-base">Recipes</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--teal);">50+</div>
+                        </div>
+                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Recipes</div>
                     </div>
                     <div class="text-center">
-                        <div class="text-3xl sm:text-4xl font-bold text-white mb-1">5</div>
-                        <div class="text-white/80 text-sm sm:text-base">Power Tools</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--mustard);">5</div>
+                        </div>
+                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Power Tools</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Wave separator -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-                <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#fef7f5" fill-opacity="0.9"/>
-            </svg>
-        </div>
+        <!-- Geometric separator -->
+        <div class="absolute bottom-0 left-0 right-0 h-8" style="background: repeating-linear-gradient(90deg, var(--cream) 0px, var(--cream) 40px, var(--teal) 40px, var(--teal) 43px, var(--cream) 43px, var(--cream) 83px, var(--mustard) 83px, var(--mustard) 86px);"></div>
     </header>
 
     <!-- Main Content -->
@@ -280,11 +395,11 @@
 
         <!-- View Mode Toggle -->
         <div class="mb-8 flex justify-center">
-            <div class="inline-flex items-center gap-3 bg-white rounded-2xl border-2 border-orange-100 p-1.5 shadow-lg">
-                <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200">
+            <div class="inline-flex items-center gap-4 bg-white p-2" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--olive);">
+                <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn px-8 py-3 font-bold transition-all duration-200">
                     ⚡ Quick Start
                 </button>
-                <button onclick="setViewMode('detailed')" id="detailed-view-btn" class="view-mode-btn px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200">
+                <button onclick="setViewMode('detailed')" id="detailed-view-btn" class="view-mode-btn px-8 py-3 font-bold transition-all duration-200">
                     📚 Full View
                 </button>
             </div>
@@ -292,145 +407,131 @@
 
         <!-- Power Tools Section -->
         <div id="power-tools-section" class="mb-12 fade-in collapsible-section">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Power Up Your Meal Prep</h2>
-                <p class="text-slate-600 text-lg">Smart tools to save time and stay organized</p>
+            <div class="text-center mb-10">
+                <div class="inline-block px-8 py-3 mb-4" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--mustard);">
+                    <h2 class="text-3xl font-bold text-white">Power Up Your Meal Prep</h2>
+                </div>
+                <p class="text-slate-700 text-lg font-medium">Smart tools to save time and stay organized</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <a href="shopping-helper.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="shopping-helper.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
                             🛒
                         </div>
-                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Smart Shopping</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Smart Shopping</h3>
                     </div>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                    <p class="text-slate-700 mb-4 leading-relaxed">
                         Auto-consolidate ingredients, track prices & budget, organize by aisle for efficient shopping.
                     </p>
-                    <div class="flex items-center text-terracotta font-semibold text-sm">
-                        <span class="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded text-xs mr-2">NEW</span>
-                        <span>Explore tool</span>
-                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--burnt-orange); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--teal); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                        <span>Explore tool →</span>
                     </div>
                 </a>
 
 
-                <a href="analytics-dashboard.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                <a href="analytics-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
                             📈
                         </div>
-                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Analytics</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Analytics</h3>
                     </div>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                    <p class="text-slate-700 mb-4 leading-relaxed">
                         Track cooking history, analyze nutrition trends, visualize progress with interactive charts.
                     </p>
-                    <div class="flex items-center text-terracotta font-semibold text-sm">
-                        <span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded text-xs mr-2">NEW</span>
-                        <span>Explore tool</span>
-                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--teal); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--mustard); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                        <span>Explore tool →</span>
                     </div>
                 </a>
 
-                <a href="nutrition-dashboard.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                <a href="nutrition-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--mustard); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
                             📊
                         </div>
-                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Nutrition Compare</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Nutrition Compare</h3>
                     </div>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                    <p class="text-slate-700 mb-4 leading-relaxed">
                         Compare meal plans side-by-side, track macros, visualize weekly nutrition with charts.
                     </p>
-                    <div class="flex items-center text-terracotta font-semibold text-sm">
-                        <span>Explore tool</span>
-                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--mustard); font-family: 'Space Grotesk', sans-serif;">
+                        <span>Explore tool →</span>
                     </div>
                 </a>
 
-                <a href="recipe-scaler.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                <a href="recipe-scaler.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-rose-400 to-red-500 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--warm-terracotta); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
                             ⚖️
                         </div>
-                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Recipe Scaler</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Recipe Scaler</h3>
                     </div>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                    <p class="text-slate-700 mb-4 leading-relaxed">
                         Scale any recipe to your desired serving size with smart fraction handling and instant calculations.
                     </p>
-                    <div class="flex items-center text-terracotta font-semibold text-sm">
-                        <span>Explore tool</span>
-                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--warm-terracotta); font-family: 'Space Grotesk', sans-serif;">
+                        <span>Explore tool →</span>
                     </div>
                 </a>
 
-                <a href="settings.html" class="tool-card rounded-2xl p-6 border-2 border-orange-100 hover:border-terracotta block group shadow-lg">
+                <a href="settings.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-slate-400 to-slate-600 flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--olive); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
                             ⚙️
                         </div>
-                        <h3 class="ml-4 text-xl font-bold text-slate-800 group-hover:text-terracotta transition-colors">Settings</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Settings</h3>
                     </div>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                    <p class="text-slate-700 mb-4 leading-relaxed">
                         Configure notifications, quiet hours, theme preferences, and manage your data.
                     </p>
-                    <div class="flex items-center text-terracotta font-semibold text-sm">
-                        <span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-xs mr-2">NEW</span>
-                        <span>Explore tool</span>
-                        <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--olive); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--burnt-orange); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                        <span>Explore tool →</span>
                     </div>
                 </a>
             </div>
         </div>
 
         <!-- Recipe Discovery Section -->
-        <div id="recipe-discovery-section" class="bg-gradient-to-r from-orange-50 to-rose-50 border-l-4 border-terracotta p-6 mb-12 rounded-2xl shadow-md collapsible-section">
+        <div id="recipe-discovery-section" class="p-8 mb-12 collapsible-section" style="background: white; border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--teal); border-left: 12px solid var(--burnt-orange);">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <div class="w-12 h-12 rounded-full bg-terracotta flex items-center justify-center text-2xl shadow-lg">
+                    <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
                         📖
                     </div>
                 </div>
-                <div class="ml-4 flex-1">
-                    <h3 class="text-lg font-bold text-slate-800 mb-2">Explore Our Recipe Collection</h3>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
+                <div class="ml-6 flex-1">
+                    <h3 class="text-2xl font-bold mb-2" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Explore Our Recipe Collection</h3>
+                    <p class="text-slate-700 mb-5 leading-relaxed">
                         Browse our complete recipe library to find your next favorite meal. From Asian-inspired stir-fries to high-protein breakfasts, discover dishes that fit your lifestyle.
                     </p>
-                    <a href="all-recipes.html" class="inline-flex items-center px-5 py-2.5 bg-terracotta hover:bg-terracotta-dark text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
-                        <span>Browse All Recipes</span>
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                    <a href="all-recipes.html" class="inline-flex items-center px-6 py-3 text-white font-bold transition-all duration-200 uppercase tracking-wide text-sm" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">
+                        <span>Browse All Recipes →</span>
                     </a>
                 </div>
             </div>
         </div>
 
         <!-- Meal Plans Section Header & Category Toggle -->
-        <div class="mb-10">
-            <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold text-slate-800 mb-2">Your Meal Plans</h2>
-                <p class="text-slate-600 text-lg">Organized weekly plans with recipes, prep guides, and shopping lists</p>
+        <div class="mb-12">
+            <div class="text-center mb-8">
+                <div class="inline-block px-8 py-3 mb-3" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--teal);">
+                    <h2 class="text-3xl font-bold text-white">Your Meal Plans</h2>
+                </div>
+                <p class="text-slate-700 text-lg font-medium">Organized weekly plans with recipes, prep guides, and shopping lists</p>
             </div>
 
             <div class="flex justify-center">
-                <div class="inline-flex rounded-2xl border-2 border-orange-100 bg-white p-1.5 shadow-lg">
-                    <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-8 py-3 rounded-xl text-base font-bold flex items-center gap-2">
+                <div class="inline-flex bg-white p-2 gap-3" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--mustard);">
+                    <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-10 py-3 font-bold flex items-center gap-2">
                         <span>🍽️</span>
                         <span>Meals</span>
                     </button>
-                    <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn px-8 py-3 rounded-xl text-base font-bold text-slate-600 flex items-center gap-2">
+                    <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn px-10 py-3 font-bold flex items-center gap-2">
                         <span>🍳</span>
                         <span>Breakfasts</span>
                     </button>
@@ -439,36 +540,36 @@
         </div>
 
         <!-- Meal Plans Grid -->
-        <div id="meal-plans-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div id="meal-plans-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Cards will be dynamically generated here -->
         </div>
 
         <!-- Instructions Section -->
-        <div id="instructions-section" class="mt-16 bg-white rounded-2xl shadow-xl p-8 border-2 border-orange-100 collapsible-section">
-            <div class="flex items-center mb-6">
-                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center shadow-lg">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div id="instructions-section" class="mt-16 bg-white p-8 collapsible-section" style="border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--mustard); border-top: 12px solid var(--teal);">
+            <div class="flex items-center mb-8">
+                <div class="w-16 h-16 flex items-center justify-center" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
-                <h3 class="text-2xl font-bold text-slate-800 ml-4">How to Add More Meal Plans</h3>
+                <h3 class="text-2xl font-bold ml-4" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">How to Add More Meal Plans</h3>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-5">
                 <div class="flex items-start group">
-                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">1</span>
-                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Save your meal plan HTML file in the <code class="bg-orange-50 text-terracotta px-2 py-1 rounded-lg text-sm font-mono border border-orange-200">meals/</code> directory</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--teal); font-family: 'Space Grotesk', sans-serif;">1</span>
+                    <span class="text-slate-700 leading-relaxed">Save your meal plan HTML file in the <code class="px-2 py-1 text-sm font-mono" style="background: var(--beige); color: var(--burnt-orange); border: 2px solid var(--olive);">meals/</code> directory</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">2</span>
-                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Add a new entry to <code class="bg-orange-50 text-terracotta px-2 py-1 rounded-lg text-sm font-mono border border-orange-200">meals/plans.js</code> with your plan details</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">2</span>
+                    <span class="text-slate-700 leading-relaxed">Add a new entry to <code class="px-2 py-1 text-sm font-mono" style="background: var(--beige); color: var(--teal); border: 2px solid var(--olive);">meals/plans.js</code> with your plan details</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">3</span>
-                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">The card will automatically appear on this page - no need to edit index.html!</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--mustard); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--burnt-orange); font-family: 'Space Grotesk', sans-serif;">3</span>
+                    <span class="text-slate-700 leading-relaxed">The card will automatically appear on this page - no need to edit index.html!</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="bg-gradient-to-br from-orange-400 to-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-4 mt-0.5 flex-shrink-0 shadow-md">4</span>
-                    <span class="text-slate-600 leading-relaxed group-hover:text-slate-800 transition-colors">Commit and push to GitHub - changes will be live within minutes!</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--olive); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--teal); font-family: 'Space Grotesk', sans-serif;">4</span>
+                    <span class="text-slate-700 leading-relaxed">Commit and push to GitHub - changes will be live within minutes!</span>
                 </div>
             </div>
         </div>
@@ -476,17 +577,26 @@
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-12 mt-20">
+    <footer class="text-center py-16 mt-24">
         <div class="max-w-6xl mx-auto px-4">
+            <!-- Mid-Century Footer Decoration -->
             <div class="flex justify-center mb-6">
-                <div class="text-5xl">🍽️</div>
+                <div class="w-20 h-20 flex items-center justify-center text-4xl" style="background: var(--teal); border: 3px solid var(--charcoal); border-radius: 50%; box-shadow: 6px 6px 0 0 var(--mustard);">
+                    🍽️
+                </div>
             </div>
-            <p class="text-slate-600 text-lg font-medium mb-2">
+            <p class="text-slate-700 text-lg font-semibold mb-2" style="font-family: 'Space Grotesk', sans-serif;">
                 Built with care for your meal prep journey
             </p>
-            <p class="text-slate-400 text-sm">
+            <p class="text-slate-500 text-base">
                 Stay consistent, eat well, and enjoy the process
             </p>
+            <!-- Geometric decoration -->
+            <div class="mt-8 flex justify-center gap-4">
+                <div class="w-3 h-3" style="background: var(--burnt-orange); border: 2px solid var(--charcoal);"></div>
+                <div class="w-3 h-3 rounded-full" style="background: var(--teal); border: 2px solid var(--charcoal);"></div>
+                <div class="w-3 h-3" style="background: var(--mustard); border: 2px solid var(--charcoal); transform: rotate(45deg);"></div>
+            </div>
         </div>
     </footer>
 
@@ -533,47 +643,47 @@
             mealPlans.forEach((plan, index) => {
                 const card = document.createElement('a');
                 card.href = `meals/${plan.file}`;
-                card.className = 'meal-card bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-orange-100 block group';
+                card.className = 'meal-card bg-white overflow-hidden block group';
                 card.dataset.category = plan.category;
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.classList.add('fade-in');
 
-                // Updated warm color palette mapping
+                // Mid-Century Modern color palette mapping
                 const colorMap = {
                     emerald: {
-                        gradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
-                        iconBg: 'from-orange-400 to-orange-500',
-                        accentColor: '#f97316',
+                        headerBg: '#D2691E',
+                        accentColor: '#2C7A7B',
+                        shadowColor: 'rgba(44, 122, 123, 0.2)',
                         emoji: '🥗'
                     },
                     amber: {
-                        gradient: 'linear-gradient(135deg, #fb923c 0%, #fdba74 100%)',
-                        iconBg: 'from-amber-400 to-orange-400',
-                        accentColor: '#fb923c',
+                        headerBg: '#D69E2E',
+                        accentColor: '#D2691E',
+                        shadowColor: 'rgba(210, 105, 30, 0.2)',
                         emoji: '🍳'
                     },
                     orange: {
-                        gradient: 'linear-gradient(135deg, #ea580c 0%, #f97316 100%)',
-                        iconBg: 'from-orange-500 to-red-400',
-                        accentColor: '#ea580c',
+                        headerBg: '#E67E22',
+                        accentColor: '#2C7A7B',
+                        shadowColor: 'rgba(44, 122, 123, 0.2)',
                         emoji: '🍲'
                     },
                     red: {
-                        gradient: 'linear-gradient(135deg, #dc2626 0%, #f97316 100%)',
-                        iconBg: 'from-red-500 to-orange-500',
-                        accentColor: '#dc2626',
+                        headerBg: '#D2691E',
+                        accentColor: '#D69E2E',
+                        shadowColor: 'rgba(214, 158, 46, 0.2)',
                         emoji: '🌶️'
                     },
                     blue: {
-                        gradient: 'linear-gradient(135deg, #d4735e 0%, #e88d67 100%)',
-                        iconBg: 'from-orange-400 to-rose-400',
-                        accentColor: '#d4735e',
+                        headerBg: '#2C7A7B',
+                        accentColor: '#D2691E',
+                        shadowColor: 'rgba(210, 105, 30, 0.2)',
                         emoji: '🥘'
                     },
                     purple: {
-                        gradient: 'linear-gradient(135deg, #e88d67 0%, #ffa07a 100%)',
-                        iconBg: 'from-rose-400 to-orange-300',
-                        accentColor: '#e88d67',
+                        headerBg: '#718096',
+                        accentColor: '#D69E2E',
+                        shadowColor: 'rgba(214, 158, 46, 0.2)',
                         emoji: '🍜'
                     }
                 };
@@ -610,16 +720,17 @@
                 });
 
                 card.innerHTML = `
-                    <div style="background: ${colors.gradient};" class="p-6 relative overflow-hidden">
+                    <div style="background: ${colors.headerBg}; border-bottom: 3px solid #2D3748;" class="p-6 relative overflow-hidden">
                         ${ratingBadge}
-                        <div class="absolute top-0 right-0 text-6xl opacity-20 transform rotate-12">${colors.emoji}</div>
+                        <div class="absolute top-2 right-2 w-16 h-16 rounded-full opacity-20" style="border: 3px solid white;"></div>
+                        <div class="absolute bottom-2 left-2 w-12 h-12 opacity-20" style="background: white; transform: rotate(45deg);"></div>
                         <div class="relative z-10">
                             <div class="flex items-center mb-3">
-                                <div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl shadow-lg">
+                                <div class="w-12 h-12 flex items-center justify-center text-2xl" style="background: white; border: 2px solid #2D3748; box-shadow: 3px 3px 0 0 ${colors.accentColor};">
                                     ${colors.emoji}
                                 </div>
                             </div>
-                            <h2 class="text-2xl font-extrabold text-white mb-1 tracking-tight">${plan.title}</h2>
+                            <h2 class="text-2xl font-bold text-white mb-1" style="font-family: 'Space Grotesk', sans-serif; text-shadow: 2px 2px 0 rgba(0,0,0,0.2);">${plan.title}</h2>
                             <p class="text-white/90 text-sm font-medium">${plan.subtitle}</p>
                         </div>
                     </div>
@@ -627,19 +738,16 @@
                         <div class="space-y-3 mb-6">
                             ${plan.features.map((feature, idx) => `
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br ${colors.iconBg} flex items-center justify-center text-white shadow-sm">
+                                    <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-white" style="background: ${colors.accentColor}; border: 2px solid #2D3748;">
                                         ${featureIcons[idx]}
                                     </div>
                                     <span class="ml-3 text-slate-700 leading-relaxed font-medium">${feature}</span>
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="pt-4 border-t-2 border-orange-50">
-                            <div class="flex items-center justify-between text-terracotta font-bold group-hover:text-terracotta-dark transition-colors">
-                                <span>View Full Plan</span>
-                                <div class="transform group-hover:translate-x-2 transition-transform duration-300">
-                                    ${icons.arrow}
-                                </div>
+                        <div class="pt-4" style="border-top: 2px solid ${colors.accentColor};">
+                            <div class="flex items-center justify-between font-bold uppercase tracking-wide text-sm" style="color: ${colors.headerBg}; font-family: 'Space Grotesk', sans-serif;">
+                                <span>View Full Plan →</span>
                             </div>
                         </div>
                     </div>
