@@ -212,6 +212,35 @@ window.notificationManager = notificationManager;
 window.sendCookingTimer = (mealName, minutesRemaining) => {
     notificationManager.sendCookingTimer(mealName, minutesRemaining);
 };
-window.testNotification = () => {
-    notificationManager.testNotification();
+window.testNotification = async () => {
+    try {
+        const success = await notificationManager.testNotification();
+
+        // Provide feedback based on the result
+        if (success) {
+            if (window.showToast) {
+                showToast('✅ Test notification sent!');
+            } else {
+                alert('Test notification sent successfully!');
+            }
+        } else {
+            // Notification was blocked or failed
+            const reason = Notification.permission === 'denied'
+                ? 'Notification permission was denied. Please enable notifications in your browser settings.'
+                : 'Notification failed. Make sure notifications are enabled in your browser.';
+
+            if (window.showToast) {
+                showToast('❌ ' + reason);
+            } else {
+                alert(reason);
+            }
+        }
+    } catch (error) {
+        console.error('Test notification error:', error);
+        if (window.showToast) {
+            showToast('❌ Error sending test notification');
+        } else {
+            alert('Error sending test notification: ' + error.message);
+        }
+    }
 };
