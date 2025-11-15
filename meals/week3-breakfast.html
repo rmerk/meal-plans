@@ -9,7 +9,7 @@
     <title>Week 3 Breakfast Plan</title>
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="meal-utils.js"></script>
     <script src="../analytics-tracker.js"></script>
     <script src="../mobile-utils.js"></script>
@@ -18,18 +18,31 @@
     <link rel="stylesheet" href="../dark-mode.css">
     <link rel="stylesheet" href="../landscape.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'DM Sans', sans-serif; }
 
         /* Custom terracotta/orange color palette */
         :root {
-            --terracotta: #d4735e;
-            --terracotta-dark: #b85c47;
-            --warm-orange: #e88d67;
+            --coral: #F06C6C;
+            --sage: #87AB8F;
+            --butter: #F4D35E;
+            --taupe: #C9B5A0;
+            --warm-cream: #FFF8F0;
+            --soft-peach: #FFE5D9;
+            --charcoal: #2D3748;
         }
 
-        .bg-terracotta { background-color: var(--terracotta); }
-        .text-terracotta { color: var(--terracotta); }
-        .border-terracotta { border-color: var(--terracotta); }
+        .bg-sage { background-color: var(--sage); }
+        .bg-butter { background-color: var(--butter); }
+
+        /* Mid-Century Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        .bg-coral { background-color: var(--coral); }
+        .text-coral { color: var(--coral); }
+        .border-coral { border-color: var(--coral); }
 
         /* Mobile optimizations */
         * {
@@ -112,10 +125,10 @@
     </style>
     <script src="meal-utils.js"></script>
 </head>
-<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 text-slate-800 antialiased">
+<body class="text-slate-800 antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, #FFF4E6 100%);">
 
     <!-- Navigation Bar -->
-    <nav class="bg-gradient-to-r from-terracotta-dark to-warm-orange text-white sticky top-0 z-50 shadow-lg">
+    <nav class="bg-coral text-white sticky top-0 z-50" style="background: var(--coral); border-bottom: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 rgba(135, 171, 143, 0.25);">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0 font-bold text-xl text-amber-400">
@@ -140,19 +153,19 @@
 
     <!-- Mobile Bottom Nav -->
     <div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-orange-200 flex justify-around py-3 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50 text-xs font-medium text-slate-600">
-        <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-amber-600">
+        <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-coral uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
             Home
         </a>
-        <a href="#strategy" class="flex flex-col items-center gap-1 hover:text-amber-600">
+        <a href="#strategy" class="flex flex-col items-center gap-1 hover:text-coral uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Strategy
         </a>
-        <a href="#shopping" class="flex flex-col items-center gap-1 hover:text-amber-600">
+        <a href="#shopping" class="flex flex-col items-center gap-1 hover:text-coral uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
             Shop
         </a>
-        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-amber-600">
+        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-coral uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="m4 8 16-4"/><path d="m8.86 6.78-.45-1.81a2 2 0 0 1 1.45-2.43l1.94-.55a2 2 0 0 1 2.43 1.46l.45 1.8"/></svg>
             Cook
         </a>
