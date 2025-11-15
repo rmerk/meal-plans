@@ -10,20 +10,38 @@
     <title>My Week One Meals</title>
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'DM Sans', sans-serif; }
 
-        /* Custom terracotta/orange color palette */
+        /* Atomic Age Sunset Color Palette */
         :root {
-            --terracotta: #d4735e;
-            --terracotta-dark: #b85c47;
-            --warm-orange: #e88d67;
+            --coral: #F06C6C;
+            --coral-dark: #D95555;
+            --sage: #87AB8F;
+            --sage-light: #A4C4A7;
+            --butter: #F4D35E;
+            --butter-light: #FFE66D;
+            --taupe: #C9B5A0;
+            --warm-brown: #8B6F47;
+            --warm-cream: #FFF8F0;
+            --soft-peach: #FFE5D9;
+            --charcoal: #2D3748;
         }
 
-        .bg-terracotta { background-color: var(--terracotta); }
-        .text-terracotta { color: var(--terracotta); }
-        .border-terracotta { border-color: var(--terracotta); }
+        .bg-coral { background-color: var(--coral); }
+        .bg-sage { background-color: var(--sage); }
+        .bg-butter { background-color: var(--butter); }
+        .text-coral { color: var(--coral); }
+        .text-sage { color: var(--sage); }
+        .text-butter { color: var(--butter); }
+        .border-coral { border-color: var(--coral); }
+
+        /* Mid-Century Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
 
         /* Mobile optimizations */
         * {
@@ -118,28 +136,28 @@
       Focus: Asian-inspired, High Protein, Batch Prep
     -->
 </head>
-<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 text-slate-800 antialiased">
+<body class="text-slate-800 antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, #FFF4E6 100%);">
 
     <!-- Navigation Bar -->
-    <nav class="bg-gradient-to-r from-terracotta-dark to-warm-orange text-white sticky top-0 z-50 shadow-xl" style="background: linear-gradient(to right, var(--terracotta-dark), var(--warm-orange));">
+    <nav class="bg-coral text-white sticky top-0 z-50" style="background: var(--coral); border-bottom: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 rgba(135, 171, 143, 0.25);">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 font-bold text-xl text-white flex items-center gap-2">
+                <div class="flex-shrink-0 font-bold text-xl text-white flex items-center gap-2" style="font-family: 'Space Grotesk', sans-serif;">
                     <span>🎯</span>
                     <span>Goal: 180 lbs</span>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="../index.html" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition flex items-center">
+                    <div class="ml-10 flex items-baseline space-x-4" style="font-family: 'Space Grotesk', sans-serif;">
+                        <a href="../index.html" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
                             Home
                         </a>
-                        <a href="#overview" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Overview</a>
-                        <a href="#prep" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Week 1 Prep</a>
-                        <a href="#shopping-list" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Shopping List</a>
-                        <a href="#recipes" class="hover:bg-white/20 px-3 py-2 rounded-md text-sm font-medium transition">Recipes</a>
+                        <a href="#overview" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition uppercase tracking-wide">Overview</a>
+                        <a href="#prep" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition uppercase tracking-wide">Week 1 Prep</a>
+                        <a href="#shopping-list" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition uppercase tracking-wide">Shopping List</a>
+                        <a href="#recipes" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition uppercase tracking-wide">Recipes</a>
                     </div>
                 </div>
                 <!-- Mobile menu button placeholder (simplified for static site) -->
@@ -151,24 +169,24 @@
     </nav>
 
     <!-- Mobile Bottom Nav for easy access -->
-    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t-2 border-orange-200 flex justify-around py-3 shadow-[0_-2px_10px_rgba(212,115,94,0.15)] z-50 text-xs font-medium text-slate-600">
-        <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-terracotta transition-colors">
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around py-3 z-50 text-xs font-medium text-slate-600" style="border-top: 3px solid var(--charcoal); box-shadow: 0 -6px 0 0 rgba(135, 171, 143, 0.15); font-family: 'Space Grotesk', sans-serif;">
+        <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-coral transition-colors uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
             Home
         </a>
-        <a href="#overview" class="flex flex-col items-center gap-1 hover:text-terracotta transition-colors">
+        <a href="#overview" class="flex flex-col items-center gap-1 hover:text-coral transition-colors uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
             Info
         </a>
-        <a href="#prep" class="flex flex-col items-center gap-1 hover:text-terracotta transition-colors">
+        <a href="#prep" class="flex flex-col items-center gap-1 hover:text-coral transition-colors uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
             Plan
         </a>
-        <a href="#shopping-list" class="flex flex-col items-center gap-1 hover:text-terracotta transition-colors">
+        <a href="#shopping-list" class="flex flex-col items-center gap-1 hover:text-coral transition-colors uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
             Shop
         </a>
-        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-terracotta transition-colors">
+        <a href="#recipes" class="flex flex-col items-center gap-1 hover:text-coral transition-colors uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
             Cook
         </a>
@@ -185,32 +203,32 @@
 
         <!-- Quick Action Buttons -->
         <div class="mb-8 flex flex-wrap gap-3 justify-center print:hidden">
-            <a href="../shopping-helper.html#select-week1-meals" onclick="preselectPlan('week1-meals.html')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+            <a href="../shopping-helper.html#select-week1-meals" onclick="preselectPlan('week1-meals.html')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 Add to Shopping List
             </a>
-            <a href="../nutrition-dashboard.html#select-week1-meals" onclick="preselectPlan('week1-meals.html')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+            <a href="../nutrition-dashboard.html#select-week1-meals" onclick="preselectPlan('week1-meals.html')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
                 Check Nutrition
             </a>
-            <button onclick="startCookingMode()" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+            <button onclick="startCookingMode()" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--butter); color: var(--charcoal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral); font-family: 'Space Grotesk', sans-serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 Start Cooking
             </button>
-            <button onclick="openCameraCapture('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+            <button onclick="openCameraCapture('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--taupe); color: var(--charcoal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 Take Photo
             </button>
-            <button onclick="openPhotoGallery('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-md hover:shadow-lg text-sm">
+            <button onclick="openPhotoGallery('Week 1 Meals')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
@@ -226,13 +244,13 @@
         </script>
 
         <!-- Meal Plan Rating -->
-        <div id="rating-section" class="mb-8 bg-white rounded-2xl shadow-lg border-2 border-orange-100 p-6 print:hidden">
+        <div id="rating-section" class="mb-8 bg-white p-6 print:hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage); border-left: 8px solid var(--coral);">
             <div class="flex items-start justify-between mb-4">
                 <div>
                     <h3 class="text-lg font-bold text-slate-800 mb-1">How was this meal plan?</h3>
                     <p class="text-sm text-slate-600">Rate it so you remember for next time!</p>
                 </div>
-                <button id="rating-history-btn" onclick="showRatingHistory()" class="text-terracotta hover:text-terracotta-dark font-semibold text-sm">
+                <button id="rating-history-btn" onclick="showRatingHistory()" class="font-semibold text-sm uppercase tracking-wide" style="color: var(--coral); font-family: 'Space Grotesk', sans-serif;">
                     View History
                 </button>
             </div>
@@ -246,7 +264,7 @@
                     <span class="text-slate-600 font-medium" id="rating-date"></span>
                 </div>
                 <p class="text-slate-700 italic mb-3" id="rating-notes-display"></p>
-                <button onclick="editRating()" class="text-sm text-terracotta hover:text-terracotta-dark font-semibold">
+                <button onclick="editRating()" class="text-sm font-semibold uppercase tracking-wide" style="color: var(--coral); font-family: 'Space Grotesk', sans-serif;">
                     Edit Rating
                 </button>
             </div>
@@ -272,11 +290,12 @@
                         id="rating-notes"
                         rows="2"
                         placeholder="e.g., Too salty, Delicious!, Got boring by day 4..."
-                        class="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:border-terracotta focus:outline-none text-sm"
+                        class="w-full px-3 py-2 text-sm focus:outline-none"
+                        style="border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--taupe);"
                     ></textarea>
                 </div>
 
-                <button onclick="saveRating()" class="w-full bg-gradient-to-r from-orange-500 to-rose-500 hover:from-orange-600 hover:to-rose-600 text-white font-bold py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg">
+                <button onclick="saveRating()" class="w-full text-white font-bold py-3 uppercase tracking-wide transition-all duration-200" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">
                     Save Rating
                 </button>
             </div>
@@ -389,7 +408,7 @@
         </script>
 
         <!-- Disclaimer -->
-        <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-8 rounded-r-lg">
+        <div class="bg-amber-50 p-4 mb-8" style="border: 3px solid var(--charcoal); border-left: 8px solid var(--butter);">
             <div class="flex">
                 <div class="flex-shrink-0">
                     <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
@@ -405,7 +424,7 @@
         </div>
 
         <!-- Overview Section -->
-        <section id="overview" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+        <section id="overview" class="bg-white p-6 mb-8 scroll-mt-24" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage); border-top: 8px solid var(--coral);">
             <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Plan Overview</h2>
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
@@ -428,12 +447,12 @@
         </section>
 
         <!-- Prep Section -->
-        <section id="prep" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+        <section id="prep" class="bg-white p-6 mb-8 scroll-mt-24" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter); border-top: 8px solid var(--sage);">
             <div class="flex items-center justify-between mb-4 border-b border-slate-100 pb-2">
                 <h2 class="text-2xl font-bold text-slate-800">Week 1: Prep Strategy</h2>
                 <div class="flex items-center gap-3">
                     <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">Est. Time: 2-3 Hours</span>
-                    <button onclick="startCookingMode()" class="bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white text-sm font-bold px-4 py-2 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg print:hidden">
+                    <button onclick="startCookingMode()" class="text-white text-sm font-bold px-4 py-2 uppercase tracking-wide transition-all duration-200 print:hidden" style="background: var(--butter); color: var(--charcoal); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--coral); font-family: 'Space Grotesk', sans-serif;">
                         🚀 Start Cooking Mode
                     </button>
                 </div>
@@ -442,7 +461,7 @@
             <div class="mb-6">
                 <h3 class="font-bold text-lg text-slate-700 mb-3">The Menu (14 Meals)</h3>
                 <div class="grid sm:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                    <div class="bg-slate-50 p-4" style="border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--taupe);">
                         <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Lunches (7 Total)</span>
                         <div class="mt-2">
                             <div class="flex justify-between items-center mb-1">
@@ -455,8 +474,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Dinners (7 Total)</span>
+                    <div class="bg-slate-50 p-4" style="border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--taupe);">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider" style="font-family: 'Space Grotesk', sans-serif;">Dinners (7 Total)</span>
                         <div class="mt-2">
                             <div class="flex justify-between items-center mb-1">
                                 <span class="text-slate-700 font-medium">Beef Stir-Fry</span>
@@ -504,7 +523,7 @@
         </section>
 
         <!-- Shopping List Section -->
-        <section id="shopping-list" class="bg-white shadow rounded-xl p-6 mb-8 scroll-mt-24">
+        <section id="shopping-list" class="bg-white p-6 mb-8 scroll-mt-24" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--coral); border-top: 8px solid var(--butter);">
             <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Shopping List</h2>
             <div class="grid md:grid-cols-3 gap-6">
 
@@ -563,10 +582,10 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">Detailed Recipes</h2>
 
             <!-- Recipe 1 -->
-            <div class="bg-white shadow rounded-xl overflow-hidden">
+            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage); border-left: 8px solid var(--coral);">
                 <div class="bg-red-50 p-4 border-b border-red-100 flex justify-between items-center">
                     <h3 class="font-bold text-lg text-red-900">1. Gochugaru Beef & Broccoli Bowl</h3>
-                    <span class="bg-white text-red-800 text-xs font-bold px-2 py-1 rounded border border-red-200">Lunch (4 Servings)</span>
+                    <span class="bg-white text-red-800 text-xs font-bold px-2 py-1 uppercase border border-red-200" style="border: 2px solid var(--charcoal);">Lunch (4 Servings)</span>
                 </div>
                 <div class="p-6">
                     <div class="grid md:grid-cols-2 gap-8">
@@ -599,10 +618,10 @@
             </div>
 
             <!-- Recipe 2 -->
-            <div class="bg-white shadow rounded-xl overflow-hidden">
+            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter); border-left: 8px solid var(--sage);">
                 <div class="bg-orange-50 p-4 border-b border-orange-100 flex justify-between items-center">
                     <h3 class="font-bold text-lg text-orange-900">2. Vietnamese-Style Chicken Salad</h3>
-                    <span class="bg-white text-orange-800 text-xs font-bold px-2 py-1 rounded border border-orange-200">Lunch (3 Servings)</span>
+                    <span class="bg-white text-orange-800 text-xs font-bold px-2 py-1 uppercase border border-orange-200" style="border: 2px solid var(--charcoal);">Lunch (3 Servings)</span>
                 </div>
                 <div class="p-6">
                     <div class="grid md:grid-cols-2 gap-8">
@@ -632,10 +651,10 @@
             </div>
 
             <!-- Recipe 3 -->
-            <div class="bg-white shadow rounded-xl overflow-hidden">
+            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--coral); border-left: 8px solid var(--butter);">
                 <div class="bg-blue-50 p-4 border-b border-blue-100 flex justify-between items-center">
                     <h3 class="font-bold text-lg text-blue-900">3. Classic Beef & Broccoli Stir-Fry</h3>
-                    <span class="bg-white text-blue-800 text-xs font-bold px-2 py-1 rounded border border-blue-200">Dinner (4 Servings)</span>
+                    <span class="bg-white text-blue-800 text-xs font-bold px-2 py-1 uppercase border border-blue-200" style="border: 2px solid var(--charcoal);">Dinner (4 Servings)</span>
                 </div>
                 <div class="p-6">
                     <div class="grid md:grid-cols-2 gap-8">
@@ -666,10 +685,10 @@
             </div>
 
             <!-- Recipe 4 -->
-            <div class="bg-white shadow rounded-xl overflow-hidden">
+            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--taupe); border-left: 8px solid var(--coral);">
                 <div class="bg-purple-50 p-4 border-b border-purple-100 flex justify-between items-center">
                     <h3 class="font-bold text-lg text-purple-900">4. Pork & Soba Noodle Stir-Fry</h3>
-                    <span class="bg-white text-purple-800 text-xs font-bold px-2 py-1 rounded border border-purple-200">Dinner (3 Servings)</span>
+                    <span class="bg-white text-purple-800 text-xs font-bold px-2 py-1 uppercase border border-purple-200" style="border: 2px solid var(--charcoal);">Dinner (3 Servings)</span>
                 </div>
                 <div class="p-6">
                     <div class="grid md:grid-cols-2 gap-8">
