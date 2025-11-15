@@ -131,7 +131,7 @@ class NotificationManager {
                         tag: 'weekly-meal-prep',
                         requireInteraction: true,
                         onClick: () => {
-                            window.location.href = '/index.html';
+                            window.location.href = './index.html';
                         }
                     }
                 );
@@ -181,7 +181,7 @@ class NotificationManager {
                 {
                     tag: 'cooking-reminder',
                     onClick: () => {
-                        window.location.href = '/index.html';
+                        window.location.href = './index.html';
                     }
                 }
             );

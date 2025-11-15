@@ -3,27 +3,32 @@ const CACHE_NAME = `meal-plans-${CACHE_VERSION}`;
 
 // Assets to cache immediately on install
 const PRECACHE_ASSETS = [
-  '/',
-  '/index.html',
-  '/shopping-helper.html',
-  '/nutrition-dashboard.html',
-  '/recipe-scaler.html',
-  '/all-recipes.html',
-  '/rating-history.html',
-  '/meals/week1-meals.html',
-  '/meals/week2-meals.html',
-  '/meals/week3-meals.html',
-  '/meals/week1-breakfast.html',
-  '/meals/week2-breakfast.html',
-  '/meals/week3-breakfast.html',
-  '/meals/meal-utils.js',
-  '/meals/plans.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './shopping-helper.html',
+  './nutrition-dashboard.html',
+  './recipe-scaler.html',
+  './all-recipes.html',
+  './rating-history.html',
+  './meals/week1-meals.html',
+  './meals/week2-meals.html',
+  './meals/week3-meals.html',
+  './meals/week1-breakfast.html',
+  './meals/week2-breakfast.html',
+  './meals/week3-breakfast.html',
+  './meals/meal-utils.js',
+  './meals/plans.js',
+  './manifest.json',
+  './dist/tailwind.css',
+  './dark-mode.css',
+  './landscape.css'
 ];
 
-// CDN assets (Tailwind CSS)
+// CDN assets (External resources)
 const CDN_ASSETS = [
-  'https://cdn.tailwindcss.com'
+  'https://fonts.googleapis.com',
+  'https://fonts.gstatic.com',
+  'https://cdn.jsdelivr.net'
 ];
 
 // Install event - precache essential assets
@@ -143,7 +148,7 @@ self.addEventListener('fetch', (event) => {
 
             // Return offline page if available
             if (request.mode === 'navigate') {
-              return caches.match('/index.html');
+              return caches.match('./index.html');
             }
 
             throw error;
@@ -189,7 +194,7 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   event.waitUntil(
-    clients.openWindow('/')
+    clients.openWindow('./')
   );
 });
 
