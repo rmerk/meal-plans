@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#D2691E">
+    <meta name="theme-color" content="#F06C6C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Meal Plans - Recipe Discovery & Planning Dashboard</title>
@@ -19,28 +19,28 @@
             font-family: 'DM Sans', sans-serif;
         }
 
-        /* Mid-Century Modern Color Palette */
+        /* Atomic Age Sunset Color Palette */
         :root {
-            --burnt-orange: #D2691E;
-            --warm-terracotta: #E67E22;
-            --teal: #2C7A7B;
-            --teal-light: #319795;
-            --mustard: #D69E2E;
-            --mustard-light: #ECC94B;
-            --olive: #718096;
-            --warm-brown: #744210;
-            --cream: #F7FAFC;
-            --beige: #FFF5E6;
+            --coral: #F06C6C;
+            --coral-dark: #D95555;
+            --sage: #87AB8F;
+            --sage-light: #A4C4A7;
+            --butter: #F4D35E;
+            --butter-light: #FFE66D;
+            --taupe: #C9B5A0;
+            --warm-brown: #8B6F47;
+            --warm-cream: #FFF8F0;
+            --soft-peach: #FFE5D9;
             --charcoal: #2D3748;
         }
 
-        .bg-burnt-orange { background-color: var(--burnt-orange); }
-        .bg-teal { background-color: var(--teal); }
-        .bg-mustard { background-color: var(--mustard); }
-        .text-burnt-orange { color: var(--burnt-orange); }
-        .text-teal { color: var(--teal); }
-        .text-mustard { color: var(--mustard); }
-        .border-burnt-orange { border-color: var(--burnt-orange); }
+        .bg-coral { background-color: var(--coral); }
+        .bg-sage { background-color: var(--sage); }
+        .bg-butter { background-color: var(--butter); }
+        .text-coral { color: var(--coral); }
+        .text-sage { color: var(--sage); }
+        .text-butter { color: var(--butter); }
+        .border-coral { border-color: var(--coral); }
 
         /* Mid-Century Typography */
         h1, h2, h3 {
@@ -86,9 +86,9 @@
         .animate-fade-out { animation: fade-out 0.3s ease-out; }
         .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
-        /* Mid-Century Hero Section */
+        /* Atomic Age Hero Section */
         .hero-gradient {
-            background: linear-gradient(165deg, var(--burnt-orange) 0%, var(--warm-terracotta) 50%, var(--mustard) 100%);
+            background: linear-gradient(165deg, var(--coral) 0%, #FF8787 50%, var(--butter) 100%);
             position: relative;
         }
 
@@ -97,7 +97,7 @@
             position: absolute;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, transparent 30%, var(--teal) 30%, var(--teal) 32%, transparent 32%);
+            background: radial-gradient(circle, transparent 30%, var(--sage) 30%, var(--sage) 32%, transparent 32%);
             opacity: 0.15;
         }
 
@@ -108,33 +108,33 @@
             left: 50%;
             width: 100%;
             height: 2px;
-            background: var(--teal);
+            background: var(--sage);
             transform: translate(-50%, -50%) rotate(0deg);
             box-shadow:
-                0 0 0 2px var(--teal),
-                0 0 0 2px var(--teal);
+                0 0 0 2px var(--sage),
+                0 0 0 2px var(--sage);
         }
 
         /* Geometric Shapes */
         .geometric-circle {
             border-radius: 50%;
-            border: 3px solid var(--teal);
+            border: 3px solid var(--sage);
             background: transparent;
         }
 
         .geometric-square {
-            border: 3px solid var(--mustard);
+            border: 3px solid var(--butter);
             background: transparent;
             transform: rotate(45deg);
         }
 
-        /* Mid-Century Card Design */
+        /* Atomic Age Card Design */
         .meal-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             border: 3px solid var(--charcoal);
-            box-shadow: 8px 8px 0 0 rgba(44, 122, 123, 0.2);
+            box-shadow: 8px 8px 0 0 rgba(135, 171, 143, 0.25);
         }
 
         .meal-card::after {
@@ -156,14 +156,14 @@
 
         .meal-card:hover {
             transform: translateY(-4px);
-            box-shadow: 12px 12px 0 0 rgba(44, 122, 123, 0.3);
+            box-shadow: 12px 12px 0 0 rgba(135, 171, 143, 0.35);
         }
 
         .meal-card.hidden {
             display: none;
         }
 
-        /* Mid-Century Category Buttons */
+        /* Atomic Age Category Buttons */
         .category-btn {
             transition: all 0.2s ease;
             position: relative;
@@ -175,21 +175,21 @@
         }
 
         .category-btn.active {
-            background: var(--burnt-orange);
+            background: var(--coral);
             color: white;
-            border-color: var(--warm-brown);
-            box-shadow: 4px 4px 0 0 var(--teal);
+            border-color: var(--coral-dark);
+            box-shadow: 4px 4px 0 0 var(--sage);
         }
 
         .category-btn:not(.active) {
-            background: var(--cream);
+            background: var(--warm-cream);
             color: var(--charcoal);
-            border-color: var(--olive);
+            border-color: var(--taupe);
         }
 
         .category-btn:not(.active):hover {
-            background: var(--beige);
-            border-color: var(--burnt-orange);
+            background: var(--soft-peach);
+            border-color: var(--coral);
             transform: translateY(-2px);
         }
 
@@ -223,12 +223,12 @@
         .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
         .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
 
-        /* Mid-Century Tool Cards */
+        /* Atomic Age Tool Cards */
         .tool-card {
             transition: all 0.3s ease;
             background: white;
             border: 3px solid var(--charcoal);
-            box-shadow: 6px 6px 0 0 var(--mustard);
+            box-shadow: 6px 6px 0 0 var(--butter);
             position: relative;
         }
 
@@ -239,7 +239,7 @@
             left: 12px;
             right: 12px;
             bottom: 12px;
-            border: 1px dashed var(--olive);
+            border: 1px dashed var(--taupe);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -251,10 +251,10 @@
 
         .tool-card:hover {
             transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0 0 var(--mustard);
+            box-shadow: 8px 8px 0 0 var(--butter);
         }
 
-        /* Mid-Century Search Bar */
+        /* Atomic Age Search Bar */
         .search-bar {
             transition: all 0.3s ease;
             border: 3px solid var(--charcoal);
@@ -262,12 +262,12 @@
         }
 
         .search-bar:focus {
-            box-shadow: 6px 6px 0 0 var(--teal);
-            border-color: var(--burnt-orange);
+            box-shadow: 6px 6px 0 0 var(--sage);
+            border-color: var(--coral);
             outline: none;
         }
 
-        /* Mid-Century View Mode Buttons */
+        /* Atomic Age View Mode Buttons */
         .view-mode-btn {
             color: var(--charcoal);
             border: 2px solid transparent;
@@ -278,20 +278,20 @@
         }
 
         .view-mode-btn.active {
-            background: var(--teal);
+            background: var(--sage);
             color: white;
             border-color: var(--charcoal);
-            box-shadow: 3px 3px 0 0 var(--mustard);
+            box-shadow: 3px 3px 0 0 var(--butter);
         }
 
         .view-mode-btn:not(.active) {
-            background: var(--cream);
-            border-color: var(--olive);
+            background: var(--warm-cream);
+            border-color: var(--taupe);
         }
 
         .view-mode-btn:not(.active):hover {
-            background: var(--beige);
-            border-color: var(--teal);
+            background: var(--soft-peach);
+            border-color: var(--sage);
         }
 
         .collapsible-section {
@@ -308,7 +308,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen antialiased" style="background: linear-gradient(135deg, var(--cream) 0%, var(--beige) 50%, #FFF8DC 100%);">
+<body class="min-h-screen antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, #FFF4E6 100%);">
 
     <!-- Hero Section -->
     <header class="hero-gradient relative overflow-hidden">
@@ -329,13 +329,13 @@
 
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
             <div class="text-center fade-in">
-                <!-- Mid-Century Icon Badge -->
+                <!-- Atomic Age Icon Badge -->
                 <div class="inline-block mb-6">
                     <div class="relative">
-                        <div class="w-24 h-24 rounded-full flex items-center justify-center text-5xl" style="background: var(--teal); border: 4px solid var(--charcoal); box-shadow: 8px 8px 0 0 rgba(255, 255, 255, 0.3);">
+                        <div class="w-24 h-24 rounded-full flex items-center justify-center text-5xl" style="background: var(--sage); border: 4px solid var(--charcoal); box-shadow: 8px 8px 0 0 rgba(255, 255, 255, 0.3);">
                             🍽️
                         </div>
-                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full" style="background: var(--mustard); border: 3px solid var(--charcoal);"></div>
+                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full" style="background: var(--butter); border: 3px solid var(--charcoal);"></div>
                     </div>
                 </div>
                 <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 drop-shadow-lg" style="text-shadow: 3px 3px 0 rgba(0,0,0,0.2);">
@@ -354,9 +354,9 @@
                             id="quick-search"
                             placeholder="Search all recipes... (e.g., chicken, curry, breakfast)"
                             class="search-bar w-full px-6 py-4 rounded-none bg-white text-slate-800 placeholder-slate-500 text-lg"
-                            style="box-shadow: 6px 6px 0 0 rgba(44, 122, 123, 0.3);"
+                            style="box-shadow: 6px 6px 0 0 rgba(135, 171, 143, 0.3);"
                         />
-                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white px-6 py-2.5 font-bold transition-all duration-200 uppercase tracking-wider text-sm" style="background: var(--burnt-orange); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">
+                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white px-6 py-2.5 font-bold transition-all duration-200 uppercase tracking-wider text-sm" style="background: var(--coral); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
                             Search
                         </button>
                     </div>
@@ -365,20 +365,20 @@
                 <!-- Stats -->
                 <div class="mt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto fade-in-delay-2">
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--burnt-orange);">${mealPlans.length}</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--coral);">${mealPlans.length}</div>
                         </div>
                         <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Meal Plans</div>
                     </div>
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--teal);">50+</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--sage);">50+</div>
                         </div>
                         <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Recipes</div>
                     </div>
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--mustard);">5</div>
+                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--butter);">5</div>
                         </div>
                         <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Power Tools</div>
                     </div>
@@ -387,7 +387,7 @@
         </div>
 
         <!-- Geometric separator -->
-        <div class="absolute bottom-0 left-0 right-0 h-8" style="background: repeating-linear-gradient(90deg, var(--cream) 0px, var(--cream) 40px, var(--teal) 40px, var(--teal) 43px, var(--cream) 43px, var(--cream) 83px, var(--mustard) 83px, var(--mustard) 86px);"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-8" style="background: repeating-linear-gradient(90deg, var(--warm-cream) 0px, var(--warm-cream) 40px, var(--sage) 40px, var(--sage) 43px, var(--warm-cream) 43px, var(--warm-cream) 83px, var(--butter) 83px, var(--butter) 86px);"></div>
     </header>
 
     <!-- Main Content -->
@@ -395,7 +395,7 @@
 
         <!-- View Mode Toggle -->
         <div class="mb-8 flex justify-center">
-            <div class="inline-flex items-center gap-4 bg-white p-2" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--olive);">
+            <div class="inline-flex items-center gap-4 bg-white p-2" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--taupe);">
                 <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn px-8 py-3 font-bold transition-all duration-200">
                     ⚡ Quick Start
                 </button>
@@ -408,7 +408,7 @@
         <!-- Power Tools Section -->
         <div id="power-tools-section" class="mb-12 fade-in collapsible-section">
             <div class="text-center mb-10">
-                <div class="inline-block px-8 py-3 mb-4" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--mustard);">
+                <div class="inline-block px-8 py-3 mb-4" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter);">
                     <h2 class="text-3xl font-bold text-white">Power Up Your Meal Prep</h2>
                 </div>
                 <p class="text-slate-700 text-lg font-medium">Smart tools to save time and stay organized</p>
@@ -417,7 +417,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <a href="shopping-helper.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
                             🛒
                         </div>
                         <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Smart Shopping</h3>
@@ -425,8 +425,8 @@
                     <p class="text-slate-700 mb-4 leading-relaxed">
                         Auto-consolidate ingredients, track prices & budget, organize by aisle for efficient shopping.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--burnt-orange); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--teal); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--coral); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--sage); color: white; border: 2px solid var(--charcoal);">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
@@ -434,7 +434,7 @@
 
                 <a href="analytics-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
                             📈
                         </div>
                         <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Analytics</h3>
@@ -442,15 +442,15 @@
                     <p class="text-slate-700 mb-4 leading-relaxed">
                         Track cooking history, analyze nutrition trends, visualize progress with interactive charts.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--teal); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--mustard); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--sage); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--butter); color: var(--charcoal); border: 2px solid var(--charcoal);">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="nutrition-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--mustard); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--butter); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage);">
                             📊
                         </div>
                         <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Nutrition Compare</h3>
@@ -458,14 +458,14 @@
                     <p class="text-slate-700 mb-4 leading-relaxed">
                         Compare meal plans side-by-side, track macros, visualize weekly nutrition with charts.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--mustard); font-family: 'Space Grotesk', sans-serif;">
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--butter-light); font-family: 'Space Grotesk', sans-serif;">
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="recipe-scaler.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--warm-terracotta); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--teal);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--taupe); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
                             ⚖️
                         </div>
                         <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Recipe Scaler</h3>
@@ -473,14 +473,14 @@
                     <p class="text-slate-700 mb-4 leading-relaxed">
                         Scale any recipe to your desired serving size with smart fraction handling and instant calculations.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--warm-terracotta); font-family: 'Space Grotesk', sans-serif;">
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--warm-brown); font-family: 'Space Grotesk', sans-serif;">
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="settings.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--olive); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--sage-light); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
                             ⚙️
                         </div>
                         <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Settings</h3>
@@ -488,8 +488,8 @@
                     <p class="text-slate-700 mb-4 leading-relaxed">
                         Configure notifications, quiet hours, theme preferences, and manage your data.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--olive); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--burnt-orange); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--sage); font-family: 'Space Grotesk', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--coral); color: white; border: 2px solid var(--charcoal);">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
@@ -497,10 +497,10 @@
         </div>
 
         <!-- Recipe Discovery Section -->
-        <div id="recipe-discovery-section" class="p-8 mb-12 collapsible-section" style="background: white; border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--teal); border-left: 12px solid var(--burnt-orange);">
+        <div id="recipe-discovery-section" class="p-8 mb-12 collapsible-section" style="background: white; border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--sage); border-left: 12px solid var(--coral);">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard);">
+                    <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
                         📖
                     </div>
                 </div>
@@ -509,7 +509,7 @@
                     <p class="text-slate-700 mb-5 leading-relaxed">
                         Browse our complete recipe library to find your next favorite meal. From Asian-inspired stir-fries to high-protein breakfasts, discover dishes that fit your lifestyle.
                     </p>
-                    <a href="all-recipes.html" class="inline-flex items-center px-6 py-3 text-white font-bold transition-all duration-200 uppercase tracking-wide text-sm" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">
+                    <a href="all-recipes.html" class="inline-flex items-center px-6 py-3 text-white font-bold transition-all duration-200 uppercase tracking-wide text-sm" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
                         <span>Browse All Recipes →</span>
                     </a>
                 </div>
@@ -519,14 +519,14 @@
         <!-- Meal Plans Section Header & Category Toggle -->
         <div class="mb-12">
             <div class="text-center mb-8">
-                <div class="inline-block px-8 py-3 mb-3" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--teal);">
+                <div class="inline-block px-8 py-3 mb-3" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage);">
                     <h2 class="text-3xl font-bold text-white">Your Meal Plans</h2>
                 </div>
                 <p class="text-slate-700 text-lg font-medium">Organized weekly plans with recipes, prep guides, and shopping lists</p>
             </div>
 
             <div class="flex justify-center">
-                <div class="inline-flex bg-white p-2 gap-3" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--mustard);">
+                <div class="inline-flex bg-white p-2 gap-3" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter);">
                     <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-10 py-3 font-bold flex items-center gap-2">
                         <span>🍽️</span>
                         <span>Meals</span>
@@ -545,9 +545,9 @@
         </div>
 
         <!-- Instructions Section -->
-        <div id="instructions-section" class="mt-16 bg-white p-8 collapsible-section" style="border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--mustard); border-top: 12px solid var(--teal);">
+        <div id="instructions-section" class="mt-16 bg-white p-8 collapsible-section" style="border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--butter); border-top: 12px solid var(--sage);">
             <div class="flex items-center mb-8">
-                <div class="w-16 h-16 flex items-center justify-center" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--burnt-orange);">
+                <div class="w-16 h-16 flex items-center justify-center" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
                     <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
@@ -556,19 +556,19 @@
             </div>
             <div class="space-y-5">
                 <div class="flex items-start group">
-                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--burnt-orange); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--teal); font-family: 'Space Grotesk', sans-serif;">1</span>
-                    <span class="text-slate-700 leading-relaxed">Save your meal plan HTML file in the <code class="px-2 py-1 text-sm font-mono" style="background: var(--beige); color: var(--burnt-orange); border: 2px solid var(--olive);">meals/</code> directory</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">1</span>
+                    <span class="text-slate-700 leading-relaxed">Save your meal plan HTML file in the <code class="px-2 py-1 text-sm font-mono" style="background: var(--soft-peach); color: var(--coral); border: 2px solid var(--taupe);">meals/</code> directory</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--teal); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--mustard); font-family: 'Space Grotesk', sans-serif;">2</span>
-                    <span class="text-slate-700 leading-relaxed">Add a new entry to <code class="px-2 py-1 text-sm font-mono" style="background: var(--beige); color: var(--teal); border: 2px solid var(--olive);">meals/plans.js</code> with your plan details</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">2</span>
+                    <span class="text-slate-700 leading-relaxed">Add a new entry to <code class="px-2 py-1 text-sm font-mono" style="background: var(--soft-peach); color: var(--sage); border: 2px solid var(--taupe);">meals/plans.js</code> with your plan details</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--mustard); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--burnt-orange); font-family: 'Space Grotesk', sans-serif;">3</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--butter); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--coral); font-family: 'Space Grotesk', sans-serif;">3</span>
                     <span class="text-slate-700 leading-relaxed">The card will automatically appear on this page - no need to edit index.html!</span>
                 </div>
                 <div class="flex items-start group">
-                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--olive); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--teal); font-family: 'Space Grotesk', sans-serif;">4</span>
+                    <span class="text-white w-10 h-10 flex items-center justify-center text-lg font-bold mr-4 mt-0.5 flex-shrink-0" style="background: var(--taupe); border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">4</span>
                     <span class="text-slate-700 leading-relaxed">Commit and push to GitHub - changes will be live within minutes!</span>
                 </div>
             </div>
@@ -579,9 +579,9 @@
     <!-- Footer -->
     <footer class="text-center py-16 mt-24">
         <div class="max-w-6xl mx-auto px-4">
-            <!-- Mid-Century Footer Decoration -->
+            <!-- Atomic Age Footer Decoration -->
             <div class="flex justify-center mb-6">
-                <div class="w-20 h-20 flex items-center justify-center text-4xl" style="background: var(--teal); border: 3px solid var(--charcoal); border-radius: 50%; box-shadow: 6px 6px 0 0 var(--mustard);">
+                <div class="w-20 h-20 flex items-center justify-center text-4xl" style="background: var(--sage); border: 3px solid var(--charcoal); border-radius: 50%; box-shadow: 6px 6px 0 0 var(--butter);">
                     🍽️
                 </div>
             </div>
@@ -593,9 +593,9 @@
             </p>
             <!-- Geometric decoration -->
             <div class="mt-8 flex justify-center gap-4">
-                <div class="w-3 h-3" style="background: var(--burnt-orange); border: 2px solid var(--charcoal);"></div>
-                <div class="w-3 h-3 rounded-full" style="background: var(--teal); border: 2px solid var(--charcoal);"></div>
-                <div class="w-3 h-3" style="background: var(--mustard); border: 2px solid var(--charcoal); transform: rotate(45deg);"></div>
+                <div class="w-3 h-3" style="background: var(--coral); border: 2px solid var(--charcoal);"></div>
+                <div class="w-3 h-3 rounded-full" style="background: var(--sage); border: 2px solid var(--charcoal);"></div>
+                <div class="w-3 h-3" style="background: var(--butter); border: 2px solid var(--charcoal); transform: rotate(45deg);"></div>
             </div>
         </div>
     </footer>
@@ -648,42 +648,42 @@
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.classList.add('fade-in');
 
-                // Mid-Century Modern color palette mapping
+                // Atomic Age Sunset color palette mapping
                 const colorMap = {
                     emerald: {
-                        headerBg: '#D2691E',
-                        accentColor: '#2C7A7B',
-                        shadowColor: 'rgba(44, 122, 123, 0.2)',
+                        headerBg: '#F06C6C',
+                        accentColor: '#87AB8F',
+                        shadowColor: 'rgba(135, 171, 143, 0.25)',
                         emoji: '🥗'
                     },
                     amber: {
-                        headerBg: '#D69E2E',
-                        accentColor: '#D2691E',
-                        shadowColor: 'rgba(210, 105, 30, 0.2)',
+                        headerBg: '#F4D35E',
+                        accentColor: '#F06C6C',
+                        shadowColor: 'rgba(240, 108, 108, 0.25)',
                         emoji: '🍳'
                     },
                     orange: {
-                        headerBg: '#E67E22',
-                        accentColor: '#2C7A7B',
-                        shadowColor: 'rgba(44, 122, 123, 0.2)',
+                        headerBg: '#FF8787',
+                        accentColor: '#87AB8F',
+                        shadowColor: 'rgba(135, 171, 143, 0.25)',
                         emoji: '🍲'
                     },
                     red: {
-                        headerBg: '#D2691E',
-                        accentColor: '#D69E2E',
-                        shadowColor: 'rgba(214, 158, 46, 0.2)',
+                        headerBg: '#D95555',
+                        accentColor: '#F4D35E',
+                        shadowColor: 'rgba(244, 211, 94, 0.25)',
                         emoji: '🌶️'
                     },
                     blue: {
-                        headerBg: '#2C7A7B',
-                        accentColor: '#D2691E',
-                        shadowColor: 'rgba(210, 105, 30, 0.2)',
+                        headerBg: '#87AB8F',
+                        accentColor: '#F06C6C',
+                        shadowColor: 'rgba(240, 108, 108, 0.25)',
                         emoji: '🥘'
                     },
                     purple: {
-                        headerBg: '#718096',
-                        accentColor: '#D69E2E',
-                        shadowColor: 'rgba(214, 158, 46, 0.2)',
+                        headerBg: '#C9B5A0',
+                        accentColor: '#F4D35E',
+                        shadowColor: 'rgba(244, 211, 94, 0.25)',
                         emoji: '🍜'
                     }
                 };
