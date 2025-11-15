@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#d4735e">
+    <meta name="theme-color" content="#F06C6C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Settings - Meal Plans</title>
     <link rel="manifest" href="/manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="mobile-utils.js"></script>
     <script src="notifications.js"></script>
     <link rel="stylesheet" href="/dark-mode.css">
     <link rel="stylesheet" href="/landscape.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'DM Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
 
+        /* Atomic Age Sunset Color Palette */
         :root {
-            --terracotta: #d4735e;
-            --terracotta-dark: #b85c47;
-            --warm-orange: #e88d67;
+            --coral: #F06C6C;
+            --coral-dark: #D95555;
+            --sage: #87AB8F;
+            --sage-light: #A4C4A7;
+            --butter: #F4D35E;
+            --butter-light: #FFE66D;
+            --taupe: #C9B5A0;
+            --warm-brown: #8B6F47;
+            --warm-cream: #FFF8F0;
+            --soft-peach: #FFE5D9;
+            --charcoal: #2D3748;
         }
 
-        .bg-terracotta { background-color: var(--terracotta); }
-        .text-terracotta { color: var(--terracotta); }
+        .bg-coral { background-color: var(--coral); }
+        .bg-sage { background-color: var(--sage); }
+        .bg-butter { background-color: var(--butter); }
+        .text-coral { color: var(--coral); }
+        .text-sage { color: var(--sage); }
+        .text-butter { color: var(--butter); }
+        .border-coral { border-color: var(--coral); }
 
         .hero-gradient {
-            background: linear-gradient(135deg, #d4735e 0%, #e88d67 50%, #ffa07a 100%);
+            background: linear-gradient(135deg, var(--coral) 0%, var(--butter) 50%, var(--sage-light) 100%);
         }
 
         .setting-card {
@@ -86,15 +101,23 @@
         }
 
         input:checked + .toggle-slider {
-            background-color: var(--terracotta);
+            background-color: var(--coral);
         }
 
         input:checked + .toggle-slider:before {
             transform: translateX(24px);
         }
+
+        /* Form focus styles */
+        select:focus, input:focus {
+            outline-color: var(--coral);
+            border-color: var(--coral);
+            outline-width: 2px;
+            outline-style: solid;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 min-h-screen antialiased">
+<body class="min-h-screen antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, var(--sage-light) 100%);">
 
     <!-- Header -->
     <header class="hero-gradient shadow-xl relative overflow-hidden">
@@ -129,8 +152,8 @@
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
         <!-- Appearance Settings -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-200 fade-in">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-100">
                 <span class="text-2xl mr-3">🎨</span>
                 Appearance
             </h2>
@@ -142,7 +165,7 @@
                         <div class="font-semibold text-slate-800">Theme</div>
                         <div class="text-sm text-slate-600">Choose your color theme</div>
                     </div>
-                    <select id="theme-select" onchange="changeTheme(this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    <select id="theme-select" onchange="changeTheme(this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                         <option value="auto">Auto</option>
                         <option value="light">Light</option>
                         <option value="dark">Dark</option>
@@ -164,8 +187,8 @@
         </div>
 
         <!-- Notification Settings -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.1s">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-200 fade-in" style="animation-delay: 0.1s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-100">
                 <span class="text-2xl mr-3">🔔</span>
                 Notifications
             </h2>
@@ -201,7 +224,7 @@
                         <div class="font-semibold text-slate-800">Weekly Prep Day</div>
                         <div class="text-sm text-slate-600">Day to receive prep reminders</div>
                     </div>
-                    <select id="prep-day" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    <select id="prep-day" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                         <option value="0">Sunday</option>
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
@@ -218,7 +241,7 @@
                         <div class="font-semibold text-slate-800">Prep Time</div>
                         <div class="text-sm text-slate-600">Time to receive reminders</div>
                     </div>
-                    <input type="time" id="prep-time" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    <input type="time" id="prep-time" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                 </div>
 
                 <!-- Cooking Timers -->
@@ -251,13 +274,13 @@
                         <div>
                             <div class="font-semibold text-slate-700">Start Time</div>
                         </div>
-                        <input type="time" id="quiet-start" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                        <input type="time" id="quiet-start" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                     </div>
                     <div class="setting-card flex items-center justify-between p-4 bg-white rounded-lg">
                         <div>
                             <div class="font-semibold text-slate-700">End Time</div>
                         </div>
-                        <input type="time" id="quiet-end" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                        <input type="time" id="quiet-end" onchange="updateNotificationSettings()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                     </div>
                 </div>
 
@@ -274,8 +297,8 @@
         </div>
 
         <!-- Preferences -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.2s">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-6 border-2 border-orange-200 fade-in" style="animation-delay: 0.2s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-100">
                 <span class="text-2xl mr-3">🎯</span>
                 Preferences
             </h2>
@@ -287,7 +310,7 @@
                         <div class="font-semibold text-slate-800">Default Servings</div>
                         <div class="text-sm text-slate-600">Standard serving size for recipes</div>
                     </div>
-                    <input type="number" id="default-servings" min="1" max="10" value="4" onchange="savePreference('defaultServings', this.value)" class="w-20 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent text-center">
+                    <input type="number" id="default-servings" min="1" max="20" value="4" step="1" onchange="savePreference('defaultServings', this.value)" class="w-20 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent text-center">
                 </div>
 
                 <!-- Units -->
@@ -296,7 +319,7 @@
                         <div class="font-semibold text-slate-800">Measurement Units</div>
                         <div class="text-sm text-slate-600">Preferred unit system</div>
                     </div>
-                    <select id="units-preference" onchange="savePreference('units', this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-terracotta focus:border-transparent">
+                    <select id="units-preference" onchange="savePreference('units', this.value)" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent">
                         <option value="imperial">Imperial (cups, oz, lbs)</option>
                         <option value="metric">Metric (ml, g, kg)</option>
                     </select>
@@ -305,8 +328,8 @@
         </div>
 
         <!-- Data Management -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-orange-100 fade-in" style="animation-delay: 0.3s">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-50">
+        <div class="bg-white rounded-2xl shadow-lg p-6 border-2 border-orange-200 fade-in" style="animation-delay: 0.3s">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 flex items-center pb-4 border-b-2 border-orange-100">
                 <span class="text-2xl mr-3">💾</span>
                 Data Management
             </h2>
@@ -349,7 +372,7 @@
         </div>
 
         <!-- About -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mt-6 border-2 border-orange-100 text-center fade-in" style="animation-delay: 0.4s">
+        <div class="bg-white rounded-2xl shadow-lg p-6 mt-6 border-2 border-orange-200 text-center fade-in" style="animation-delay: 0.4s">
             <h3 class="font-bold text-slate-800 mb-2">Meal Planning App</h3>
             <p class="text-sm text-slate-600 mb-2">Version 2.0.0</p>
             <p class="text-xs text-slate-500">Built with ❤️ for healthy eating</p>
@@ -371,8 +394,13 @@
 
         // Load all settings
         function loadAllSettings() {
-            // Load notification settings
-            if (window.notificationManager) {
+            // Check if notification system is available
+            if (!window.notificationManager) {
+                // Notification system unavailable - show warning and disable controls
+                showNotificationUnavailableWarning();
+                disableNotificationControls();
+            } else {
+                // Load notification settings
                 const settings = notificationManager.settings;
                 document.getElementById('notifications-enabled').checked = settings.enabled;
                 document.getElementById('meal-prep-reminders').checked = settings.mealPrepReminders;
@@ -386,16 +414,77 @@
                 toggleQuietHoursInputs();
             }
 
-            // Load theme
-            const theme = localStorage.getItem('theme-preference') || 'auto';
+            // Load theme (use unified 'theme' key from mobile-utils.js)
+            const theme = localStorage.getItem('theme') || 'auto';
             document.getElementById('theme-select').value = theme;
 
-            // Load haptic feedback preference
-            const hapticEnabled = localStorage.getItem('haptic-enabled') !== 'false';
-            document.getElementById('haptic-toggle').checked = hapticEnabled;
+            // Load haptic feedback preference (use 'haptics-disabled' key from mobile-utils.js)
+            const hapticsDisabled = localStorage.getItem('haptics-disabled') === 'true';
+            document.getElementById('haptic-toggle').checked = !hapticsDisabled;
 
             // Load preferences
             loadPreferences();
+        }
+
+        // Show warning when notification system is unavailable
+        function showNotificationUnavailableWarning() {
+            const notificationSection = document.querySelector('.bg-white.rounded-2xl.shadow-lg:nth-of-type(2)');
+            if (notificationSection) {
+                const warningBanner = document.createElement('div');
+                warningBanner.className = 'bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded-lg';
+                warningBanner.innerHTML = `
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-amber-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-semibold text-amber-800">Notification System Unavailable</h4>
+                            <p class="text-sm text-amber-700 mt-1">The notification system failed to load. Notification settings are currently disabled. Please refresh the page or check your browser console for errors.</p>
+                        </div>
+                    </div>
+                `;
+                notificationSection.insertBefore(warningBanner, notificationSection.children[1]);
+            }
+        }
+
+        // Disable notification controls when system unavailable
+        function disableNotificationControls() {
+            const notificationInputs = [
+                'notifications-enabled',
+                'meal-prep-reminders',
+                'cooking-timers',
+                'prep-day',
+                'prep-time',
+                'quiet-hours-enabled',
+                'quiet-start',
+                'quiet-end'
+            ];
+
+            notificationInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.disabled = true;
+                    element.style.opacity = '0.5';
+                    element.style.cursor = 'not-allowed';
+                }
+            });
+
+            // Disable test notification button
+            const testButton = document.querySelector('button[onclick="testNotification()"]');
+            if (testButton) {
+                testButton.disabled = true;
+                testButton.style.opacity = '0.5';
+                testButton.style.cursor = 'not-allowed';
+                testButton.onclick = function(e) {
+                    e.preventDefault();
+                    if (window.showToast) {
+                        showToast('⚠️ Notification system unavailable');
+                    } else {
+                        alert('Notification system unavailable');
+                    }
+                    return false;
+                };
+            }
         }
 
         // Update notification settings
@@ -412,6 +501,11 @@
                 quietHoursStart: document.getElementById('quiet-start').value,
                 quietHoursEnd: document.getElementById('quiet-end').value
             });
+
+            // Provide visual feedback
+            if (window.showToast) {
+                showToast('✅ Notification settings saved');
+            }
         }
 
         // Toggle quiet hours inputs
@@ -425,23 +519,42 @@
             }
         }
 
-        // Change theme
-        function changeTheme(theme) {
-            localStorage.setItem('theme-preference', theme);
-            if (theme === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            } else if (theme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-            } else {
-                // Auto mode
+        // Change theme (unified with mobile-utils.js)
+        function changeTheme(themeValue) {
+            let appliedTheme;
+
+            if (themeValue === 'auto') {
+                // Auto mode: remove manual preference and follow system
+                localStorage.removeItem('theme');
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+                appliedTheme = prefersDark ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', appliedTheme);
+            } else if (themeValue === 'dark' || themeValue === 'light') {
+                // Manual theme selection
+                localStorage.setItem('theme', themeValue);
+                appliedTheme = themeValue;
+                document.documentElement.setAttribute('data-theme', themeValue);
+            }
+
+            // Dispatch event for custom reactions (for all theme changes)
+            if (appliedTheme) {
+                window.dispatchEvent(new CustomEvent('themechange', {
+                    detail: { theme: appliedTheme }
+                }));
+            }
+
+            // Provide haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(20);
             }
         }
 
-        // Toggle haptic feedback
+        // Toggle haptic feedback (unified with mobile-utils.js)
         function toggleHaptic(enabled) {
-            localStorage.setItem('haptic-enabled', enabled);
+            // Use inverse logic: store 'haptics-disabled' instead of 'haptic-enabled'
+            localStorage.setItem('haptics-disabled', !enabled);
+
+            // Test vibration if being enabled
             if (enabled && navigator.vibrate) {
                 navigator.vibrate(50);
             }
@@ -459,10 +572,31 @@
 
         // Save preference
         function savePreference(key, value) {
+            // Validate default servings
+            if (key === 'defaultServings') {
+                const numValue = parseInt(value);
+                if (isNaN(numValue) || numValue < 1 || numValue > 20) {
+                    if (window.showToast) {
+                        showToast('❌ Servings must be between 1 and 20');
+                    } else {
+                        alert('Servings must be between 1 and 20');
+                    }
+                    // Reset to default
+                    document.getElementById('default-servings').value = 4;
+                    return;
+                }
+                value = numValue; // Ensure it's stored as a number
+            }
+
             const saved = localStorage.getItem(PREFERENCES_KEY);
             const prefs = saved ? JSON.parse(saved) : {};
             prefs[key] = value;
             localStorage.setItem(PREFERENCES_KEY, JSON.stringify(prefs));
+
+            // Provide visual feedback
+            if (window.showToast) {
+                showToast('✅ Preference saved');
+            }
         }
 
         // Export all data
@@ -483,7 +617,11 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            alert('Data exported successfully!');
+            if (window.showToast) {
+                showToast('✅ Data exported successfully!');
+            } else {
+                alert('Data exported successfully!');
+            }
         }
 
         // Import data
@@ -498,10 +636,20 @@
                     Object.entries(data).forEach(([key, value]) => {
                         localStorage.setItem(key, value);
                     });
-                    alert('Data imported successfully! Page will refresh.');
-                    location.reload();
+
+                    if (window.showToast) {
+                        showToast('✅ Data imported successfully! Page will refresh...');
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        alert('Data imported successfully! Page will refresh.');
+                        location.reload();
+                    }
                 } catch (error) {
-                    alert('Error importing data. Please check the file format.');
+                    if (window.showToast) {
+                        showToast('❌ Error importing data. Please check the file format.');
+                    } else {
+                        alert('Error importing data. Please check the file format.');
+                    }
                 }
             };
             reader.readAsText(file);
@@ -518,46 +666,16 @@
             }
 
             localStorage.clear();
-            alert('All data cleared. Page will refresh.');
-            location.reload();
+
+            if (window.showToast) {
+                showToast('🗑️ All data cleared. Page will refresh...');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                alert('All data cleared. Page will refresh.');
+                location.reload();
+            }
         }
     </script>
-
-    <!-- Dark Mode Toggle Button -->
-    <button
-        id="dark-mode-toggle"
-        onclick="toggleDarkMode()"
-        class="fixed top-4 right-4 z-[100] w-12 h-12 rounded-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group border-2 border-transparent hover:border-orange-400"
-        aria-label="Toggle dark mode"
-        title="Toggle dark mode"
-    >
-        <svg
-            class="w-6 h-6 text-yellow-500 dark-mode-icon-sun hidden"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-            />
-        </svg>
-        <svg
-            class="w-6 h-6 text-slate-700 dark-mode-icon-moon"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            />
-        </svg>
-    </button>
 
 </body>
 </html>
