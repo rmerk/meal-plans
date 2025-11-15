@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#d4735e">
+    <meta name="theme-color" content="#8B9D83">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>My Breakfast Plan</title>
     <link rel="manifest" href="../manifest.json">
     <link rel="stylesheet" href="../dist/tailwind.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="meal-utils.js"></script>
     <script src="../analytics-tracker.js"></script>
     <script src="../mobile-utils.js"></script>
@@ -19,35 +19,43 @@
     <link rel="stylesheet" href="../dark-mode.css">
     <link rel="stylesheet" href="../landscape.css">
     <style>
-        body { font-family: 'DM Sans', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #FAF8F5; }
 
-        /* Atomic Age Sunset Color Palette */
+        /* Sage & Gold Sophisticated Color Palette */
         :root {
-            --coral: #F06C6C;
-            --coral-dark: #D95555;
-            --sage: #87AB8F;
-            --sage-light: #A4C4A7;
-            --butter: #F4D35E;
-            --butter-light: #FFE66D;
-            --taupe: #C9B5A0;
-            --warm-brown: #8B6F47;
-            --warm-cream: #FFF8F0;
-            --soft-peach: #FFE5D9;
-            --charcoal: #2D3748;
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+            --gray-secondary: #636E72;
+            --success: #7FA87F;
+            --warning: #D4A574;
+            --error: #C17B7B;
+            --info: #8B9DC3;
+            --category-breakfast: #F4E4D7;
+            --category-lunch: #E8F0E8;
+            --category-dinner: #E8DFE0;
+            --category-dessert: #F2E8DC;
         }
 
-        .bg-coral { background-color: var(--coral); }
-        .bg-sage { background-color: var(--sage); }
-        .bg-butter { background-color: var(--butter); }
-        .text-coral { color: var(--coral); }
-        .text-sage { color: var(--sage); }
-        .text-butter { color: var(--butter); }
-        .border-coral { border-color: var(--coral); }
+        .bg-gold { background-color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .bg-cream { background-color: var(--cream); }
+        .text-gold { color: var(--gold); }
+        .text-gold { color: var(--gold); }
+        .text-charcoal { color: var(--charcoal); }
+        .border-sage { border-color: var(--sage); }
 
-        /* Mid-Century Typography */
-        h1, h2, h3, h4 {
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: -0.02em;
+        /* Sophisticated Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
         }
 
         /* Mobile optimizations */
@@ -131,17 +139,17 @@
     </style>
     <script src="meal-utils.js"></script>
 </head>
-<body class="text-slate-800 antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, #FFF4E6 100%);">
+<body class="text-slate-800 antialiased" style="background-color: var(--cream);">
 
     <!-- Navigation Bar -->
-    <nav class="bg-coral text-white sticky top-0 z-50" style="background: var(--coral); border-bottom: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 rgba(135, 171, 143, 0.25);">
+    <nav class="text-white sticky top-0 z-50" style="background: var(--sage); box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 font-bold text-xl text-white" style="font-family: 'Space Grotesk', sans-serif;">
+                <div class="flex-shrink-0 font-medium text-xl text-white" style="font-family: 'Playfair Display', serif;">
                     Morning Fuel
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4" style="font-family: 'Space Grotesk', sans-serif;">
+                    <div class="ml-10 flex items-baseline space-x-4" style="font-family: 'Playfair Display', serif;">
                         <a href="../index.html" class="hover:bg-white/20 px-3 py-2 text-sm font-medium transition flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -158,7 +166,7 @@
     </nav>
 
     <!-- Mobile Bottom Nav -->
-    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around py-3 z-50 text-xs font-medium text-slate-600" style="border-top: 3px solid var(--charcoal); box-shadow: 0 -6px 0 0 rgba(135, 171, 143, 0.15); font-family: 'Space Grotesk', sans-serif;">
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white flex justify-around py-3 z-50 text-xs font-medium text-slate-600" style="border-top: 1px solid var(--cream-dark); box-shadow: 0 -6px 0 0 rgba(135, 171, 143, 0.15); font-family: 'Playfair Display', serif;">
         <a href="../index.html" class="flex flex-col items-center gap-1 hover:text-coral uppercase">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
             Home
@@ -187,26 +195,26 @@
 
         <!-- Quick Action Buttons -->
         <div class="mb-8 flex flex-wrap gap-3 justify-center print:hidden">
-            <a href="../shopping-helper.html#select-week1-breakfast" onclick="preselectPlan('week1-breakfast.html')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">
+            <a href="../shopping-helper.html#select-week1-breakfast" onclick="preselectPlan('week1-breakfast.html')" class="inline-flex items-center px-4 py-2.5 text-white font-medium text-sm transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2); font-family: 'Playfair Display', serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 Add to Shopping List
             </a>
-            <a href="../nutrition-dashboard.html#select-week1-breakfast" onclick="preselectPlan('week1-breakfast.html')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
+            <a href="../nutrition-dashboard.html#select-week1-breakfast" onclick="preselectPlan('week1-breakfast.html')" class="inline-flex items-center px-4 py-2.5 text-white font-medium text-sm transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 4px rgba(184, 149, 106, 0.2); font-family: 'Playfair Display', serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
                 Check Nutrition
             </a>
-            <button onclick="openCameraCapture('Week 1 Breakfast')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--taupe); color: var(--charcoal); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage); font-family: 'Space Grotesk', sans-serif;">
+            <button onclick="openCameraCapture('Week 1 Breakfast')" class="inline-flex items-center px-4 py-2.5 text-white font-medium text-sm transition-all duration-200" style="background: var(--cream-dark); color: var(--charcoal); box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2); font-family: 'Playfair Display', serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
                 </svg>
                 Take Photo
             </button>
-            <button onclick="openPhotoGallery('Week 1 Breakfast')" class="inline-flex items-center px-4 py-2.5 text-white font-bold uppercase tracking-wide text-sm transition-all duration-200" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
+            <button onclick="openPhotoGallery('Week 1 Breakfast')" class="inline-flex items-center px-4 py-2.5 text-white font-medium text-sm transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 4px rgba(184, 149, 106, 0.2); font-family: 'Playfair Display', serif;">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
@@ -222,14 +230,14 @@
         </script>
 
         <!-- Strategy Section -->
-        <section id="strategy" class="bg-white p-6 mb-8 scroll-mt-24" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage); border-top: 8px solid var(--coral);">
+        <section id="strategy" class="bg-white p-6 mb-8 scroll-mt-24" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
             <div class="flex items-center mb-4">
                 <div class="p-2 bg-amber-100 rounded-lg mr-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-slate-800">Morning Strategy</h2>
+                <h2 class="text-2xl font-medium text-slate-800">Morning Strategy</h2>
             </div>
 
             <div class="prose text-slate-600">
@@ -243,13 +251,13 @@
         </section>
 
         <!-- Shopping List Section -->
-        <section id="shopping" class="bg-white p-6 mb-8 scroll-mt-24" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--coral); border-top: 8px solid var(--butter);">
-            <h2 class="text-2xl font-bold text-slate-800 mb-6 border-b border-slate-100 pb-2">Shopping Lists</h2>
+        <section id="shopping" class="bg-white p-6 mb-8 scroll-mt-24" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium text-slate-800 mb-6 border-b border-slate-100 pb-2">Shopping Lists</h2>
             <p class="text-sm text-slate-500 mb-4 italic">Choose the list based on which breakfast you plan to eat this week.</p>
 
             <div class="grid md:grid-cols-3 gap-6">
                 <!-- List 1 -->
-                <div class="bg-slate-50 p-4" style="border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--taupe);">
+                <div class="bg-slate-50 p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.1);">
                     <h3 class="font-bold text-amber-700 mb-3">For "Kimchi Scramble"</h3>
                     <ul class="text-sm text-slate-700 space-y-2">
                         <li><input type="checkbox" class="accent-amber-600 mr-2">Eggs (3 per day)</li>
@@ -262,7 +270,7 @@
                 </div>
 
                 <!-- List 2 -->
-                <div class="bg-slate-50 p-4" style="border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--taupe);">
+                <div class="bg-slate-50 p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.1);">
                     <h3 class="font-bold text-amber-700 mb-3">For "Mango Yogurt"</h3>
                     <ul class="text-sm text-slate-700 space-y-2">
                         <li><input type="checkbox" class="accent-amber-600 mr-2">Non-Fat Greek Yogurt</li>
@@ -274,7 +282,7 @@
                 </div>
 
                 <!-- List 3 -->
-                <div class="bg-slate-50 p-4" style="border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--taupe);">
+                <div class="bg-slate-50 p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.1);">
                     <h3 class="font-bold text-amber-700 mb-3">For "Tofu Scramble"</h3>
                     <ul class="text-sm text-slate-700 space-y-2">
                         <li><input type="checkbox" class="accent-amber-600 mr-2">Extra Firm Tofu</li>
@@ -289,20 +297,20 @@
 
         <!-- Recipes Section -->
         <section id="recipes" class="space-y-8 scroll-mt-24">
-            <h2 class="text-2xl font-bold text-slate-800 mb-4">The Recipes</h2>
+            <h2 class="text-2xl font-medium text-slate-800 mb-4">The Recipes</h2>
 
             <!-- Recipe 1 -->
-            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage); border-left: 8px solid var(--coral);">
+            <div class="bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-900">1. Savory Kimchi & Egg Scramble</h3>
-                        <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded">High Protein</span>
+                        <h3 class="text-xl font-medium text-slate-900">1. Savory Kimchi & Egg Scramble</h3>
+                        <span class="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded">High Protein</span>
                     </div>
                     <p class="text-slate-600 mb-4 text-sm">A savory, probiotic-packed way to start the day.</p>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Ingredients</h4>
                             <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
                                 <li>3 whole eggs (whisked)</li>
                                 <li>1/2 cup kimchi, chopped</li>
@@ -313,7 +321,7 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Instructions</h4>
                             <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
                                 <li>Sauté white parts of onion and kimchi in a pan for 2 mins.</li>
                                 <li>Add eggs and scramble gently until 80% cooked.</li>
@@ -326,17 +334,17 @@
             </div>
 
             <!-- Recipe 2 -->
-            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter); border-left: 8px solid var(--sage);">
+            <div class="bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-900">2. Mango-Ginger Protein Yogurt</h3>
-                        <span class="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">Fastest (2 Mins)</span>
+                        <h3 class="text-xl font-medium text-slate-900">2. Mango-Ginger Protein Yogurt</h3>
+                        <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded">Fastest (2 Mins)</span>
                     </div>
                     <p class="text-slate-600 mb-4 text-sm">Tastes like dessert, fuels like a meal. Can be made the night before.</p>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Ingredients</h4>
                             <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
                                 <li>1 cup (220g) Non-Fat Greek Yogurt</li>
                                 <li>1 scoop Vanilla Whey Protein</li>
@@ -346,7 +354,7 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Instructions</h4>
                             <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
                                 <li>Mix yogurt and protein powder vigorously until smooth.</li>
                                 <li>Stir in ginger and chia seeds.</li>
@@ -359,17 +367,17 @@
             </div>
 
             <!-- Recipe 3 -->
-            <div class="bg-white overflow-hidden" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--coral); border-left: 8px solid var(--butter);">
+            <div class="bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-slate-900">3. Spicy Tofu & Avocado Scramble</h3>
-                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">Plant Based</span>
+                        <h3 class="text-xl font-medium text-slate-900">3. Spicy Tofu & Avocado Scramble</h3>
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">Plant Based</span>
                     </div>
                     <p class="text-slate-600 mb-4 text-sm">Hearty and savory. Great for days you want a break from eggs.</p>
 
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Ingredients</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Ingredients</h4>
                             <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
                                 <li>7 oz (1/2 block) extra-firm tofu</li>
                                 <li>1/2 avocado, sliced</li>
@@ -380,7 +388,7 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-bold text-slate-700 mb-2 text-sm uppercase tracking-wide">Instructions</h4>
+                            <h4 class="font-bold text-slate-700 mb-2 text-sm">Instructions</h4>
                             <ol class="list-decimal list-inside text-sm text-slate-600 space-y-2">
                                 <li>Crumble tofu with hands into a bowl.</li>
                                 <li>Sauté mushrooms in a pan until browned.</li>
@@ -406,7 +414,7 @@
     id="dark-mode-toggle"
     onclick="toggleDarkMode()"
     class="fixed top-4 right-4 z-[100] w-12 h-12 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm transition-all duration-300 flex items-center justify-center group no-print"
-    style="border: 3px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--sage);"
+    style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2);"
     aria-label="Toggle dark mode"
     title="Toggle dark mode"
 >
