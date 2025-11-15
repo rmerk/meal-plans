@@ -110,8 +110,10 @@
 
         /* Form focus styles */
         select:focus, input:focus {
-            ring-color: var(--coral);
+            outline-color: var(--coral);
             border-color: var(--coral);
+            outline-width: 2px;
+            outline-style: solid;
         }
     </style>
 </head>
@@ -308,7 +310,7 @@
                         <div class="font-semibold text-slate-800">Default Servings</div>
                         <div class="text-sm text-slate-600">Standard serving size for recipes</div>
                     </div>
-                    <input type="number" id="default-servings" min="1" max="10" value="4" onchange="savePreference('defaultServings', this.value)" class="w-20 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent text-center">
+                    <input type="number" id="default-servings" min="1" max="20" value="4" step="1" onchange="savePreference('defaultServings', this.value)" class="w-20 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-coral focus:border-transparent text-center">
                 </div>
 
                 <!-- Units -->
@@ -392,8 +394,13 @@
 
         // Load all settings
         function loadAllSettings() {
-            // Load notification settings
-            if (window.notificationManager) {
+            // Check if notification system is available
+            if (!window.notificationManager) {
+                // Notification system unavailable - show warning and disable controls
+                showNotificationUnavailableWarning();
+                disableNotificationControls();
+            } else {
+                // Load notification settings
                 const settings = notificationManager.settings;
                 document.getElementById('notifications-enabled').checked = settings.enabled;
                 document.getElementById('meal-prep-reminders').checked = settings.mealPrepReminders;
@@ -417,6 +424,67 @@
 
             // Load preferences
             loadPreferences();
+        }
+
+        // Show warning when notification system is unavailable
+        function showNotificationUnavailableWarning() {
+            const notificationSection = document.querySelector('.bg-white.rounded-2xl.shadow-lg:nth-of-type(2)');
+            if (notificationSection) {
+                const warningBanner = document.createElement('div');
+                warningBanner.className = 'bg-amber-50 border-l-4 border-amber-500 p-4 mb-4 rounded-lg';
+                warningBanner.innerHTML = `
+                    <div class="flex items-start">
+                        <svg class="w-6 h-6 text-amber-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <div>
+                            <h4 class="font-semibold text-amber-800">Notification System Unavailable</h4>
+                            <p class="text-sm text-amber-700 mt-1">The notification system failed to load. Notification settings are currently disabled. Please refresh the page or check your browser console for errors.</p>
+                        </div>
+                    </div>
+                `;
+                notificationSection.insertBefore(warningBanner, notificationSection.children[1]);
+            }
+        }
+
+        // Disable notification controls when system unavailable
+        function disableNotificationControls() {
+            const notificationInputs = [
+                'notifications-enabled',
+                'meal-prep-reminders',
+                'cooking-timers',
+                'prep-day',
+                'prep-time',
+                'quiet-hours-enabled',
+                'quiet-start',
+                'quiet-end'
+            ];
+
+            notificationInputs.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.disabled = true;
+                    element.style.opacity = '0.5';
+                    element.style.cursor = 'not-allowed';
+                }
+            });
+
+            // Disable test notification button
+            const testButton = document.querySelector('button[onclick="testNotification()"]');
+            if (testButton) {
+                testButton.disabled = true;
+                testButton.style.opacity = '0.5';
+                testButton.style.cursor = 'not-allowed';
+                testButton.onclick = function(e) {
+                    e.preventDefault();
+                    if (window.showToast) {
+                        showToast('⚠️ Notification system unavailable');
+                    } else {
+                        alert('Notification system unavailable');
+                    }
+                    return false;
+                };
+            }
         }
 
         // Update notification settings
@@ -453,26 +521,26 @@
 
         // Change theme (unified with mobile-utils.js)
         function changeTheme(themeValue) {
+            let appliedTheme;
+
             if (themeValue === 'auto') {
                 // Auto mode: remove manual preference and follow system
                 localStorage.removeItem('theme');
                 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+                appliedTheme = prefersDark ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', appliedTheme);
             } else if (themeValue === 'dark' || themeValue === 'light') {
-                // Use mobile-utils.js setTheme if available, otherwise set directly
-                if (window.MobileUtils && typeof window.MobileUtils !== 'undefined') {
-                    // MobileUtils is loaded, but setTheme might not be exposed
-                    localStorage.setItem('theme', themeValue);
-                    document.documentElement.setAttribute('data-theme', themeValue);
+                // Manual theme selection
+                localStorage.setItem('theme', themeValue);
+                appliedTheme = themeValue;
+                document.documentElement.setAttribute('data-theme', themeValue);
+            }
 
-                    // Dispatch event for custom reactions
-                    window.dispatchEvent(new CustomEvent('themechange', {
-                        detail: { theme: themeValue }
-                    }));
-                } else {
-                    localStorage.setItem('theme', themeValue);
-                    document.documentElement.setAttribute('data-theme', themeValue);
-                }
+            // Dispatch event for custom reactions (for all theme changes)
+            if (appliedTheme) {
+                window.dispatchEvent(new CustomEvent('themechange', {
+                    detail: { theme: appliedTheme }
+                }));
             }
 
             // Provide haptic feedback
@@ -504,6 +572,22 @@
 
         // Save preference
         function savePreference(key, value) {
+            // Validate default servings
+            if (key === 'defaultServings') {
+                const numValue = parseInt(value);
+                if (isNaN(numValue) || numValue < 1 || numValue > 20) {
+                    if (window.showToast) {
+                        showToast('❌ Servings must be between 1 and 20');
+                    } else {
+                        alert('Servings must be between 1 and 20');
+                    }
+                    // Reset to default
+                    document.getElementById('default-servings').value = 4;
+                    return;
+                }
+                value = numValue; // Ensure it's stored as a number
+            }
+
             const saved = localStorage.getItem(PREFERENCES_KEY);
             const prefs = saved ? JSON.parse(saved) : {};
             prefs[key] = value;
