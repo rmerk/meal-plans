@@ -8,22 +8,22 @@
    ============================================================================ */
 
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-card: #1e293b;
-  --bg-hover: #334155;
+  --bg-primary: #1A1D1E;
+  --bg-secondary: #2A2D2E;
+  --bg-tertiary: #3A3D3E;
+  --bg-card: #2A2D2E;
+  --bg-hover: #3A3D3E;
 
-  --text-primary: #f1f5f9;
+  --text-primary: #E8E4DF;
   --text-secondary: #cbd5e1;
   --text-tertiary: #94a3b8;
 
-  --border-primary: #334155;
-  --border-secondary: #475569;
+  --border-primary: #3A3D3E;
+  --border-secondary: #4A4D4E;
 
-  --terracotta: #e88d67;
-  --terracotta-dark: #d4735e;
-  --warm-orange: #ffa07a;
+  --sage-dark: #A8B8A0;
+  --gold-dark: #C9A961;
+  --accent: #A8B8A0;
 
   color-scheme: dark;
 }
@@ -33,7 +33,7 @@
    ============================================================================ */
 
 [data-theme="dark"] body {
-  background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+  background: linear-gradient(to bottom right, #1A1D1E, #2A2D2E, #1A1D1E);
   color: var(--text-primary);
 }
 
@@ -46,12 +46,12 @@
    ============================================================================ */
 
 [data-theme="dark"] nav {
-  background: linear-gradient(to right, #1e293b, #334155) !important;
+  background: linear-gradient(to right, #2A2D2E, #3A3D3E) !important;
   border-bottom: 1px solid var(--border-secondary);
 }
 
 [data-theme="dark"] .hero-gradient {
-  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%) !important;
+  background: linear-gradient(135deg, #2A2D2E 0%, #3A3D3E 50%, #4A4D4E 100%) !important;
 }
 
 /* ============================================================================
@@ -64,7 +64,7 @@
 }
 
 [data-theme="dark"] .bg-gradient-to-br {
-  background: linear-gradient(to bottom right, #1e293b, #334155) !important;
+  background: linear-gradient(to bottom right, #2A2D2E, #3A3D3E) !important;
 }
 
 [data-theme="dark"] .border-orange-100,
@@ -113,7 +113,7 @@
 [data-theme="dark"] input:focus,
 [data-theme="dark"] textarea:focus,
 [data-theme="dark"] select:focus {
-  border-color: var(--terracotta);
+  border-color: var(--sage-dark);
   background-color: var(--bg-secondary);
 }
 
@@ -174,12 +174,12 @@
 
 [data-theme="dark"] .modal,
 [data-theme="dark"] .overlay {
-  background-color: rgba(15, 23, 42, 0.95);
+  background-color: rgba(26, 29, 30, 0.95);
 }
 
 /* Cooking mode is already dark, keep it consistent */
 [data-theme="dark"] #cooking-mode {
-  background: linear-gradient(to bottom, #0f172a, #1e293b);
+  background: linear-gradient(to bottom, #1A1D1E, #2A2D2E);
 }
 
 /* ============================================================================
@@ -196,7 +196,7 @@
 }
 
 [data-theme="dark"] .fixed.bottom-0 a:hover {
-  color: var(--terracotta);
+  color: var(--sage-dark);
 }
 
 /* ============================================================================

@@ -3,50 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#F06C6C">
+    <meta name="theme-color" content="#8B9D83">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Meal Plans - Recipe Discovery & Planning Dashboard</title>
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="./dist/tailwind.css">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="meals/plans.js"></script>
     <script src="mobile-utils.js"></script>
     <link rel="stylesheet" href="./dark-mode.css">
     <link rel="stylesheet" href="./landscape.css">
     <style>
         body {
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
         }
 
-        /* Atomic Age Sunset Color Palette */
+        /* Sage & Gold Sophisticated Color Palette */
         :root {
-            --coral: #F06C6C;
-            --coral-dark: #D95555;
-            --sage: #87AB8F;
-            --sage-light: #A4C4A7;
-            --butter: #F4D35E;
-            --butter-light: #FFE66D;
-            --taupe: #C9B5A0;
-            --warm-brown: #8B6F47;
-            --warm-cream: #FFF8F0;
-            --soft-peach: #FFE5D9;
-            --charcoal: #2D3748;
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+            --gray-secondary: #636E72;
+            --success: #7FA87F;
+            --warning: #D4A574;
+            --error: #C17B7B;
+            --info: #8B9DC3;
+            --category-breakfast: #F4E4D7;
+            --category-lunch: #E8F0E8;
+            --category-dinner: #E8DFE0;
+            --category-dessert: #F2E8DC;
         }
 
-        .bg-coral { background-color: var(--coral); }
         .bg-sage { background-color: var(--sage); }
-        .bg-butter { background-color: var(--butter); }
-        .text-coral { color: var(--coral); }
+        .bg-gold { background-color: var(--gold); }
+        .bg-cream { background-color: var(--cream); }
         .text-sage { color: var(--sage); }
-        .text-butter { color: var(--butter); }
-        .border-coral { border-color: var(--coral); }
+        .text-gold { color: var(--gold); }
+        .text-charcoal { color: var(--charcoal); }
+        .border-sage { border-color: var(--sage); }
 
-        /* Mid-Century Typography */
-        h1, h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            letter-spacing: -0.02em;
+        /* Sophisticated Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
         }
 
         /* Mobile optimizations */
@@ -87,110 +96,59 @@
         .animate-fade-out { animation: fade-out 0.3s ease-out; }
         .animate-slide-up { animation: slide-up 0.4s ease-out; }
 
-        /* Atomic Age Hero Section */
+        /* Sophisticated Hero Section */
         .hero-gradient {
-            background: linear-gradient(165deg, var(--coral) 0%, #FF8787 50%, var(--butter) 100%);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
             position: relative;
         }
 
-        /* Starburst Pattern */
-        .starburst {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, transparent 30%, var(--sage) 30%, var(--sage) 32%, transparent 32%);
-            opacity: 0.15;
-        }
-
-        .starburst::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 2px;
-            background: var(--sage);
-            transform: translate(-50%, -50%) rotate(0deg);
-            box-shadow:
-                0 0 0 2px var(--sage),
-                0 0 0 2px var(--sage);
-        }
-
-        /* Geometric Shapes */
-        .geometric-circle {
-            border-radius: 50%;
-            border: 3px solid var(--sage);
-            background: transparent;
-        }
-
-        .geometric-square {
-            border: 3px solid var(--butter);
-            background: transparent;
-            transform: rotate(45deg);
-        }
-
-        /* Atomic Age Card Design */
+        /* Sophisticated Card Design */
         .meal-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            border: 3px solid var(--charcoal);
-            box-shadow: 8px 8px 0 0 rgba(135, 171, 143, 0.25);
-        }
-
-        .meal-card::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: scale(0);
-            transition: transform 0.3s ease;
-        }
-
-        .meal-card:hover::after {
-            transform: scale(1);
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);
         }
 
         .meal-card:hover {
             transform: translateY(-4px);
-            box-shadow: 12px 12px 0 0 rgba(135, 171, 143, 0.35);
+            box-shadow: 0 4px 16px rgba(45, 52, 54, 0.12);
         }
 
         .meal-card.hidden {
             display: none;
         }
 
-        /* Atomic Age Category Buttons */
+        /* Sophisticated Category Buttons */
         .category-btn {
             transition: all 0.2s ease;
             position: relative;
             border: 2px solid transparent;
-            font-family: 'Space Grotesk', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 12px 24px;
         }
 
         .category-btn.active {
-            background: var(--coral);
+            background: var(--sage);
             color: white;
-            border-color: var(--coral-dark);
-            box-shadow: 4px 4px 0 0 var(--sage);
+            border-color: var(--sage);
+            box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2);
         }
 
         .category-btn:not(.active) {
-            background: var(--warm-cream);
-            color: var(--charcoal);
-            border-color: var(--taupe);
+            background: transparent;
+            color: var(--sage);
+            border-color: var(--sage);
         }
 
         .category-btn:not(.active):hover {
-            background: var(--soft-peach);
-            border-color: var(--coral);
+            background: var(--sage-light);
+            border-color: var(--sage-hover);
             transform: translateY(-2px);
         }
 
@@ -224,74 +182,59 @@
         .fade-in-delay-2 { animation-delay: 0.2s; opacity: 0; }
         .fade-in-delay-3 { animation-delay: 0.3s; opacity: 0; }
 
-        /* Atomic Age Tool Cards */
+        /* Sophisticated Tool Cards */
         .tool-card {
             transition: all 0.3s ease;
             background: white;
-            border: 3px solid var(--charcoal);
-            box-shadow: 6px 6px 0 0 var(--butter);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);
             position: relative;
         }
 
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border: 1px dashed var(--taupe);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        .tool-card:hover::before {
-            opacity: 0.3;
-        }
-
         .tool-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 8px 8px 0 0 var(--butter);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(45, 52, 54, 0.12);
         }
 
-        /* Atomic Age Search Bar */
+        /* Sophisticated Search Bar */
         .search-bar {
             transition: all 0.3s ease;
-            border: 3px solid var(--charcoal);
-            font-family: 'DM Sans', sans-serif;
+            border: 1.5px solid #E8E4DF;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            padding: 12px 16px;
         }
 
         .search-bar:focus {
-            box-shadow: 6px 6px 0 0 var(--sage);
-            border-color: var(--coral);
+            box-shadow: 0 0 0 3px rgba(139, 157, 131, 0.1);
+            border: 2px solid var(--sage);
             outline: none;
         }
 
-        /* Atomic Age View Mode Buttons */
+        /* Sophisticated View Mode Buttons */
         .view-mode-btn {
             color: var(--charcoal);
             border: 2px solid transparent;
-            font-family: 'Space Grotesk', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.75rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 8px 16px;
         }
 
         .view-mode-btn.active {
             background: var(--sage);
             color: white;
-            border-color: var(--charcoal);
-            box-shadow: 3px 3px 0 0 var(--butter);
+            border-color: var(--sage);
         }
 
         .view-mode-btn:not(.active) {
-            background: var(--warm-cream);
-            border-color: var(--taupe);
+            background: var(--cream);
+            border-color: var(--cream-dark);
         }
 
         .view-mode-btn:not(.active):hover {
-            background: var(--soft-peach);
+            background: var(--cream-dark);
             border-color: var(--sage);
         }
 
@@ -309,41 +252,23 @@
         }
     </style>
 </head>
-<body class="min-h-screen antialiased" style="background: linear-gradient(135deg, var(--warm-cream) 0%, var(--soft-peach) 50%, #FFF4E6 100%);">
+<body class="min-h-screen antialiased" style="background-color: var(--cream);">
 
     <!-- Hero Section -->
     <header class="hero-gradient relative overflow-hidden">
-        <!-- Mid-Century Geometric Decorations -->
-        <div class="absolute inset-0 opacity-20">
-            <!-- Starburst elements -->
-            <div class="starburst" style="top: 10%; left: 5%; animation: float 6s ease-in-out infinite;"></div>
-            <div class="starburst" style="top: 60%; right: 10%; animation: float 8s ease-in-out infinite; animation-delay: 1s;"></div>
-
-            <!-- Geometric circles -->
-            <div class="geometric-circle absolute" style="top: 20%; right: 15%; width: 120px; height: 120px; animation: float 7s ease-in-out infinite; animation-delay: 0.5s;"></div>
-            <div class="geometric-circle absolute" style="bottom: 15%; left: 20%; width: 80px; height: 80px; animation: float 9s ease-in-out infinite; animation-delay: 2s;"></div>
-
-            <!-- Geometric squares -->
-            <div class="geometric-square absolute" style="top: 40%; left: 10%; width: 60px; height: 60px; animation: float 5s ease-in-out infinite; animation-delay: 1.5s;"></div>
-            <div class="geometric-square absolute" style="bottom: 30%; right: 25%; width: 90px; height: 90px; animation: float 10s ease-in-out infinite; animation-delay: 0.8s;"></div>
-        </div>
-
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 relative z-10">
             <div class="text-center fade-in">
-                <!-- Atomic Age Icon Badge -->
+                <!-- Sophisticated Icon Badge -->
                 <div class="inline-block mb-6">
-                    <div class="relative">
-                        <div class="w-24 h-24 rounded-full flex items-center justify-center text-5xl" style="background: var(--sage); border: 4px solid var(--charcoal); box-shadow: 8px 8px 0 0 rgba(255, 255, 255, 0.3);">
-                            🍽️
-                        </div>
-                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full" style="background: var(--butter); border: 3px solid var(--charcoal);"></div>
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center text-4xl bg-white shadow-card">
+                        🍽️
                     </div>
                 </div>
-                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 drop-shadow-lg" style="text-shadow: 3px 3px 0 rgba(0,0,0,0.2);">
+                <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6" style="color: var(--charcoal);">
                     Your Meal Planning
                     <span class="block mt-3">Dashboard</span>
                 </h1>
-                <p class="text-xl sm:text-2xl text-white/95 max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
+                <p class="text-xl sm:text-2xl max-w-3xl mx-auto mb-10 font-normal leading-relaxed" style="color: var(--gray-secondary);">
                     Discover delicious recipes, organize your weekly meals, and simplify batch cooking with smart planning tools
                 </p>
 
@@ -354,10 +279,9 @@
                             type="text"
                             id="quick-search"
                             placeholder="Search all recipes... (e.g., chicken, curry, breakfast)"
-                            class="search-bar w-full px-6 py-4 rounded-none bg-white text-slate-800 placeholder-slate-500 text-lg"
-                            style="box-shadow: 6px 6px 0 0 rgba(135, 171, 143, 0.3);"
+                            class="search-bar w-full px-6 py-4 bg-white text-slate-800 placeholder-slate-500 text-lg"
                         />
-                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white px-6 py-2.5 font-bold transition-all duration-200 uppercase tracking-wider text-sm" style="background: var(--coral); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
+                        <button onclick="handleQuickSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white px-6 py-2.5 font-medium transition-all duration-200" style="background: var(--sage); border-radius: 6px; font-family: 'Inter', sans-serif;">
                             Search
                         </button>
                     </div>
@@ -366,29 +290,27 @@
                 <!-- Stats -->
                 <div class="mt-12 grid grid-cols-3 gap-8 max-w-3xl mx-auto fade-in-delay-2">
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--coral);">${mealPlans.length}</div>
+                        <div class="inline-block px-6 py-3 mb-2 bg-white rounded-lg shadow-card">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--sage);">${mealPlans.length}</div>
                         </div>
-                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Meal Plans</div>
+                        <div class="font-medium text-sm sm:text-base" style="color: var(--charcoal); font-family: 'Inter', sans-serif;">Meal Plans</div>
                     </div>
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--sage);">50+</div>
+                        <div class="inline-block px-6 py-3 mb-2 bg-white rounded-lg shadow-card">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--gold);">50+</div>
                         </div>
-                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Recipes</div>
+                        <div class="font-medium text-sm sm:text-base" style="color: var(--charcoal); font-family: 'Inter', sans-serif;">Recipes</div>
                     </div>
                     <div class="text-center">
-                        <div class="inline-block px-6 py-3 mb-2" style="background: white; border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
-                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--butter);">5</div>
+                        <div class="inline-block px-6 py-3 mb-2 bg-white rounded-lg shadow-card">
+                            <div class="text-3xl sm:text-4xl font-bold mb-1" style="color: var(--sage);">5</div>
                         </div>
-                        <div class="text-white font-semibold text-sm sm:text-base uppercase tracking-wide" style="font-family: 'Space Grotesk', sans-serif;">Power Tools</div>
+                        <div class="font-medium text-sm sm:text-base" style="color: var(--charcoal); font-family: 'Inter', sans-serif;">Power Tools</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Geometric separator -->
-        <div class="absolute bottom-0 left-0 right-0 h-8" style="background: repeating-linear-gradient(90deg, var(--warm-cream) 0px, var(--warm-cream) 40px, var(--sage) 40px, var(--sage) 43px, var(--warm-cream) 43px, var(--warm-cream) 83px, var(--butter) 83px, var(--butter) 86px);"></div>
     </header>
 
     <!-- Main Content -->
@@ -396,11 +318,11 @@
 
         <!-- View Mode Toggle -->
         <div class="mb-8 flex justify-center">
-            <div class="inline-flex items-center gap-4 bg-white p-2" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--taupe);">
-                <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn px-8 py-3 font-bold transition-all duration-200">
+            <div class="inline-flex items-center gap-2 bg-white p-2 rounded-lg shadow-card">
+                <button onclick="setViewMode('simple')" id="simple-view-btn" class="view-mode-btn transition-all duration-200">
                     ⚡ Quick Start
                 </button>
-                <button onclick="setViewMode('detailed')" id="detailed-view-btn" class="view-mode-btn px-8 py-3 font-bold transition-all duration-200">
+                <button onclick="setViewMode('detailed')" id="detailed-view-btn" class="view-mode-btn transition-all duration-200">
                     📚 Full View
                 </button>
             </div>
@@ -409,25 +331,23 @@
         <!-- Power Tools Section -->
         <div id="power-tools-section" class="mb-12 fade-in collapsible-section">
             <div class="text-center mb-10">
-                <div class="inline-block px-8 py-3 mb-4" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter);">
-                    <h2 class="text-3xl font-bold text-white">Power Up Your Meal Prep</h2>
-                </div>
-                <p class="text-slate-700 text-lg font-medium">Smart tools to save time and stay organized</p>
+                <h2 class="text-3xl font-bold mb-3" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Power Up Your Meal Prep</h2>
+                <p class="text-lg" style="color: var(--gray-secondary);">Smart tools to save time and stay organized</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <a href="shopping-helper.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--sage);">
                             🛒
                         </div>
-                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Smart Shopping</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Smart Shopping</h3>
                     </div>
-                    <p class="text-slate-700 mb-4 leading-relaxed">
+                    <p class="mb-4 leading-relaxed" style="color: var(--gray-secondary); font-size: 14px;">
                         Auto-consolidate ingredients, track prices & budget, organize by aisle for efficient shopping.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--coral); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--sage); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-medium text-sm" style="color: var(--sage); font-family: 'Inter', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2 rounded-full" style="background: var(--success); color: white;">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
@@ -435,62 +355,62 @@
 
                 <a href="analytics-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--gold);">
                             📈
                         </div>
-                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Analytics</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Analytics</h3>
                     </div>
-                    <p class="text-slate-700 mb-4 leading-relaxed">
+                    <p class="mb-4 leading-relaxed" style="color: var(--gray-secondary); font-size: 14px;">
                         Track cooking history, analyze nutrition trends, visualize progress with interactive charts.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--sage); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--butter); color: var(--charcoal); border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-medium text-sm" style="color: var(--gold); font-family: 'Inter', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2 rounded-full" style="background: var(--info); color: white;">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="nutrition-dashboard.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--butter); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--sage);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--sage-light);">
                             📊
                         </div>
-                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Nutrition Compare</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Nutrition Compare</h3>
                     </div>
-                    <p class="text-slate-700 mb-4 leading-relaxed">
+                    <p class="mb-4 leading-relaxed" style="color: var(--gray-secondary); font-size: 14px;">
                         Compare meal plans side-by-side, track macros, visualize weekly nutrition with charts.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--butter-light); font-family: 'Space Grotesk', sans-serif;">
+                    <div class="flex items-center font-medium text-sm" style="color: var(--gold); font-family: 'Inter', sans-serif;">
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="recipe-scaler.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--taupe); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--coral);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--gold-soft);">
                             ⚖️
                         </div>
-                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Recipe Scaler</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Recipe Scaler</h3>
                     </div>
-                    <p class="text-slate-700 mb-4 leading-relaxed">
+                    <p class="mb-4 leading-relaxed" style="color: var(--gray-secondary); font-size: 14px;">
                         Scale any recipe to your desired serving size with smart fraction handling and instant calculations.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--warm-brown); font-family: 'Space Grotesk', sans-serif;">
+                    <div class="flex items-center font-medium text-sm" style="color: var(--sage); font-family: 'Inter', sans-serif;">
                         <span>Explore tool →</span>
                     </div>
                 </a>
 
                 <a href="settings.html" class="tool-card p-6 block group">
                     <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--sage-light); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--sage-light);">
                             ⚙️
                         </div>
-                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Settings</h3>
+                        <h3 class="ml-4 text-xl font-bold transition-colors" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Settings</h3>
                     </div>
-                    <p class="text-slate-700 mb-4 leading-relaxed">
+                    <p class="mb-4 leading-relaxed" style="color: var(--gray-secondary); font-size: 14px;">
                         Configure notifications, quiet hours, theme preferences, and manage your data.
                     </p>
-                    <div class="flex items-center font-bold text-sm uppercase tracking-wide" style="color: var(--sage); font-family: 'Space Grotesk', sans-serif;">
-                        <span class="px-2 py-1 text-xs mr-2" style="background: var(--coral); color: white; border: 2px solid var(--charcoal);">NEW</span>
+                    <div class="flex items-center font-medium text-sm" style="color: var(--sage); font-family: 'Inter', sans-serif;">
+                        <span class="px-2 py-1 text-xs mr-2 rounded-full" style="background: var(--success); color: white;">NEW</span>
                         <span>Explore tool →</span>
                     </div>
                 </a>
@@ -498,19 +418,19 @@
         </div>
 
         <!-- Recipe Discovery Section -->
-        <div id="recipe-discovery-section" class="p-8 mb-12 collapsible-section" style="background: white; border: 3px solid var(--charcoal); box-shadow: 8px 8px 0 0 var(--sage); border-left: 12px solid var(--coral);">
+        <div id="recipe-discovery-section" class="p-8 mb-12 collapsible-section bg-white rounded-lg shadow-card" style="border-left: 4px solid var(--gold);">
             <div class="flex items-start">
                 <div class="flex-shrink-0">
-                    <div class="w-16 h-16 flex items-center justify-center text-3xl" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter);">
+                    <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-lg" style="background: var(--gold);">
                         📖
                     </div>
                 </div>
                 <div class="ml-6 flex-1">
-                    <h3 class="text-2xl font-bold mb-2" style="color: var(--charcoal); font-family: 'Space Grotesk', sans-serif;">Explore Our Recipe Collection</h3>
-                    <p class="text-slate-700 mb-5 leading-relaxed">
+                    <h3 class="text-2xl font-bold mb-2" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Explore Our Recipe Collection</h3>
+                    <p class="mb-5 leading-relaxed" style="color: var(--gray-secondary);">
                         Browse our complete recipe library to find your next favorite meal. From Asian-inspired stir-fries to high-protein breakfasts, discover dishes that fit your lifestyle.
                     </p>
-                    <a href="all-recipes.html" class="inline-flex items-center px-6 py-3 text-white font-bold transition-all duration-200 uppercase tracking-wide text-sm" style="background: var(--sage); border: 3px solid var(--charcoal); box-shadow: 4px 4px 0 0 var(--butter); font-family: 'Space Grotesk', sans-serif;">
+                    <a href="all-recipes.html" class="inline-flex items-center px-6 py-3 text-white font-medium transition-all duration-200 rounded-lg shadow-button" style="background: var(--sage); font-family: 'Inter', sans-serif;">
                         <span>Browse All Recipes →</span>
                     </a>
                 </div>
@@ -520,19 +440,17 @@
         <!-- Meal Plans Section Header & Category Toggle -->
         <div class="mb-12">
             <div class="text-center mb-8">
-                <div class="inline-block px-8 py-3 mb-3" style="background: var(--coral); border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--sage);">
-                    <h2 class="text-3xl font-bold text-white">Your Meal Plans</h2>
-                </div>
-                <p class="text-slate-700 text-lg font-medium">Organized weekly plans with recipes, prep guides, and shopping lists</p>
+                <h2 class="text-3xl font-bold mb-3" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Your Meal Plans</h2>
+                <p class="text-lg" style="color: var(--gray-secondary);">Organized weekly plans with recipes, prep guides, and shopping lists</p>
             </div>
 
             <div class="flex justify-center">
-                <div class="inline-flex bg-white p-2 gap-3" style="border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 0 var(--butter);">
-                    <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active px-10 py-3 font-bold flex items-center gap-2">
+                <div class="inline-flex bg-white p-2 gap-2 rounded-lg shadow-card">
+                    <button onclick="showCategory('meals')" id="meals-btn" class="category-btn active flex items-center gap-2">
                         <span>🍽️</span>
                         <span>Meals</span>
                     </button>
-                    <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn px-10 py-3 font-bold flex items-center gap-2">
+                    <button onclick="showCategory('breakfast')" id="breakfast-btn" class="category-btn flex items-center gap-2">
                         <span>🍳</span>
                         <span>Breakfasts</span>
                     </button>
@@ -580,24 +498,18 @@
     <!-- Footer -->
     <footer class="text-center py-16 mt-24">
         <div class="max-w-6xl mx-auto px-4">
-            <!-- Atomic Age Footer Decoration -->
+            <!-- Sophisticated Footer Decoration -->
             <div class="flex justify-center mb-6">
-                <div class="w-20 h-20 flex items-center justify-center text-4xl" style="background: var(--sage); border: 3px solid var(--charcoal); border-radius: 50%; box-shadow: 6px 6px 0 0 var(--butter);">
+                <div class="w-16 h-16 flex items-center justify-center text-3xl rounded-full bg-white shadow-card">
                     🍽️
                 </div>
             </div>
-            <p class="text-slate-700 text-lg font-semibold mb-2" style="font-family: 'Space Grotesk', sans-serif;">
+            <p class="text-lg font-semibold mb-2" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">
                 Built with care for your meal prep journey
             </p>
-            <p class="text-slate-500 text-base">
+            <p class="text-base" style="color: var(--gray-secondary); font-family: 'Inter', sans-serif;">
                 Stay consistent, eat well, and enjoy the process
             </p>
-            <!-- Geometric decoration -->
-            <div class="mt-8 flex justify-center gap-4">
-                <div class="w-3 h-3" style="background: var(--coral); border: 2px solid var(--charcoal);"></div>
-                <div class="w-3 h-3 rounded-full" style="background: var(--sage); border: 2px solid var(--charcoal);"></div>
-                <div class="w-3 h-3" style="background: var(--butter); border: 2px solid var(--charcoal); transform: rotate(45deg);"></div>
-            </div>
         </div>
     </footer>
 
@@ -649,42 +561,42 @@
                 card.style.animationDelay = `${index * 0.1}s`;
                 card.classList.add('fade-in');
 
-                // Atomic Age Sunset color palette mapping
+                // Sage & Gold Sophisticated color palette mapping
                 const colorMap = {
                     emerald: {
-                        headerBg: '#F06C6C',
-                        accentColor: '#87AB8F',
-                        shadowColor: 'rgba(135, 171, 143, 0.25)',
+                        headerBg: '#8B9D83',  // Sage
+                        accentColor: '#B8956A',  // Gold
+                        shadowColor: 'rgba(139, 157, 131, 0.15)',
                         emoji: '🥗'
                     },
                     amber: {
-                        headerBg: '#F4D35E',
-                        accentColor: '#F06C6C',
-                        shadowColor: 'rgba(240, 108, 108, 0.25)',
+                        headerBg: '#B8956A',  // Gold
+                        accentColor: '#8B9D83',  // Sage
+                        shadowColor: 'rgba(184, 149, 106, 0.15)',
                         emoji: '🍳'
                     },
                     orange: {
-                        headerBg: '#FF8787',
-                        accentColor: '#87AB8F',
-                        shadowColor: 'rgba(135, 171, 143, 0.25)',
+                        headerBg: '#A8B8A0',  // Sage Light
+                        accentColor: '#B8956A',  // Gold
+                        shadowColor: 'rgba(168, 184, 160, 0.15)',
                         emoji: '🍲'
                     },
                     red: {
-                        headerBg: '#D95555',
-                        accentColor: '#F4D35E',
-                        shadowColor: 'rgba(244, 211, 94, 0.25)',
+                        headerBg: '#7FA87F',  // Success Green
+                        accentColor: '#D4A574',  // Gold Soft
+                        shadowColor: 'rgba(127, 168, 127, 0.15)',
                         emoji: '🌶️'
                     },
                     blue: {
-                        headerBg: '#87AB8F',
-                        accentColor: '#F06C6C',
-                        shadowColor: 'rgba(240, 108, 108, 0.25)',
+                        headerBg: '#8B9DC3',  // Info Blue
+                        accentColor: '#B8956A',  // Gold
+                        shadowColor: 'rgba(139, 157, 195, 0.15)',
                         emoji: '🥘'
                     },
                     purple: {
-                        headerBg: '#C9B5A0',
-                        accentColor: '#F4D35E',
-                        shadowColor: 'rgba(244, 211, 94, 0.25)',
+                        headerBg: '#D4A574',  // Gold Soft
+                        accentColor: '#8B9D83',  // Sage
+                        shadowColor: 'rgba(212, 165, 116, 0.15)',
                         emoji: '🍜'
                     }
                 };
@@ -721,33 +633,31 @@
                 });
 
                 card.innerHTML = `
-                    <div style="background: ${colors.headerBg}; border-bottom: 3px solid #2D3748;" class="p-6 relative overflow-hidden">
+                    <div style="background: ${colors.headerBg};" class="p-6 relative overflow-hidden rounded-t-lg">
                         ${ratingBadge}
-                        <div class="absolute top-2 right-2 w-16 h-16 rounded-full opacity-20" style="border: 3px solid white;"></div>
-                        <div class="absolute bottom-2 left-2 w-12 h-12 opacity-20" style="background: white; transform: rotate(45deg);"></div>
                         <div class="relative z-10">
                             <div class="flex items-center mb-3">
-                                <div class="w-12 h-12 flex items-center justify-center text-2xl" style="background: white; border: 2px solid #2D3748; box-shadow: 3px 3px 0 0 ${colors.accentColor};">
+                                <div class="w-12 h-12 flex items-center justify-center text-2xl rounded-lg" style="background: rgba(255,255,255,0.9);">
                                     ${colors.emoji}
                                 </div>
                             </div>
-                            <h2 class="text-2xl font-bold text-white mb-1" style="font-family: 'Space Grotesk', sans-serif; text-shadow: 2px 2px 0 rgba(0,0,0,0.2);">${plan.title}</h2>
-                            <p class="text-white/90 text-sm font-medium">${plan.subtitle}</p>
+                            <h2 class="text-2xl font-bold text-white mb-1" style="font-family: 'Playfair Display', serif;">${plan.title}</h2>
+                            <p class="text-white/90 text-sm font-medium" style="font-family: 'Inter', sans-serif;">${plan.subtitle}</p>
                         </div>
                     </div>
                     <div class="p-6">
                         <div class="space-y-3 mb-6">
                             ${plan.features.map((feature, idx) => `
                                 <div class="flex items-start">
-                                    <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-white" style="background: ${colors.accentColor}; border: 2px solid #2D3748;">
+                                    <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center text-white rounded" style="background: ${colors.accentColor};">
                                         ${featureIcons[idx]}
                                     </div>
-                                    <span class="ml-3 text-slate-700 leading-relaxed font-medium">${feature}</span>
+                                    <span class="ml-3 leading-relaxed font-normal" style="color: #636E72; font-size: 14px; font-family: 'Inter', sans-serif;">${feature}</span>
                                 </div>
                             `).join('')}
                         </div>
-                        <div class="pt-4" style="border-top: 2px solid ${colors.accentColor};">
-                            <div class="flex items-center justify-between font-bold uppercase tracking-wide text-sm" style="color: ${colors.headerBg}; font-family: 'Space Grotesk', sans-serif;">
+                        <div class="pt-4" style="border-top: 1px solid #F5F1EC;">
+                            <div class="flex items-center justify-between font-medium text-sm" style="color: ${colors.headerBg}; font-family: 'Inter', sans-serif;">
                                 <span>View Full Plan →</span>
                             </div>
                         </div>
