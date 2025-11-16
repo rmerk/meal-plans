@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Meal Plan - Overview</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../dark-mode.css">
+
+    <!-- Mobile Utils & Analytics -->
+    <script src="../../mobile-utils.js"></script>
+    <script src="../../analytics-tracker.js"></script>
+
+    <style>
+        :root {
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+
+            --category-breakfast: #FFF4E6;
+            --category-lunch: #FFE7DB;
+            --category-dinner: #E3F2FD;
+            --category-snack: #F3E5F5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+        }
+
+        .nav-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(139, 157, 131, 0.2) !important;
+        }
+
+        .nav-card:active {
+            transform: translateY(-2px);
+        }
+
+        .stat-ring {
+            width: 80px;
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="bg-gradient-to-r from-sage to-sage-dark text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="../../index.html" class="hover:bg-white/20 p-2 rounded-lg transition-all duration-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </a>
+                    <div>
+                        <div class="text-xs opacity-80">Meal Plans</div>
+                        <div class="font-semibold" style="font-family: 'Playfair Display', serif;">Week 1 Overview</div>
+                    </div>
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="theme-toggle-nav" onclick="toggleDarkMode()" class="p-2 hover:bg-white/20 rounded-lg transition-all duration-200">
+                    <svg class="w-5 h-5 text-white theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                    <svg class="w-5 h-5 text-yellow-300 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <!-- Hero Section -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-semibold mb-3" style="color: var(--charcoal); font-family: 'Playfair Display', serif;">Week 1 Meal Plan</h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-6">From 205 lbs to 180 lbs. High protein, Asian-inspired, batch prep focused.</p>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                <div class="bg-white p-4" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="text-3xl font-bold" style="color: var(--sage);">14</div>
+                    <div class="text-sm text-slate-600">Total Meals</div>
+                </div>
+                <div class="bg-white p-4" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="text-3xl font-bold" style="color: var(--gold);">4</div>
+                    <div class="text-sm text-slate-600">Recipes</div>
+                </div>
+                <div class="bg-white p-4" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="text-3xl font-bold" style="color: var(--sage);">2-3</div>
+                    <div class="text-sm text-slate-600">Prep Hours</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Cards -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-medium text-slate-800 mb-4" style="font-family: 'Playfair Display', serif;">What would you like to do?</h2>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+
+                <!-- Prep Strategy Card -->
+                <a href="prep.html" class="nav-card bg-white p-6 block" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--sage); color: white;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-1">Prep Strategy</h3>
+                            <p class="text-sm text-slate-600 mb-2">Step-by-step batch prep workflow</p>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded font-medium">2-3 hours</span>
+                                <span class="text-slate-500">5 steps</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- Shopping List Card -->
+                <a href="shopping.html" class="nav-card bg-white p-6 block" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--gold); color: white;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-1">Shopping List</h3>
+                            <p class="text-sm text-slate-600 mb-2">Organized by category with checkboxes</p>
+                            <div class="flex items-center gap-2 text-xs">
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded font-medium">Print friendly</span>
+                                <span class="text-slate-500">Interactive</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- View Recipes Card -->
+                <a href="recipes/index.html" class="nav-card bg-white p-6 block sm:col-span-2" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+                    <div class="flex items-start gap-4">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: linear-gradient(135deg, var(--sage), var(--gold)); color: white;">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-semibold text-slate-900 mb-1">View All Recipes</h3>
+                            <p class="text-sm text-slate-600 mb-2">4 detailed recipes with ingredients and instructions</p>
+                            <div class="flex items-center gap-2 text-xs flex-wrap">
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded font-medium">2 Lunches</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded font-medium">2 Dinners</span>
+                                <span class="text-slate-500">High protein</span>
+                            </div>
+                        </div>
+                        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Plan Details -->
+        <section class="bg-white p-6 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-xl font-medium text-slate-800 mb-6 border-b border-slate-100 pb-2" style="font-family: 'Playfair Display', serif;">Your 4 Recipes • 14 Total Meals</h2>
+
+            <div class="grid sm:grid-cols-2 gap-4 mb-6">
+                <!-- Recipe 1 -->
+                <div class="p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2);">
+                    <div class="flex items-start justify-between mb-2">
+                        <h4 class="font-bold text-slate-900 leading-tight">Gochugaru Beef & Broccoli Bowl</h4>
+                        <span class="flex-shrink-0 ml-2 font-medium text-2xl" style="color: var(--sage);">4</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-2">Spicy Korean-inspired ground beef with tender broccoli</p>
+                    <span class="bg-red-100 text-red-800 px-2 py-0.5 rounded text-xs font-semibold">LUNCH</span>
+                </div>
+
+                <!-- Recipe 2 -->
+                <div class="p-4" style="box-shadow: 0 2px 4px rgba(184, 149, 106, 0.2);">
+                    <div class="flex items-start justify-between mb-2">
+                        <h4 class="font-bold text-slate-900 leading-tight">Vietnamese-Style Chicken Salad</h4>
+                        <span class="flex-shrink-0 ml-2 font-medium text-2xl" style="color: var(--sage);">3</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-2">Fresh, deconstructed salad with tangy lime dressing</p>
+                    <span class="bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-xs font-semibold">LUNCH</span>
+                </div>
+
+                <!-- Recipe 3 -->
+                <div class="p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2);">
+                    <div class="flex items-start justify-between mb-2">
+                        <h4 class="font-bold text-slate-900 leading-tight">Classic Beef & Broccoli Stir-Fry</h4>
+                        <span class="flex-shrink-0 ml-2 font-medium text-2xl" style="color: var(--gold);">4</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-2">Restaurant-quality stir-fry with tender flank steak</p>
+                    <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs font-semibold">DINNER</span>
+                </div>
+
+                <!-- Recipe 4 -->
+                <div class="p-4" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.1);">
+                    <div class="flex items-start justify-between mb-2">
+                        <h4 class="font-bold text-slate-900 leading-tight">Pork & Soba Noodle Stir-Fry</h4>
+                        <span class="flex-shrink-0 ml-2 font-medium text-2xl" style="color: var(--sage);">3</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-2">Savory pork with chewy soba and crisp bok choy</p>
+                    <span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded text-xs font-semibold">DINNER</span>
+                </div>
+            </div>
+
+            <!-- The Numbers & Strategy -->
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="font-semibold mb-2" style="color: var(--sage);">The Numbers</h3>
+                    <ul class="space-y-2 text-slate-600 text-sm">
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--sage);"></span>Target Loss: 25 lbs (12-13 weeks)</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--sage);"></span>Rate: ~2 lbs per week</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--sage);"></span>Calories: 1,900 - 2,100 daily</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-2" style="color: var(--gold);">The Strategy</h3>
+                    <ul class="space-y-2 text-slate-600 text-sm">
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--gold);"></span>High Protein & Fiber</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--gold);"></span>Batch Prep Lunches & Dinners</li>
+                        <li class="flex items-center"><span class="w-2 h-2 rounded-full mr-2" style="background: var(--gold);"></span>Asian-inspired flavor profiles</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-slate-400 text-sm py-4">
+            <p>Generated by AI • Good luck hitting 180 lbs!</p>
+        </footer>
+
+    </div>
+
+    <!-- FAB Menu -->
+    <div id="fab-backdrop" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-[99]" onclick="closeFAB()"></div>
+
+    <div id="fab-container" class="fixed z-[100] print:hidden" style="bottom: 2rem; right: 2rem;">
+        <div id="fab-menu" class="hidden mb-3" style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">View Photos</span>
+                <button onclick="openPhotoGallery('Week 1 Overview')" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Take Photo</span>
+                <button onclick="openCameraCapture('Week 1 Overview')" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Start Prep</span>
+                <button onclick="window.location.href='prep.html'" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Shopping List</span>
+                <button onclick="window.location.href='shopping.html'" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <button id="main-fab" onclick="toggleFAB()" class="main-fab" style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%); box-shadow: 0 4px 12px rgba(184, 149, 106, 0.4); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: all 0.3s ease;">
+            <svg id="fab-icon-plus" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <svg id="fab-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- FAB Styles & Script -->
+    <style>
+        @media (max-width: 767px) {
+            #fab-container {
+                bottom: 5.5rem !important;
+                right: 1rem !important;
+            }
+        }
+
+        .main-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(184, 149, 106, 0.5) !important;
+        }
+
+        .main-fab:active {
+            transform: scale(0.95);
+        }
+
+        .mini-fab:hover {
+            transform: scale(1.1);
+            background: var(--sage) !important;
+            border-color: var(--sage) !important;
+        }
+
+        .mini-fab:hover svg {
+            color: white !important;
+        }
+
+        .fab-item:hover .fab-label {
+            background: var(--cream-dark) !important;
+        }
+
+        @keyframes fabSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fabSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+        }
+
+        @media print {
+            #fab-container, #fab-backdrop {
+                display: none !important;
+            }
+        }
+    </style>
+
+    <script>
+        let fabOpen = false;
+
+        function toggleFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (!fabOpen) {
+                fabOpen = true;
+                backdrop.classList.remove('hidden');
+                menu.classList.remove('hidden');
+                iconPlus.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.animation = 'fabSlideIn 0.3s ease forwards';
+                    }, index * 50);
+                });
+            } else {
+                closeFAB();
+            }
+        }
+
+        function closeFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (fabOpen) {
+                fabOpen = false;
+
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.animation = 'fabSlideOut 0.3s ease forwards';
+                        item.style.opacity = '0';
+                    }, index * 30);
+                });
+
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                    iconClose.classList.add('hidden');
+                    iconPlus.classList.remove('hidden');
+                }, fabItems.length * 30 + 300);
+            }
+        }
+
+        // Theme toggle
+        function updateThemeIcons() {
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            const navToggle = document.getElementById('theme-toggle-nav');
+            if (navToggle) {
+                const moonIcon = navToggle.querySelector('.theme-icon-moon');
+                const sunIcon = navToggle.querySelector('.theme-icon-sun');
+                if (theme === 'dark') {
+                    moonIcon?.classList.add('hidden');
+                    sunIcon?.classList.remove('hidden');
+                } else {
+                    moonIcon?.classList.remove('hidden');
+                    sunIcon?.classList.add('hidden');
+                }
+            }
+        }
+
+        const originalToggleDarkMode = window.toggleDarkMode;
+        window.toggleDarkMode = function() {
+            if (originalToggleDarkMode) {
+                originalToggleDarkMode();
+            }
+            updateThemeIcons();
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcons();
+        });
+    </script>
+
+</body>
+</html>

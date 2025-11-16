@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#8B9D83">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Week 1 Recipes - Browse all 4 Asian-inspired high-protein recipes.">
+    <title>Week 1 Recipes | Meal Plan</title>
+    <link rel="manifest" href="../../../manifest.json">
+    <link rel="stylesheet" href="../../../dist/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+        }
+
+        :root {
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+            --gray-secondary: #636E72;
+            --success: #7FA87F;
+            --warning: #D4A574;
+            --error: #C17B7B;
+            --info: #8B9DC3;
+            --category-lunch: #E8F0E8;
+            --category-dinner: #E8DFE0;
+        }
+
+        .bg-sage { background-color: var(--sage); }
+        .bg-gold { background-color: var(--gold); }
+        .text-sage { color: var(--sage); }
+        .text-gold { color: var(--gold); }
+        .text-charcoal { color: var(--charcoal); }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Recipe card hover effects */
+        .recipe-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(45, 52, 54, 0.15) !important;
+        }
+
+        .recipe-card:hover .recipe-arrow {
+            transform: translateX(4px);
+        }
+
+        .recipe-arrow {
+            transition: transform 0.3s ease;
+        }
+    </style>
+    <script src="../../plans.js"></script>
+    <script src="../../meal-utils.js"></script>
+    <script src="../../../analytics-tracker.js"></script>
+    <script src="../../../mobile-utils.js"></script>
+    <link rel="stylesheet" href="../../../animations.css">
+    <link rel="stylesheet" href="../../../dark-mode.css">
+</head>
+<body class="text-slate-800 antialiased" style="background-color: var(--cream);">
+
+    <nav class="text-white sticky top-0 z-50" style="background: var(--sage); box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <div class="text-sm text-white/80 flex items-center gap-2" style="font-family: 'Inter', sans-serif;">
+                        <a href="../../../index.html" class="hover:text-white transition">Home</a>
+                        <span>›</span>
+                        <a href="../index.html" class="hover:text-white transition">Week 1</a>
+                        <span>›</span>
+                        <span class="text-white font-medium">Recipes</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 hover:bg-white/20 rounded-lg transition-all duration-200" aria-label="Toggle dark mode">
+                        <svg class="w-5 h-5 text-white theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-300 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h1 class="text-3xl sm:text-4xl font-semibold mb-3" style="color: var(--charcoal);">Week 1 Recipes</h1>
+            <p class="text-lg text-slate-600 mb-4">4 Asian-inspired, high-protein recipes • 14 total meals</p>
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="px-3 py-1 text-sm font-medium" style="background-color: var(--category-lunch); color: var(--charcoal); border-radius: 12px;">🥗 2 Lunch Recipes</span>
+                <span class="px-3 py-1 text-sm font-medium" style="background-color: var(--category-dinner); color: var(--charcoal); border-radius: 12px;">🍽️ 2 Dinner Recipes</span>
+            </div>
+        </div>
+
+        <!-- Recipe Grid -->
+        <div class="grid sm:grid-cols-2 gap-6 mb-8">
+
+            <!-- Recipe 1: Beef & Broccoli Bowl -->
+            <a href="beef-broccoli.html" class="recipe-card bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08); border-radius: 12px; text-decoration: none;">
+                <div class="p-6" style="background: linear-gradient(135deg, #FFF5F5 0%, #FFF 100%); border-bottom: 3px solid var(--error);">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 text-xs font-semibold bg-red-100 text-red-800 rounded mb-2">LUNCH</span>
+                            <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Playfair Display', serif;">Gochugaru Beef & Broccoli Bowl</h3>
+                        </div>
+                        <span class="flex-shrink-0 ml-3 text-3xl font-bold" style="color: var(--sage);">4</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4">Spicy Korean-inspired ground beef with tender broccoli over fluffy brown rice</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                25 mins
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ~480 cal
+                            </span>
+                        </div>
+                        <div class="recipe-arrow" style="color: var(--sage);">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Recipe 2: Vietnamese Chicken Salad -->
+            <a href="chicken-salad.html" class="recipe-card bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08); border-radius: 12px; text-decoration: none;">
+                <div class="p-6" style="background: linear-gradient(135deg, #FFF7ED 0%, #FFF 100%); border-bottom: 3px solid var(--warning);">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 text-xs font-semibold bg-orange-100 text-orange-800 rounded mb-2">LUNCH</span>
+                            <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Playfair Display', serif;">Vietnamese-Style Chicken Salad</h3>
+                        </div>
+                        <span class="flex-shrink-0 ml-3 text-3xl font-bold" style="color: var(--gold);">3</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4">Fresh, deconstructed salad with shredded chicken and tangy lime dressing</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                20 mins
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ~350 cal
+                            </span>
+                        </div>
+                        <div class="recipe-arrow" style="color: var(--gold);">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Recipe 3: Beef & Broccoli Stir-Fry -->
+            <a href="beef-stirfry.html" class="recipe-card bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08); border-radius: 12px; text-decoration: none;">
+                <div class="p-6" style="background: linear-gradient(135deg, #EFF6FF 0%, #FFF 100%); border-bottom: 3px solid var(--info);">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded mb-2">DINNER</span>
+                            <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Playfair Display', serif;">Classic Beef & Broccoli Stir-Fry</h3>
+                        </div>
+                        <span class="flex-shrink-0 ml-3 text-3xl font-bold" style="color: var(--gold);">4</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4">Restaurant-quality stir-fry with tender flank steak and savory sauce</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                30 mins
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ~520 cal
+                            </span>
+                        </div>
+                        <div class="recipe-arrow" style="color: var(--info);">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Recipe 4: Pork & Soba Noodle Stir-Fry -->
+            <a href="pork-soba.html" class="recipe-card bg-white overflow-hidden" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08); border-radius: 12px; text-decoration: none;">
+                <div class="p-6" style="background: linear-gradient(135deg, #FAF5FF 0%, #FFF 100%); border-bottom: 3px solid #A78BFA;">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex-1">
+                            <span class="inline-block px-2 py-1 text-xs font-semibold bg-purple-100 text-purple-800 rounded mb-2">DINNER</span>
+                            <h3 class="text-xl font-bold text-slate-900" style="font-family: 'Playfair Display', serif;">Pork & Soba Noodle Stir-Fry</h3>
+                        </div>
+                        <span class="flex-shrink-0 ml-3 text-3xl font-bold" style="color: var(--sage);">3</span>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4">Savory pork with chewy soba noodles and crisp baby bok choy</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-4 text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                25 mins
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                ~490 cal
+                            </span>
+                        </div>
+                        <div class="recipe-arrow" style="color: #A78BFA;">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">Quick Actions</h2>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <a href="../prep.html" class="flex items-center gap-4 p-4 transition-all duration-200 hover:bg-slate-50" style="border: 2px solid var(--sage); border-radius: 8px; text-decoration: none;">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--sage);">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-slate-900">View Prep Strategy</h4>
+                        <p class="text-sm text-slate-600">5-step batch prep workflow</p>
+                    </div>
+                </a>
+                <a href="../shopping.html" class="flex items-center gap-4 p-4 transition-all duration-200 hover:bg-slate-50" style="border: 2px solid var(--gold); border-radius: 8px; text-decoration: none;">
+                    <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center" style="background: var(--gold);">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-slate-900">Shopping List</h4>
+                        <p class="text-sm text-slate-600">36 items with checkboxes</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Back to Overview Button -->
+        <div class="flex items-center justify-center">
+            <a href="../index.html" class="flex items-center gap-2 px-8 py-4 transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); border-radius: 12px; color: white; text-decoration: none; font-family: 'Playfair Display', serif; font-weight: 500;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Back to Week 1 Overview
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FAB Menu -->
+    <div id="fab-backdrop" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-[99]" onclick="closeFAB()"></div>
+
+    <div id="fab-container" class="fixed z-[100] print-hidden" style="bottom: 2rem; right: 2rem;">
+        <div id="fab-menu" class="hidden mb-3" style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Prep Strategy</span>
+                <button onclick="window.location.href='../prep.html'" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Shopping List</span>
+                <button onclick="window.location.href='../shopping.html'" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(184, 149, 106, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <button id="main-fab" onclick="toggleFAB()" class="main-fab" style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%); box-shadow: 0 4px 12px rgba(184, 149, 106, 0.4); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: all 0.3s ease;">
+            <svg id="fab-icon-plus" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <svg id="fab-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <style>
+        @media (max-width: 767px) {
+            #fab-container {
+                bottom: 1rem !important;
+                right: 1rem !important;
+            }
+        }
+
+        .main-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(184, 149, 106, 0.5) !important;
+        }
+
+        .main-fab:active {
+            transform: scale(0.95);
+        }
+
+        .mini-fab:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-item:hover .fab-label {
+            background: var(--cream-dark) !important;
+        }
+
+        @keyframes fabSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fabSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+        }
+    </style>
+
+    <script>
+        let fabOpen = false;
+
+        // FAB Menu
+        function toggleFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (!fabOpen) {
+                fabOpen = true;
+                backdrop.classList.remove('hidden');
+                menu.classList.remove('hidden');
+                iconPlus.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.animation = 'fabSlideIn 0.3s ease forwards';
+                    }, index * 50);
+                });
+            } else {
+                closeFAB();
+            }
+        }
+
+        function closeFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (fabOpen) {
+                fabOpen = false;
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.animation = 'fabSlideOut 0.3s ease forwards';
+                        item.style.opacity = '0';
+                    }, index * 30);
+                });
+
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                    iconClose.classList.add('hidden');
+                    iconPlus.classList.remove('hidden');
+                }, fabItems.length * 30 + 300);
+            }
+        }
+
+        // Theme toggle
+        function updateThemeIcons() {
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                const moonIcon = toggle.querySelector('.theme-icon-moon');
+                const sunIcon = toggle.querySelector('.theme-icon-sun');
+                if (theme === 'dark') {
+                    moonIcon?.classList.add('hidden');
+                    sunIcon?.classList.remove('hidden');
+                } else {
+                    moonIcon?.classList.remove('hidden');
+                    sunIcon?.classList.add('hidden');
+                }
+            }
+        }
+
+        const originalToggleDarkMode = window.toggleDarkMode;
+        window.toggleDarkMode = function() {
+            if (originalToggleDarkMode) {
+                originalToggleDarkMode();
+            }
+            updateThemeIcons();
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcons();
+
+            if (window.analyticsTracker) {
+                analyticsTracker.trackMealPlanView('Week 1 Recipe Gallery');
+            }
+        });
+    </script>
+
+</body>
+</html>
