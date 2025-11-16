@@ -4,7 +4,7 @@
 
 const mealPlans = [
     {
-        file: "week1-meals.html",
+        file: "week1/index.html",
         title: "Week 1 Meals",
         subtitle: "205 → 180 lbs",
         category: "meals",
