@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#8B9D83">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Week 1 Shopping List - Complete grocery list for all 4 recipes.">
+    <title>Week 1 Shopping List | Meal Plan</title>
+    <link rel="manifest" href="../../manifest.json">
+    <link rel="stylesheet" href="../../dist/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+        }
+
+        :root {
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+            --gray-secondary: #636E72;
+            --success: #7FA87F;
+            --warning: #D4A574;
+            --error: #C17B7B;
+            --info: #8B9DC3;
+        }
+
+        .bg-sage { background-color: var(--sage); }
+        .bg-gold { background-color: var(--gold); }
+        .text-sage { color: var(--sage); }
+        .text-gold { color: var(--gold); }
+        .text-charcoal { color: var(--charcoal); }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Checkbox animations */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            accent-color: var(--sage);
+        }
+
+        .shopping-item {
+            transition: all 0.3s ease;
+        }
+
+        .shopping-item.checked {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        /* Print styles */
+        @media print {
+            nav, .print-hidden, #fab-container, #fab-backdrop {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+                font-size: 11pt;
+            }
+
+            .shopping-list-container {
+                page-break-inside: avoid;
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0;
+            }
+
+            input[type="checkbox"] {
+                -webkit-appearance: checkbox;
+                appearance: checkbox;
+                width: 14px;
+                height: 14px;
+                border: 1px solid #000;
+            }
+
+            .shopping-list-grid {
+                column-count: 2;
+                column-gap: 20px;
+            }
+        }
+    </style>
+    <script src="../plans.js"></script>
+    <script src="../meal-utils.js"></script>
+    <script src="../../analytics-tracker.js"></script>
+    <script src="../../mobile-utils.js"></script>
+    <link rel="stylesheet" href="../../animations.css">
+    <link rel="stylesheet" href="../../dark-mode.css">
+</head>
+<body class="text-slate-800 antialiased" style="background-color: var(--cream);">
+
+    <nav class="text-white sticky top-0 z-50" style="background: var(--sage); box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <div class="text-sm text-white/80 flex items-center gap-2" style="font-family: 'Inter', sans-serif;">
+                        <a href="../../index.html" class="hover:text-white transition">Home</a>
+                        <span>›</span>
+                        <a href="index.html" class="hover:text-white transition">Week 1</a>
+                        <span>›</span>
+                        <span class="text-white font-medium">Shopping List</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 hover:bg-white/20 rounded-lg transition-all duration-200" aria-label="Toggle dark mode">
+                        <svg class="w-5 h-5 text-white theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-300 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <!-- Header -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h1 class="text-3xl sm:text-4xl font-semibold mb-3" style="color: var(--charcoal);">Week 1 Shopping List</h1>
+                    <p class="text-lg text-slate-600 mb-4">Complete grocery list for all 4 recipes • 14 total meals</p>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span id="progress-indicator" class="px-3 py-1 text-sm font-medium" style="background-color: var(--cream-dark); color: var(--charcoal); border-radius: 12px;">✓ 0/36 items checked</span>
+                        <button onclick="clearAllChecks()" class="px-3 py-1 text-sm font-medium hover:bg-slate-100 transition-all" style="border: 1px solid var(--sage); color: var(--sage); border-radius: 8px;">Clear All</button>
+                        <button onclick="window.print()" class="px-3 py-1 text-sm font-medium hover:bg-slate-100 transition-all print-hidden" style="border: 1px solid var(--gold); color: var(--gold); border-radius: 8px;">🖨️ Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping List -->
+        <div class="shopping-list-container bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <div class="grid md:grid-cols-3 gap-8 shopping-list-grid">
+
+                <!-- Produce Column -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2" style="color: var(--success);">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/>
+                        </svg>
+                        Produce
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-1" onchange="saveChecks()">
+                            <span>Garlic (3-4 heads)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-2" onchange="saveChecks()">
+                            <span>Fresh Ginger (5 inches)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-3" onchange="saveChecks()">
+                            <span>Green Onions (1 bunch)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-4" onchange="saveChecks()">
+                            <span>Cabbage (1 head)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-5" onchange="saveChecks()">
+                            <span>Carrots (1 bag/bunch)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-6" onchange="saveChecks()">
+                            <span>Large Cucumber (1)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-7" onchange="saveChecks()">
+                            <span>Cilantro & Mint (1 each)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-8" onchange="saveChecks()">
+                            <span>Limes (3)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-9" onchange="saveChecks()">
+                            <span>Onions (4 medium)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-10" onchange="saveChecks()">
+                            <span>Baby Bok Choy (12-15)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-11" onchange="saveChecks()">
+                            <span>Red Bell Peppers (3)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="produce-12" onchange="saveChecks()">
+                            <span>Broccoli (5 heads/2lbs)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Protein Column -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2" style="color: var(--error);">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        Protein
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="protein-1" onchange="saveChecks()">
+                            <span>Lean Ground Beef (1.25 lbs)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="protein-2" onchange="saveChecks()">
+                            <span>Chicken Breast (1.125 lbs)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="protein-3" onchange="saveChecks()">
+                            <span>Flank/Sirloin Steak (1.5 lbs)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="protein-4" onchange="saveChecks()">
+                            <span>Lean Pork Loin (1.125 lbs)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Pantry Column -->
+                <div>
+                    <h3 class="font-semibold text-lg mb-4 flex items-center gap-2" style="color: var(--warning);">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                        Pantry
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-1" onchange="saveChecks()">
+                            <span>Brown Rice (2 lbs)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-2" onchange="saveChecks()">
+                            <span>Soba Noodles (1 pack)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-3" onchange="saveChecks()">
+                            <span>Low-Sodium Soy Sauce</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-4" onchange="saveChecks()">
+                            <span>Gochugaru (Korean Chili)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-5" onchange="saveChecks()">
+                            <span>Honey or Maple Syrup</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-6" onchange="saveChecks()">
+                            <span>Sesame Oil</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-7" onchange="saveChecks()">
+                            <span>Toasted Sesame Seeds</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-8" onchange="saveChecks()">
+                            <span>Cooking Oils (Olive, Avo)</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-9" onchange="saveChecks()">
+                            <span>Cornstarch</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-10" onchange="saveChecks()">
+                            <span>Chicken/Beef Broth</span>
+                        </li>
+                        <li class="flex items-start shopping-item">
+                            <input type="checkbox" class="mt-1 mr-3" data-item="pantry-11" onchange="saveChecks()">
+                            <span>Rice Vinegar</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shopping Tips -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">Shopping Tips</h2>
+            <div class="space-y-4 text-slate-700">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Pre-Prepped Vegetables</h4>
+                        <p class="text-sm text-slate-600">Consider buying pre-shredded cabbage and carrots to save 15-20 minutes of prep time. Perfect for the Vietnamese chicken salad!</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Budget-Friendly Swaps</h4>
+                        <p class="text-sm text-slate-600">Flank steak can be swapped for sirloin or even chuck steak if you slice it thin and marinate well. Ground turkey works great instead of ground beef for a leaner option.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--info);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Gochugaru Substitute</h4>
+                        <p class="text-sm text-slate-600">If you can't find gochugaru (Korean chili flakes), use crushed red pepper flakes with a pinch of paprika for color. Start with half the amount as it's spicier!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Overview Button -->
+        <div class="flex items-center justify-center">
+            <a href="index.html" class="flex items-center gap-2 px-8 py-4 transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); border-radius: 12px; color: white; text-decoration: none; font-family: 'Playfair Display', serif; font-weight: 500;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Back to Week 1 Overview
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FAB Menu -->
+    <div id="fab-backdrop" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-[99]" onclick="closeFAB()"></div>
+
+    <div id="fab-container" class="fixed z-[100] print-hidden" style="bottom: 2rem; right: 2rem;">
+        <div id="fab-menu" class="hidden mb-3" style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Print List</span>
+                <button onclick="window.print()" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(184, 149, 106, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">View Recipes</span>
+                <button onclick="window.location.href='recipes/index.html'" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <button id="main-fab" onclick="toggleFAB()" class="main-fab" style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%); box-shadow: 0 4px 12px rgba(184, 149, 106, 0.4); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: all 0.3s ease;">
+            <svg id="fab-icon-plus" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <svg id="fab-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <style>
+        @media (max-width: 767px) {
+            #fab-container {
+                bottom: 1rem !important;
+                right: 1rem !important;
+            }
+        }
+
+        .main-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(184, 149, 106, 0.5) !important;
+        }
+
+        .main-fab:active {
+            transform: scale(0.95);
+        }
+
+        .mini-fab:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-item:hover .fab-label {
+            background: var(--cream-dark) !important;
+        }
+
+        @keyframes fabSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fabSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+        }
+    </style>
+
+    <script>
+        const SHOPPING_STORAGE_KEY = 'week1_shopping_checks';
+        let fabOpen = false;
+
+        // Load saved checks on page load
+        function loadChecks() {
+            const saved = localStorage.getItem(SHOPPING_STORAGE_KEY);
+            if (saved) {
+                const checks = JSON.parse(saved);
+                Object.keys(checks).forEach(itemId => {
+                    const checkbox = document.querySelector(`input[data-item="${itemId}"]`);
+                    if (checkbox && checks[itemId]) {
+                        checkbox.checked = true;
+                        checkbox.parentElement.classList.add('checked');
+                    }
+                });
+            }
+            updateProgress();
+        }
+
+        // Save checks to localStorage
+        function saveChecks() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checks = {};
+
+            checkboxes.forEach(checkbox => {
+                const itemId = checkbox.dataset.item;
+                checks[itemId] = checkbox.checked;
+
+                // Update visual state
+                if (checkbox.checked) {
+                    checkbox.parentElement.classList.add('checked');
+                } else {
+                    checkbox.parentElement.classList.remove('checked');
+                }
+            });
+
+            localStorage.setItem(SHOPPING_STORAGE_KEY, JSON.stringify(checks));
+            updateProgress();
+        }
+
+        // Update progress indicator
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = checkboxes.length;
+            const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+            const indicator = document.getElementById('progress-indicator');
+            indicator.textContent = `✓ ${checked}/${total} items checked`;
+
+            if (checked === total && total > 0) {
+                indicator.style.backgroundColor = 'var(--sage)';
+                indicator.style.color = 'white';
+            } else {
+                indicator.style.backgroundColor = 'var(--cream-dark)';
+                indicator.style.color = 'var(--charcoal)';
+            }
+        }
+
+        // Clear all checks
+        function clearAllChecks() {
+            if (confirm('Clear all checked items?')) {
+                localStorage.removeItem(SHOPPING_STORAGE_KEY);
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.parentElement.classList.remove('checked');
+                });
+                updateProgress();
+            }
+        }
+
+        // FAB Menu
+        function toggleFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (!fabOpen) {
+                fabOpen = true;
+                backdrop.classList.remove('hidden');
+                menu.classList.remove('hidden');
+                iconPlus.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.animation = 'fabSlideIn 0.3s ease forwards';
+                    }, index * 50);
+                });
+            } else {
+                closeFAB();
+            }
+        }
+
+        function closeFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (fabOpen) {
+                fabOpen = false;
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.animation = 'fabSlideOut 0.3s ease forwards';
+                        item.style.opacity = '0';
+                    }, index * 30);
+                });
+
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                    iconClose.classList.add('hidden');
+                    iconPlus.classList.remove('hidden');
+                }, fabItems.length * 30 + 300);
+            }
+        }
+
+        // Theme toggle
+        function updateThemeIcons() {
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                const moonIcon = toggle.querySelector('.theme-icon-moon');
+                const sunIcon = toggle.querySelector('.theme-icon-sun');
+                if (theme === 'dark') {
+                    moonIcon?.classList.add('hidden');
+                    sunIcon?.classList.remove('hidden');
+                } else {
+                    moonIcon?.classList.remove('hidden');
+                    sunIcon?.classList.add('hidden');
+                }
+            }
+        }
+
+        const originalToggleDarkMode = window.toggleDarkMode;
+        window.toggleDarkMode = function() {
+            if (originalToggleDarkMode) {
+                originalToggleDarkMode();
+            }
+            updateThemeIcons();
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChecks();
+            updateThemeIcons();
+
+            if (window.analyticsTracker) {
+                analyticsTracker.trackMealPlanView('Week 1 Shopping List');
+            }
+        });
+    </script>
+
+</body>
+</html>

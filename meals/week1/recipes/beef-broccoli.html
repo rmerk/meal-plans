@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#8B9D83">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Gochugaru Beef & Broccoli Bowl - Spicy Korean-inspired ground beef with tender broccoli over brown rice.">
+    <title>Gochugaru Beef & Broccoli Bowl | Week 1</title>
+    <link rel="manifest" href="../../../manifest.json">
+    <link rel="stylesheet" href="../../../dist/tailwind.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF8F5;
+        }
+
+        /* Sage & Gold Sophisticated Color Palette */
+        :root {
+            --sage: #8B9D83;
+            --sage-hover: #7A8C74;
+            --sage-light: #A8B8A0;
+            --sage-dark: #6D7A66;
+            --gold: #B8956A;
+            --gold-hover: #A38660;
+            --gold-soft: #D4A574;
+            --cream: #FAF8F5;
+            --cream-dark: #F5F1EC;
+            --charcoal: #2D3436;
+            --gray-secondary: #636E72;
+            --success: #7FA87F;
+            --warning: #D4A574;
+            --error: #C17B7B;
+            --info: #8B9DC3;
+            --category-breakfast: #F4E4D7;
+            --category-lunch: #E8F0E8;
+            --category-dinner: #E8DFE0;
+            --category-dessert: #F2E8DC;
+        }
+
+        .bg-sage { background-color: var(--sage); }
+        .bg-gold { background-color: var(--gold); }
+        .bg-cream { background-color: var(--cream); }
+        .text-sage { color: var(--sage); }
+        .text-gold { color: var(--gold); }
+        .text-charcoal { color: var(--charcoal); }
+        .border-sage { border-color: var(--sage); }
+
+        /* Sophisticated Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.3;
+        }
+
+        /* Mobile optimizations */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button, a, input, label {
+            touch-action: manipulation;
+        }
+
+        /* Safe area insets for iPhone notch */
+        nav.sticky {
+            padding-top: env(safe-area-inset-top);
+        }
+
+        .fixed.bottom-0 {
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+        }
+
+        /* Scaling button animations */
+        .scale-btn {
+            transition: all 0.2s ease;
+        }
+
+        .scale-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .scale-btn.active {
+            background: var(--sage) !important;
+            color: white !important;
+            border-color: var(--sage) !important;
+        }
+
+        /* Ingredient scaling animations */
+        .ingredient-amount {
+            transition: all 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .updating {
+            animation: pulse 0.3s ease-in-out;
+        }
+    </style>
+    <script src="../../plans.js"></script>
+    <script src="../../meal-utils.js"></script>
+    <script src="../../../analytics-tracker.js"></script>
+    <script src="../../../mobile-utils.js"></script>
+    <link rel="stylesheet" href="../../../animations.css">
+    <link rel="stylesheet" href="../../../dark-mode.css">
+    <link rel="stylesheet" href="../../../landscape.css">
+</head>
+<body class="text-slate-800 antialiased" style="background-color: var(--cream);">
+
+    <!-- Navigation Bar -->
+    <nav class="text-white sticky top-0 z-50" style="background: var(--sage); box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <!-- Breadcrumbs -->
+                    <div class="text-sm text-white/80 flex items-center gap-2" style="font-family: 'Inter', sans-serif;">
+                        <a href="../../../index.html" class="hover:text-white transition">Home</a>
+                        <span>›</span>
+                        <a href="../index.html" class="hover:text-white transition">Week 1</a>
+                        <span>›</span>
+                        <a href="index.html" class="hover:text-white transition">Recipes</a>
+                        <span>›</span>
+                        <span class="text-white font-medium">Beef & Broccoli</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" onclick="toggleDarkMode()" class="p-2 hover:bg-white/20 rounded-lg transition-all duration-200" aria-label="Toggle dark mode">
+                        <svg class="w-5 h-5 text-white theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                        <svg class="w-5 h-5 text-yellow-300 theme-icon-sun hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-8 pb-24 sm:px-6 lg:px-8">
+
+        <!-- Recipe Hero -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex-1">
+                    <h1 class="text-3xl sm:text-4xl font-semibold mb-3" style="color: var(--charcoal);">Gochugaru Beef & Broccoli Bowl</h1>
+                    <p class="text-lg text-slate-600 mb-4">Spicy Korean-inspired ground beef with tender broccoli over fluffy brown rice</p>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span class="px-3 py-1 text-sm font-medium" style="background-color: var(--category-lunch); color: var(--charcoal); border-radius: 12px;">🥗 Lunch</span>
+                        <span class="px-3 py-1 text-sm font-medium bg-slate-100 text-slate-700" style="border-radius: 12px;">🍽️ 4 Servings</span>
+                        <span class="px-3 py-1 text-sm font-medium bg-slate-100 text-slate-700" style="border-radius: 12px;">⏱️ 25 mins</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <button onclick="startCookingThisRecipe()" class="w-full sm:w-auto text-white font-medium px-8 py-4 text-lg transition-all duration-200" style="background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%); box-shadow: 0 4px 8px rgba(184, 149, 106, 0.3); border-radius: 12px; font-family: 'Playfair Display', serif;">
+                🚀 Start Cooking This Recipe
+            </button>
+        </div>
+
+        <!-- Ingredients Section -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-medium" style="color: var(--charcoal);">Ingredients</h2>
+                <!-- Scaling Buttons -->
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-slate-600 mr-2">Scale:</span>
+                    <button onclick="scaleIngredients(0.5)" class="scale-btn px-3 py-1 text-sm font-medium border-2 transition-all" style="border-color: var(--sage); color: var(--sage); border-radius: 8px;">½x</button>
+                    <button onclick="scaleIngredients(1)" class="scale-btn active px-3 py-1 text-sm font-medium border-2 transition-all" style="border-color: var(--sage); color: var(--sage); border-radius: 8px;">1x</button>
+                    <button onclick="scaleIngredients(2)" class="scale-btn px-3 py-1 text-sm font-medium border-2 transition-all" style="border-color: var(--sage); color: var(--sage); border-radius: 8px;">2x</button>
+                    <button onclick="scaleIngredients(3)" class="scale-btn px-3 py-1 text-sm font-medium border-2 transition-all" style="border-color: var(--sage); color: var(--sage); border-radius: 8px;">3x</button>
+                </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-8">
+                <!-- Main Ingredients -->
+                <div>
+                    <h4 class="font-semibold text-slate-700 mb-3">Main Ingredients</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--sage);"></span>
+                            <span><span class="ingredient-amount" data-base="1.25">1.25</span> lbs 93/7 lean ground beef</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--sage);"></span>
+                            <span><span class="ingredient-amount" data-base="8">8</span> cups broccoli florets</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--sage);"></span>
+                            <span><span class="ingredient-amount" data-base="4">4</span> cups cooked brown rice</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Sauce Ingredients -->
+                <div>
+                    <h4 class="font-semibold text-slate-700 mb-3">Sauce</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="6">6</span> tbsp soy sauce</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="4" data-range="8">4-8</span> tsp gochugaru (to taste)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="4">4</span> tsp honey</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="4">4</span> tsp sesame oil</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="8">8</span> cloves garlic (minced)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="w-2 h-2 rounded-full mt-2 mr-3 flex-shrink-0" style="background: var(--gold);"></span>
+                            <span><span class="ingredient-amount" data-base="4">4</span> tsp fresh ginger (grated)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions Section -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">Instructions</h2>
+            <ol class="space-y-4">
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">1</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">Steam broccoli florets until tender-crisp (about 4-5 minutes). They should still have a slight bite.</p>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">2</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">In a small bowl, whisk together all sauce ingredients: soy sauce, gochugaru, honey, sesame oil, minced garlic, and grated ginger. Set aside.</p>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">3</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">Heat a large skillet over medium-high heat. Add ground beef and cook, breaking it apart with a wooden spoon, until fully browned (about 6-8 minutes). Drain excess fat.</p>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">4</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">Pour the prepared sauce over the cooked beef. Stir well and let simmer for 2-3 minutes until the sauce thickens slightly.</p>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">5</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">Add the steamed broccoli to the skillet and toss everything together until the broccoli is well coated with the sauce.</p>
+                </li>
+                <li class="flex items-start gap-4">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold" style="background: var(--sage);">6</div>
+                    <p class="text-slate-700 leading-relaxed pt-1">Divide brown rice among 4 meal prep containers. Top each with equal portions of the beef and broccoli mixture. Garnish with sliced green onions and sesame seeds if desired.</p>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Storage & Notes -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">Storage & Tips</h2>
+            <div class="space-y-4 text-slate-700">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Storage</h4>
+                        <p class="text-sm text-slate-600">Store in airtight containers in the refrigerator for up to 4 days. Let cool completely before sealing to prevent condensation.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Spice Level</h4>
+                        <p class="text-sm text-slate-600">Start with 4 tsp of gochugaru for mild heat. Increase gradually to 8 tsp for authentic Korean spice level. You can always add more when reheating!</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: var(--info);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <div>
+                        <h4 class="font-semibold mb-1">Reheating</h4>
+                        <p class="text-sm text-slate-600">Microwave for 2-3 minutes, stirring halfway through. Add a splash of water if needed to refresh the sauce.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nutrition Facts (Placeholder) -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">Nutrition Facts</h2>
+            <p class="text-sm text-slate-500 mb-4">Per Serving (1 of 4)</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-slate-50" style="border-radius: 8px;">
+                    <div class="text-2xl font-bold" style="color: var(--sage);">~480</div>
+                    <div class="text-xs text-slate-600">Calories</div>
+                </div>
+                <div class="text-center p-4 bg-slate-50" style="border-radius: 8px;">
+                    <div class="text-2xl font-bold" style="color: var(--sage);">~35g</div>
+                    <div class="text-xs text-slate-600">Protein</div>
+                </div>
+                <div class="text-center p-4 bg-slate-50" style="border-radius: 8px;">
+                    <div class="text-2xl font-bold" style="color: var(--sage);">~45g</div>
+                    <div class="text-xs text-slate-600">Carbs</div>
+                </div>
+                <div class="text-center p-4 bg-slate-50" style="border-radius: 8px;">
+                    <div class="text-2xl font-bold" style="color: var(--sage);">~18g</div>
+                    <div class="text-xs text-slate-600">Fat</div>
+                </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-4 text-center">Nutritional information is approximate and may vary based on specific ingredients used.</p>
+        </div>
+
+        <!-- Related Recipes -->
+        <div class="bg-white p-8 mb-8" style="box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08);">
+            <h2 class="text-2xl font-medium mb-6" style="color: var(--charcoal);">More Week 1 Recipes</h2>
+            <div class="grid sm:grid-cols-3 gap-4">
+                <a href="chicken-salad.html" class="block p-4 transition-all duration-200" style="box-shadow: 0 2px 4px rgba(184, 149, 106, 0.2); border-radius: 8px; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 class="font-semibold text-slate-900 mb-2">Vietnamese Chicken Salad</h4>
+                    <p class="text-sm text-slate-600 mb-2">Fresh, deconstructed salad with tangy lime</p>
+                    <span class="text-xs px-2 py-1 bg-orange-100 text-orange-800 rounded font-semibold">LUNCH</span>
+                </a>
+                <a href="beef-stirfry.html" class="block p-4 transition-all duration-200" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.2); border-radius: 8px; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 class="font-semibold text-slate-900 mb-2">Beef & Broccoli Stir-Fry</h4>
+                    <p class="text-sm text-slate-600 mb-2">Restaurant-quality with tender flank steak</p>
+                    <span class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded font-semibold">DINNER</span>
+                </a>
+                <a href="pork-soba.html" class="block p-4 transition-all duration-200" style="box-shadow: 0 2px 4px rgba(139, 157, 131, 0.1); border-radius: 8px; text-decoration: none;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h4 class="font-semibold text-slate-900 mb-2">Pork & Soba Noodle Stir-Fry</h4>
+                    <p class="text-sm text-slate-600 mb-2">Savory pork with chewy soba and bok choy</p>
+                    <span class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded font-semibold">DINNER</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Previous/Next Navigation -->
+        <div class="flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-2 px-6 py-3 transition-all duration-200" style="background: white; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.08); border-radius: 8px; color: var(--charcoal); text-decoration: none; font-family: 'Playfair Display', serif; font-weight: 500;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                All Recipes
+            </a>
+            <a href="chicken-salad.html" class="flex items-center gap-2 px-6 py-3 transition-all duration-200" style="background: var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); border-radius: 8px; color: white; text-decoration: none; font-family: 'Playfair Display', serif; font-weight: 500;">
+                Next Recipe
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FAB (Floating Action Button) Menu -->
+    <div id="fab-backdrop" class="hidden fixed inset-0 bg-slate-900/30 backdrop-blur-sm z-[99]" onclick="closeFAB()"></div>
+
+    <div id="fab-container" class="fixed z-[100] print:hidden" style="bottom: 2rem; right: 2rem;">
+        <!-- Mini FABs Menu -->
+        <div id="fab-menu" class="hidden mb-3" style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px;">
+
+            <!-- View Photos FAB -->
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">View Photos</span>
+                <button onclick="openPhotoGallery('Beef & Broccoli Bowl')" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Take Photo FAB -->
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Take Photo</span>
+                <button onclick="openCameraCapture('Beef & Broccoli Bowl')" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--sage); box-shadow: 0 2px 8px rgba(139, 157, 131, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--sage);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Cook This Recipe FAB -->
+            <div class="fab-item" style="opacity: 0; position: relative; display: flex; align-items: center;">
+                <span class="fab-label" style="position: absolute; right: 60px; background: white; padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(45, 52, 54, 0.12); font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: var(--charcoal); white-space: nowrap;">Cook This</span>
+                <button onclick="startCookingFromFAB()" class="mini-fab" style="width: 48px; height: 48px; border-radius: 50%; background: white; border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(184, 149, 106, 0.2); display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                    <svg class="w-5 h-5" style="color: var(--gold);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Main FAB Button -->
+        <button id="main-fab" onclick="toggleFAB()" class="main-fab" style="width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-hover) 100%); box-shadow: 0 4px 12px rgba(184, 149, 106, 0.4); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: all 0.3s ease;">
+            <svg id="fab-icon-plus" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+            </svg>
+            <svg id="fab-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <style>
+        /* Mobile positioning */
+        @media (max-width: 767px) {
+            #fab-container {
+                bottom: 1rem !important;
+                right: 1rem !important;
+            }
+        }
+
+        .main-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(184, 149, 106, 0.5) !important;
+        }
+
+        .main-fab:active {
+            transform: scale(0.95);
+        }
+
+        .mini-fab:hover {
+            transform: scale(1.1);
+        }
+
+        .fab-item:hover .fab-label {
+            background: var(--cream-dark) !important;
+        }
+
+        @keyframes fabSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fabSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(10px) scale(0.8);
+            }
+        }
+    </style>
+
+    <script>
+        let fabOpen = false;
+        let currentScale = 1;
+
+        // FAB Menu
+        function toggleFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (!fabOpen) {
+                fabOpen = true;
+                backdrop.classList.remove('hidden');
+                menu.classList.remove('hidden');
+                iconPlus.classList.add('hidden');
+                iconClose.classList.remove('hidden');
+
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.animation = 'fabSlideIn 0.3s ease forwards';
+                    }, index * 50);
+                });
+            } else {
+                closeFAB();
+            }
+        }
+
+        function closeFAB() {
+            const backdrop = document.getElementById('fab-backdrop');
+            const menu = document.getElementById('fab-menu');
+            const iconPlus = document.getElementById('fab-icon-plus');
+            const iconClose = document.getElementById('fab-icon-close');
+            const fabItems = document.querySelectorAll('.fab-item');
+
+            if (fabOpen) {
+                fabOpen = false;
+                fabItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.animation = 'fabSlideOut 0.3s ease forwards';
+                        item.style.opacity = '0';
+                    }, index * 30);
+                });
+
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                    backdrop.classList.add('hidden');
+                    iconClose.classList.add('hidden');
+                    iconPlus.classList.remove('hidden');
+                }, fabItems.length * 30 + 300);
+            }
+        }
+
+        function startCookingFromFAB() {
+            closeFAB();
+            startCookingThisRecipe();
+        }
+
+        // Ingredient Scaling
+        function scaleIngredients(multiplier) {
+            currentScale = multiplier;
+
+            // Update all ingredient amounts
+            const amounts = document.querySelectorAll('.ingredient-amount');
+            amounts.forEach(amount => {
+                const base = parseFloat(amount.dataset.base);
+                const range = amount.dataset.range;
+
+                amount.classList.add('updating');
+
+                setTimeout(() => {
+                    if (range) {
+                        // Handle ranges like "4-8"
+                        const rangeEnd = parseFloat(range);
+                        const scaledBase = (base * multiplier).toFixed(2).replace(/\.?0+$/, '');
+                        const scaledRange = (rangeEnd * multiplier).toFixed(2).replace(/\.?0+$/, '');
+                        amount.textContent = `${scaledBase}-${scaledRange}`;
+                    } else {
+                        const scaled = (base * multiplier).toFixed(2).replace(/\.?0+$/, '');
+                        amount.textContent = scaled;
+                    }
+                    amount.classList.remove('updating');
+                }, 150);
+            });
+
+            // Update active button
+            document.querySelectorAll('.scale-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Cooking Mode - Single Recipe
+        function startCookingThisRecipe() {
+            // For now, redirect to main meals page with cooking mode
+            // In future, could implement single-recipe cooking modal
+            window.location.href = '../../week1-meals.html';
+        }
+
+        // Theme toggle
+        function updateThemeIcons() {
+            const theme = document.documentElement.getAttribute('data-theme') || 'light';
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                const moonIcon = toggle.querySelector('.theme-icon-moon');
+                const sunIcon = toggle.querySelector('.theme-icon-sun');
+                if (theme === 'dark') {
+                    moonIcon?.classList.add('hidden');
+                    sunIcon?.classList.remove('hidden');
+                } else {
+                    moonIcon?.classList.remove('hidden');
+                    sunIcon?.classList.add('hidden');
+                }
+            }
+        }
+
+        const originalToggleDarkMode = window.toggleDarkMode;
+        window.toggleDarkMode = function() {
+            if (originalToggleDarkMode) {
+                originalToggleDarkMode();
+            }
+            updateThemeIcons();
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateThemeIcons();
+
+            // Track page view
+            if (window.analyticsTracker) {
+                analyticsTracker.trackMealPlanView('Beef & Broccoli Bowl');
+            }
+        });
+    </script>
+
+</body>
+</html>
