@@ -1,0 +1,90 @@
+# generated: 2025-11-16
+# project: meal-plans
+# project_key: meal-plans
+# tracking_system: file-system
+# story_location: docs/sprint-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic exists in epic file but not contexted
+#   - contexted: Epic tech context created (required before drafting stories)
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - drafted: Story file created in stories folder
+#   - ready-for-dev: Draft approved and story context created
+#   - in-progress: Developer actively working on implementation
+#   - review: Under SM review (via code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - completed: Retrospective has been done
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epics should be 'contexted' before stories can be 'drafted'
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically drafts next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', SM reviews, then Dev moves to 'done'
+
+generated: 2025-11-16
+project: meal-plans
+project_key: meal-plans
+tracking_system: file-system
+story_location: docs/sprint-artifacts
+
+development_status:
+  # Epic 1: Foundation & Infrastructure
+  epic-1: contexted
+  1-1-initialize-nuxt-ui-starter-project: review
+  1-2-configure-mountains-at-sunrise-theme: backlog
+  1-3-set-up-pwa-with-basic-service-worker: backlog
+  1-4-configure-github-pages-deployment: backlog
+  1-5-create-base-layouts-mobile-desktop: backlog
+  1-6-document-project-setup-architecture: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: Content Discovery & Browsing
+  epic-2: backlog
+  2-1-dashboard-with-meal-plan-cards: backlog
+  2-2-meal-plan-overview-page: backlog
+  2-3-recipe-gallery-grid-view: backlog
+  2-4-recipe-detail-page: backlog
+  2-5-prep-strategy-guide-page: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Shopping & Nutrition Tools
+  epic-3: backlog
+  3-1-shopping-helper-meal-plan-selection: backlog
+  3-2-intelligent-ingredient-merging-algorithm: backlog
+  3-3-shopping-list-display-interaction: backlog
+  3-4-shopping-list-export-functionality: backlog
+  3-5-nutrition-dashboard-meal-plan-selection: backlog
+  3-6-nutrition-visualization-insights: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Cooking & Scaling Tools
+  epic-4: backlog
+  4-1-recipe-library-with-filtering: backlog
+  4-2-recipe-scaler-selection-input: backlog
+  4-3-recipe-scaling-calculation-display: backlog
+  4-4-cooking-mode-step-by-step-ui: backlog
+  4-5-cooking-mode-timer-integration: backlog
+  4-6-cooking-mode-session-tracking: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Tracking & Advanced PWA
+  epic-5: backlog
+  5-1-analytics-dashboard-event-tracking: backlog
+  5-2-analytics-dashboard-visualization: backlog
+  5-3-rating-system-rate-meals: backlog
+  5-4-rating-system-ratings-history: backlog
+  5-5-settings-page-user-preferences: backlog
+  5-6-settings-data-management: backlog
+  5-7-meal-prep-guides-tool: backlog
+  5-8-advanced-pwa-app-shortcuts: backlog
+  5-9-advanced-pwa-update-notifications: backlog
+  5-10-mobile-features-gestures-haptics: backlog
+  epic-5-retrospective: optional

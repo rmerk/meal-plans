@@ -1,0 +1,315 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.1</storyId>
+    <title>Initialize Nuxt UI Starter Project</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-1-initialize-nuxt-ui-starter-project.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a developer</asA>
+    <iWant>to initialize the project using the official Nuxt UI starter template</iWant>
+    <soThat>I have a production-ready Nuxt 4 foundation with all core modules pre-configured</soThat>
+    <tasks>
+      - Task 1: Initialize project with Nuxt UI starter template (AC: #1)
+        - Verify Node.js 24+ (LTS) installed: node --version
+        - Verify pnpm installed or install globally: npm install -g pnpm
+        - Run pnpm create nuxt@latest meal-plans
+        - When prompted, select "UI" template
+        - Confirm project directory created with expected structure
+      - Task 2: Install project dependencies (AC: #2)
+        - Navigate to project directory: cd meal-plans
+        - Run pnpm install to install base dependencies
+        - Verify all dependencies installed successfully (check for pnpm-lock.yaml)
+      - Task 3: Install additional required modules (AC: #1)
+        - Run pnpm add @nuxt/content @vite-pwa/nuxt pinia @pinia/nuxt @vueuse/nuxt nuxt-charts chart.js @nuxt/image
+        - Run pnpm add -D oxc @oxc/eslint-plugin
+        - Verify additional modules added to package.json
+      - Task 4: Start development server and verify (AC: #3, #4)
+        - Run pnpm dev
+        - Verify server starts at http://localhost:3000
+        - Open browser and confirm default Nuxt UI starter page renders
+        - Check console for errors (should be none)
+        - Verify Nuxt UI v4 components are available
+      - Task 5: Commit initial scaffold (AC: #1)
+        - Verify git repository initialized
+        - Stage all files: git add .
+        - Create initial commit: git commit -m "Initialize Nuxt UI starter project with pnpm and additional modules"
+        - Push to remote if repository exists
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. Given I have Node.js 24+ (LTS) installed and pnpm available, When I run `pnpm create nuxt@latest meal-plans` and select the "UI" template, Then the project initializes with Nuxt 4, @nuxt/ui v4, Tailwind CSS v4, TypeScript, and git repository
+    2. And I can run `pnpm install` to install dependencies
+    3. And I can run `pnpm dev` and the dev server starts successfully at http://localhost:3000
+    4. And the default Nuxt UI starter page renders without errors
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Project Initialization</section>
+        <snippet>Defines the initialization command `pnpm create nuxt@latest meal-plans` with interactive "UI" template selection. Documents prerequisites (Node.js 24+ LTS, pnpm installed globally) and post-initialization steps including additional module installation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Modules to Add After Initialization</section>
+        <snippet>Lists all additional modules to install after Nuxt UI starter: @nuxt/content (markdown CMS), @vite-pwa/nuxt (PWA capabilities), pinia/@pinia/nuxt (state management), @vueuse/nuxt (composables), nuxt-charts/chart.js (visualization), @nuxt/image (optimization), oxc/@oxc/eslint-plugin (linting).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Starter Template Decision</section>
+        <snippet>Rationale for choosing Nuxt UI starter: provides 80% of required architecture out-of-the-box, includes exact UI component library specified (Nuxt UI v4), ensures best-practice Nuxt 4 + Tailwind CSS v4 integration. Using pnpm provides faster installs, better disk efficiency, stricter dependency resolution.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Decision Summary</section>
+        <snippet>Node.js 24+ (LTS - Iron) for long-term support until April 2026, optimal performance, native test runner. pnpm for 50% faster installs than npm, content-addressable storage saves disk space, strict mode prevents phantom dependencies.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>GitHub Pages Deployment</section>
+        <snippet>GitHub Actions workflow configuration includes pnpm/action-setup@v2, Node 24 setup with pnpm cache, pnpm install --frozen-lockfile for reproducible builds, and pnpm generate for static site generation.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>meal-plans - Epic Breakdown</title>
+        <section>Story 1.1: Initialize Nuxt UI Starter Project</section>
+        <snippet>First story in Epic 1: Foundation & Infrastructure. Prerequisites: None (first story). Technical notes emphasize Node.js 24+ requirement, pnpm advantages, and critical additional modules for PWA, content management, and state.</snippet>
+      </doc>
+      <doc>
+        <path>docs/index.md</path>
+        <title>Meal Plans - Project Documentation Index</title>
+        <section>Quick Reference - Technology Stack</section>
+        <snippet>Current brownfield project: Vanilla JavaScript (ES6+), Tailwind CSS 3.4.18, Service Worker v1.0.0, localStorage-based state. This story migrates to Nuxt 4 stack while maintaining offline-first PWA capabilities and 100% feature parity.</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>Product Requirements Document</title>
+        <section>Technical Requirements</section>
+        <snippet>FR125-FR134: Project must use Nuxt 4 with Vue 3 Composition API, Nuxt UI v4 component library, Nuxt Content for data, TypeScript for type safety, Pinia for state, required Nuxt modules, conventions-based structure, static generation for GitHub Pages, optimized build output, environment variables for base path.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>package.json</path>
+        <kind>configuration</kind>
+        <symbol>devDependencies</symbol>
+        <lines>18-20</lines>
+        <reason>Current brownfield project uses Tailwind CSS 3.4.18. This will be replaced with Nuxt 4 + pnpm dependencies after initialization.</reason>
+      </artifact>
+      <artifact>
+        <path>tailwind.config.js</path>
+        <kind>configuration</kind>
+        <symbol>tailwindConfig</symbol>
+        <lines>n/a</lines>
+        <reason>Existing Tailwind configuration exists. Story 1.2 will migrate this to Tailwind v4 @theme directive with Mountains at Sunrise palette.</reason>
+      </artifact>
+      <artifact>
+        <path>.gitignore</path>
+        <kind>configuration</kind>
+        <symbol>n/a</symbol>
+        <lines>n/a</lines>
+        <reason>Existing .gitignore will be replaced by Nuxt UI starter's preconfigured .gitignore which includes .nuxt/, dist/, node_modules/, etc.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <current>
+        <framework>Vanilla JavaScript (ES6+)</framework>
+        <styling>
+          <package>tailwindcss</package>
+          <version>^3.4.18</version>
+          <type>devDependency</type>
+        </styling>
+      </current>
+      <toBeInstalled>
+        <starter>
+          <package>nuxt</package>
+          <version>4.x (latest)</version>
+          <note>Vue 3 framework, SSG, auto-imports</note>
+        </starter>
+        <starter>
+          <package>@nuxt/ui</package>
+          <version>v4.x (latest)</version>
+          <note>100+ components, Tailwind CSS + Reka UI</note>
+        </starter>
+        <starter>
+          <package>tailwindcss</package>
+          <version>v4.x (latest)</version>
+          <note>Utility-first CSS with @theme directive</note>
+        </starter>
+        <starter>
+          <package>typescript</package>
+          <version>Latest</version>
+          <note>Type safety for components, composables, config</note>
+        </starter>
+        <starter>
+          <package>@nuxt/icon</package>
+          <version>Latest</version>
+          <note>200,000+ Iconify icons</note>
+        </starter>
+        <starter>
+          <package>@nuxt/color-mode</package>
+          <version>Latest</version>
+          <note>Dark mode support</note>
+        </starter>
+        <starter>
+          <package>@nuxt/fonts</package>
+          <version>Latest</version>
+          <note>Font optimization</note>
+        </starter>
+        <additional>
+          <package>@nuxt/content</package>
+          <version>Latest</version>
+          <note>CRITICAL: Markdown-based CMS for meal plan data</note>
+        </additional>
+        <additional>
+          <package>@vite-pwa/nuxt</package>
+          <version>Latest</version>
+          <note>PWA capabilities (offline-first, service worker, manifest)</note>
+        </additional>
+        <additional>
+          <package>pinia</package>
+          <version>Latest</version>
+          <note>State management</note>
+        </additional>
+        <additional>
+          <package>@pinia/nuxt</package>
+          <version>Latest</version>
+          <note>Pinia Nuxt integration</note>
+        </additional>
+        <additional>
+          <package>@vueuse/nuxt</package>
+          <version>Latest</version>
+          <note>Composables: useLocalStorage, useSwipe, useVibrate</note>
+        </additional>
+        <additional>
+          <package>nuxt-charts</package>
+          <version>Latest</version>
+          <note>Chart visualizations</note>
+        </additional>
+        <additional>
+          <package>chart.js</package>
+          <version>Latest</version>
+          <note>Chart.js library</note>
+        </additional>
+        <additional>
+          <package>@nuxt/image</package>
+          <version>Latest</version>
+          <note>Image optimization</note>
+        </additional>
+        <additional>
+          <package>oxc</package>
+          <version>Latest</version>
+          <type>devDependency</type>
+          <note>Fast Rust-based linter</note>
+        </additional>
+        <additional>
+          <package>@oxc/eslint-plugin</package>
+          <version>Latest</version>
+          <type>devDependency</type>
+          <note>oxc ESLint plugin</note>
+        </additional>
+      </toBeInstalled>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <runtime>
+      <constraint>Node.js 24+ (LTS - Iron) REQUIRED for long-term support until April 2026, optimal performance, and native test runner</constraint>
+      <constraint>pnpm package manager REQUIRED (not npm or yarn) for faster installs, disk efficiency, and strict dependency resolution to prevent phantom dependencies</constraint>
+    </runtime>
+    <initialization>
+      <constraint>MUST use interactive `pnpm create nuxt@latest meal-plans` command and SELECT "UI" template when prompted</constraint>
+      <constraint>MUST install additional modules in separate step AFTER verifying starter works standalone - this isolates issues if something breaks</constraint>
+      <constraint>MUST verify pnpm-lock.yaml created (NOT package-lock.json or yarn.lock)</constraint>
+    </initialization>
+    <migration>
+      <constraint>This is a brownfield migration from vanilla JS to Nuxt 4 - existing files (index.html, meals/, dist/) will eventually be replaced but NOT in this story</constraint>
+      <constraint>Story 1.1 initializes CLEAN Nuxt project in SAME directory - will coexist with old files temporarily until migration complete</constraint>
+      <constraint>MUST maintain 100% feature parity with existing vanilla JS PWA (all 9 tools, offline-first, localStorage state)</constraint>
+    </migration>
+    <verification>
+      <constraint>Development server MUST start successfully at localhost:3000 with `pnpm dev`</constraint>
+      <constraint>Default Nuxt UI welcome page MUST render without console errors or TypeScript errors</constraint>
+      <constraint>MUST verify Nuxt UI v4 components are accessible (check for @nuxt/ui in package.json and test importing UButton in app.vue)</constraint>
+      <constraint>Git repository MUST be initialized automatically by starter template</constraint>
+    </verification>
+    <patterns>
+      <constraint>Follow Nuxt 4 conventions: /pages, /components, /composables, /content, /stores, /layouts, /public</constraint>
+      <constraint>Use Vue 3 Composition API with script setup syntax</constraint>
+      <constraint>TypeScript REQUIRED for all .ts/.vue files</constraint>
+      <constraint>pnpm commands only: pnpm add, pnpm dev, pnpm build, pnpm generate (NOT npm run)</constraint>
+    </patterns>
+  </constraints>
+
+  <interfaces>
+    <cli>
+      <name>pnpm create nuxt@latest</name>
+      <kind>CLI command</kind>
+      <signature>pnpm create nuxt@latest &lt;project-name&gt; [--template UI]</signature>
+      <note>Interactive template selection - choose "UI" when prompted</note>
+    </cli>
+    <cli>
+      <name>pnpm add</name>
+      <kind>CLI command</kind>
+      <signature>pnpm add &lt;packages...&gt; | pnpm add -D &lt;dev-packages...&gt;</signature>
+      <note>Use for adding dependencies after initialization. Use -D flag for devDependencies.</note>
+    </cli>
+    <cli>
+      <name>pnpm dev</name>
+      <kind>CLI command</kind>
+      <signature>pnpm dev [--port 3000]</signature>
+      <note>Starts Nuxt development server with hot module replacement</note>
+    </cli>
+    <config>
+      <name>nuxt.config.ts</name>
+      <kind>Configuration file</kind>
+      <signature>export default defineNuxtConfig({ modules: [], ... })</signature>
+      <path>nuxt.config.ts</path>
+      <note>Created by starter with @nuxt/ui pre-configured. Additional modules added in Story 1.3+</note>
+    </config>
+    <config>
+      <name>package.json</name>
+      <kind>Configuration file</kind>
+      <signature>{ "name": "meal-plans", "type": "module", "scripts": {...}, "dependencies": {...} }</signature>
+      <path>package.json</path>
+      <note>Will be created by pnpm create command with Nuxt 4 dependencies</note>
+    </config>
+  </interfaces>
+
+  <tests>
+    <standards>
+      This is Story 1.1 - project initialization. Testing standards will be established in later stories (Epic 5). For this story, verification is MANUAL: (1) Server starts without errors, (2) Default page renders in browser, (3) No console errors/warnings, (4) Git initialized, (5) All dependencies in package.json, (6) pnpm-lock.yaml exists, (7) Nuxt UI v4 components accessible.
+    </standards>
+    <locations>
+      No test files created in this story. Future test locations (established in later stories): tests/, __tests__/, *.test.ts, *.spec.ts following Nuxt conventions.
+    </locations>
+    <ideas>
+      <idea ac="1">MANUAL: Verify Node version is 24+ using `node --version`</idea>
+      <idea ac="1">MANUAL: Verify pnpm installed using `pnpm --version`</idea>
+      <idea ac="1">MANUAL: Confirm project directory created with expected structure (.nuxt/, app.vue, nuxt.config.ts, package.json, tsconfig.json)</idea>
+      <idea ac="1">MANUAL: Verify package.json contains @nuxt/ui, tailwindcss v4, typescript, and all starter modules</idea>
+      <idea ac="2">MANUAL: Check pnpm-lock.yaml exists (not package-lock.json or yarn.lock)</idea>
+      <idea ac="2">MANUAL: Verify node_modules/ directory created and populated</idea>
+      <idea ac="3">MANUAL: Verify server starts on port 3000 without errors</idea>
+      <idea ac="3">MANUAL: Check terminal output for "Nuxt 4" and "ready" messages</idea>
+      <idea ac="4">MANUAL: Open http://localhost:3000 in browser and verify Nuxt UI welcome page displays</idea>
+      <idea ac="4">MANUAL: Open browser DevTools console and verify no errors (red messages)</idea>
+      <idea ac="4">MANUAL: Check for TypeScript errors in terminal during dev server run</idea>
+      <idea ac="1">MANUAL: Verify additional modules added to package.json dependencies and devDependencies sections</idea>
+      <idea ac="1">MANUAL: Verify git repository initialized with .git/ directory present</idea>
+      <idea ac="1">MANUAL: Verify .gitignore includes .nuxt/, dist/, node_modules/</idea>
+    </ideas>
+  </tests>
+</story-context>
