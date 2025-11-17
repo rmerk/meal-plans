@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plans - Color Theme Exploration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .theme-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .theme-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .theme-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #fafafa;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            height: 80px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .color-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-hex {
+            font-size: 0.7rem;
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+
+        .components-demo {
+            padding: 1.5rem;
+        }
+
+        .component-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .component-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .input-demo {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .input {
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            min-width: 200px;
+        }
+
+        .card-demo {
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .recommendation {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        .recommendation h3 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .recommendation p {
+            color: #856404;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Meal Plans Color Theme Exploration</h1>
+        <p class="subtitle">Exploring the Mountains at Sunrise design system with different mood variations</p>
+
+        <div class="theme-grid">
+            <!-- Theme 1: Mountains at Sunrise (Primary Recommendation) -->
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-title" style="color: #192E59;">Mountains at Sunrise (Primary)</div>
+                    <div class="theme-description">
+                        <strong>Mood:</strong> Warm, grounded, and trustworthy<br>
+                        <strong>Best for:</strong> Main light mode theme - natural warmth with professional confidence<br>
+                        <strong>Emotional Impact:</strong> Calm, organized, inviting
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #192E59;"></div>
+                        <div class="color-label">Primary</div>
+                        <div class="color-hex">#192E59</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F2CC85;"></div>
+                        <div class="color-label">Gold/Sand</div>
+                        <div class="color-hex">#F2CC85</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F2B680;"></div>
+                        <div class="color-label">Terra Cotta</div>
+                        <div class="color-hex">#F2B680</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #A6695B;"></div>
+                        <div class="color-label">Clay</div>
+                        <div class="color-hex">#A6695B</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #592C28;"></div>
+                        <div class="color-label">Deep Brown</div>
+                        <div class="color-hex">#592C28</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #22C55E;"></div>
+                        <div class="color-label">Success</div>
+                        <div class="color-hex">#22C55E</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #EF4444;"></div>
+                        <div class="color-label">Error</div>
+                        <div class="color-hex">#EF4444</div>
+                    </div>
+                </div>
+
+                <div class="components-demo">
+                    <div class="component-row">
+                        <div class="component-label">Buttons</div>
+                        <div class="button-group">
+                            <button class="btn" style="background: #192E59; color: white;">Primary Action</button>
+                            <button class="btn" style="background: #F2CC85; color: #592C28;">Secondary Action</button>
+                            <button class="btn" style="background: #F2B680; color: white;">Tertiary Action</button>
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label">Input Fields</div>
+                        <div class="input-demo">
+                            <input class="input" placeholder="Enter recipe name..." style="border-color: #192E59;">
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label">Card Example</div>
+                        <div class="card-demo" style="background: linear-gradient(135deg, #F2CC85 0%, #F2B680 100%);">
+                            <h3 style="color: #592C28; margin-bottom: 0.5rem;">Week 1 Meal Plan</h3>
+                            <p style="color: #592C28;">Chicken-focused batch cooking with 5 easy recipes</p>
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label">Alerts</div>
+                        <div class="alert" style="background: #D1FAE5; border: 1px solid #22C55E; color: #065F46;">
+                            ✓ Shopping list saved successfully
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 2: Dark Mountains (Dark Mode) -->
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-title" style="color: #F2CC85;">Mountains at Sunrise (Dark Mode)</div>
+                    <div class="theme-description">
+                        <strong>Mood:</strong> Sophisticated, modern, easy on eyes<br>
+                        <strong>Best for:</strong> Dark mode variant - maintains warmth in dark environment<br>
+                        <strong>Emotional Impact:</strong> Focused, calm, professional
+                    </div>
+                </div>
+
+                <div class="color-palette" style="background: #1a1a1a;">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #2A4A7C;"></div>
+                        <div class="color-label" style="color: #F2CC85;">Primary (Lighter)</div>
+                        <div class="color-hex" style="color: #A6695B;">#2A4A7C</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F2CC85;"></div>
+                        <div class="color-label" style="color: #F2CC85;">Gold/Sand</div>
+                        <div class="color-hex" style="color: #A6695B;">#F2CC85</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F2B680;"></div>
+                        <div class="color-label" style="color: #F2CC85;">Terra Cotta</div>
+                        <div class="color-hex" style="color: #A6695B;">#F2B680</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #C08A7E;"></div>
+                        <div class="color-label" style="color: #F2CC85;">Clay (Lighter)</div>
+                        <div class="color-hex" style="color: #A6695B;">#C08A7E</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #1a1a1a;"></div>
+                        <div class="color-label" style="color: #F2CC85;">Background</div>
+                        <div class="color-hex" style="color: #A6695B;">#1a1a1a</div>
+                    </div>
+                </div>
+
+                <div class="components-demo" style="background: #1a1a1a;">
+                    <div class="component-row">
+                        <div class="component-label" style="color: #F2CC85;">Buttons</div>
+                        <div class="button-group">
+                            <button class="btn" style="background: #2A4A7C; color: #F2CC85;">Primary Action</button>
+                            <button class="btn" style="background: #F2CC85; color: #1a1a1a;">Secondary Action</button>
+                            <button class="btn" style="background: transparent; border: 2px solid #F2B680; color: #F2B680;">Outline</button>
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label" style="color: #F2CC85;">Card Example</div>
+                        <div class="card-demo" style="background: #2a2a2a; color: #F2CC85;">
+                            <h3 style="color: #F2CC85; margin-bottom: 0.5rem;">Week 1 Meal Plan</h3>
+                            <p style="color: #C08A7E;">Chicken-focused batch cooking with 5 easy recipes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 3: High Contrast (Accessibility Focused) -->
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-title" style="color: #192E59;">High Contrast Accessible</div>
+                    <div class="theme-description">
+                        <strong>Mood:</strong> Clear, direct, highly readable<br>
+                        <strong>Best for:</strong> Accessibility mode - WCAG AAA contrast ratios<br>
+                        <strong>Emotional Impact:</strong> Confident, no-nonsense, efficient
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #0A1A39;"></div>
+                        <div class="color-label">Primary (Darker)</div>
+                        <div class="color-hex">#0A1A39</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #E6B963;"></div>
+                        <div class="color-label">Gold (Darker)</div>
+                        <div class="color-hex">#E6B963</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #FFFFFF;"></div>
+                        <div class="color-label">White</div>
+                        <div class="color-hex">#FFFFFF</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #000000;"></div>
+                        <div class="color-label">Black</div>
+                        <div class="color-hex">#000000</div>
+                    </div>
+                </div>
+
+                <div class="components-demo">
+                    <div class="component-row">
+                        <div class="component-label">Buttons (High Contrast)</div>
+                        <div class="button-group">
+                            <button class="btn" style="background: #0A1A39; color: white; border: 2px solid #000;">Primary</button>
+                            <button class="btn" style="background: white; color: #0A1A39; border: 2px solid #0A1A39;">Secondary</button>
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label">Alert (High Contrast)</div>
+                        <div class="alert" style="background: white; border: 3px solid #0A1A39; color: #0A1A39; font-weight: 600;">
+                            ⚠ High contrast mode enabled for better visibility
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme 4: Minimal & Clean -->
+            <div class="theme-card">
+                <div class="theme-header">
+                    <div class="theme-title" style="color: #192E59;">Minimal & Clean</div>
+                    <div class="theme-description">
+                        <strong>Mood:</strong> Spacious, modern, uncluttered<br>
+                        <strong>Best for:</strong> Users who prefer lots of whitespace and minimal visual weight<br>
+                        <strong>Emotional Impact:</strong> Calm, focused, zen-like
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #192E59;"></div>
+                        <div class="color-label">Primary</div>
+                        <div class="color-hex">#192E59</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F2CC85;"></div>
+                        <div class="color-label">Accent</div>
+                        <div class="color-hex">#F2CC85</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #F9FAFB;"></div>
+                        <div class="color-label">Background</div>
+                        <div class="color-hex">#F9FAFB</div>
+                    </div>
+                    <div class="color-swatch">
+                        <div class="color-box" style="background: #E5E7EB;"></div>
+                        <div class="color-label">Border</div>
+                        <div class="color-hex">#E5E7EB</div>
+                    </div>
+                </div>
+
+                <div class="components-demo">
+                    <div class="component-row">
+                        <div class="component-label">Buttons (Minimal)</div>
+                        <div class="button-group">
+                            <button class="btn" style="background: #192E59; color: white;">Primary</button>
+                            <button class="btn" style="background: transparent; color: #192E59; border: 1px solid #E5E7EB;">Ghost</button>
+                        </div>
+                    </div>
+
+                    <div class="component-row">
+                        <div class="component-label">Card (Minimal)</div>
+                        <div class="card-demo" style="background: white; border: 1px solid #E5E7EB;">
+                            <h3 style="color: #192E59; margin-bottom: 0.5rem; font-weight: 400;">Week 1 Meal Plan</h3>
+                            <p style="color: #6B7280;">Chicken-focused batch cooking</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendation">
+            <h3>🎯 Recommendation: Mountains at Sunrise (Primary) + Dark Mode Variant</h3>
+            <p>
+                Based on your PRD requirements and user context, I recommend the <strong>Mountains at Sunrise (Primary)</strong> theme with the <strong>Dark Mode variant</strong>. Here's why:
+            </p>
+            <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8;">
+                <li><strong>Warm & Approachable:</strong> The earthy tones create the "trusted cooking companion" feeling described in your UX principles</li>
+                <li><strong>Natural & Grounded:</strong> Earth tones align with food/cooking domain (terra cotta, clay, sunrise gold)</li>
+                <li><strong>Professional Yet Friendly:</strong> Deep blue provides confidence while warm accents prevent coldness</li>
+                <li><strong>Excellent Contrast:</strong> Meets WCAG AA standards while maintaining visual warmth</li>
+                <li><strong>Dark Mode Ready:</strong> Natural palette adapts beautifully to dark mode (important for cooking at night)</li>
+                <li><strong>Distinctive:</strong> Stands out from typical food app blues/greens while remaining approachable</li>
+            </ul>
+            <p style="margin-top: 1rem;">
+                The <strong>High Contrast</strong> theme can be offered as an optional accessibility mode for users with vision impairments, and the <strong>Minimal</strong> theme shows how the palette works with lots of whitespace (useful for certain pages like Settings).
+            </p>
+        </div>
+    </div>
+</body>
+</html>

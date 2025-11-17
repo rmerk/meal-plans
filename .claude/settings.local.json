@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(if [ -f /Users/rchoi/Developer/meal-plans/meals/REDESIGN_SUMMARY.md ])",
+      "Bash(then mv /Users/rchoi/Developer/meal-plans/meals/REDESIGN_SUMMARY.md /Users/rchoi/Developer/meal-plans/docs/archive/)",
+      "Bash(fi)",
+      "Bash(test:*)",
+      "WebSearch",
+      "Bash(cat:*)",
+      "SlashCommand(/bmad:core:workflows:party-mode)",
+      "Bash(node --version:*)",
+      "Bash(pnpm --version:*)",
+      "Bash(source ~/.nvm/nvm.sh)",
+      "Bash(nvm use:*)",
+      "Bash(pnpm create:*)",
+      "Bash(npx --yes degit:*)",
+      "Bash(npm create:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm add:*)",
+      "Bash(timeout 15 pnpm dev:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitialize Nuxt UI starter project with pnpm and additional modules\n\n- Initialize Nuxt 4.2.1 with @nuxt/ui v4.1.0 using official UI starter template\n- Add required modules: @nuxt/content, @vite-pwa/nuxt, pinia, @pinia/nuxt, @vueuse/nuxt, nuxt-charts, chart.js, @nuxt/image\n- Configure pnpm as package manager (v10.21.0)\n- Verify dev server starts successfully at http://localhost:3000\n- Nuxt files coexist with existing vanilla JS PWA (to be migrated incrementally)\n\nStory: 1.1 - Initialize Nuxt UI Starter Project\nEpic: 1 - Foundation & Infrastructure\nEOF\n)\")",
+      "WebFetch(domain:oxc.rs)",
+      "Bash(pnpm run lint:oxc:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

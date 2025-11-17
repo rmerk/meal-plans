@@ -1,0 +1,153 @@
+# Workflow Status Template
+
+# This tracks progress through BMM methodology Analysis, Planning, and Solutioning phases.
+# Implementation phase is tracked separately in sprint-status.yaml
+
+# STATUS DEFINITIONS:
+# ==================
+# Initial Status (before completion):
+#   - required: Must be completed to progress
+#   - optional: Can be completed but not required
+#   - recommended: Strongly suggested but not required
+#   - conditional: Required only if certain conditions met (e.g., if_has_ui)
+#
+# Completion Status:
+#   - {file-path}: File created/found (e.g., "docs/product-brief.md")
+#   - skipped: Optional/conditional workflow that was skipped
+
+generated: "2025-11-16"
+project: "meal-plans"
+project_type: "static-website"
+selected_track: "method"
+field_type: "brownfield"
+workflow_path: ".bmad/bmm/workflows/workflow-status/paths/method-brownfield.yaml"
+
+workflow_status:
+  # ============================================================
+  # PREREQUISITE: Documentation
+  # ============================================================
+  prerequisite:
+    name: "Documentation"
+    conditional: "if_undocumented"
+    note: "Prerequisite for brownfield projects without docs"
+    workflows:
+      document-project:
+        status: "required"
+        agent: "analyst"
+        command: "/bmad:bmm:workflows:document-project"
+        output: "Comprehensive project documentation"
+        purpose: "Understand existing codebase before planning"
+
+  # ============================================================
+  # PHASE 0: Discovery (Optional)
+  # ============================================================
+  phase_0_discovery:
+    name: "Discovery (Optional)"
+    optional: true
+    note: "User-selected workflows"
+    workflows:
+      brainstorm-project:
+        status: "skipped"
+        agent: "analyst"
+        command: "/bmad:bmm:workflows:brainstorm-project"
+        note: "User did not select"
+
+      research:
+        status: "optional"
+        agent: "analyst"
+        command: "/bmad:bmm:workflows:research"
+        note: "User selected - domain/technical analysis"
+
+      product-brief:
+        status: "skipped"
+        agent: "analyst"
+        command: "/bmad:bmm:workflows:product-brief"
+        note: "Not selected (less common for brownfield)"
+
+  # ============================================================
+  # PHASE 1: Planning
+  # ============================================================
+  phase_1_planning:
+    name: "Planning"
+    required: true
+    workflows:
+      prd:
+        status: "docs/prd.md"
+        agent: "pm"
+        command: "/bmad:bmm:workflows:prd"
+        output: "PRD focused on new features/changes"
+        note: "Must consider existing system constraints"
+
+      validate-prd:
+        status: "optional"
+        agent: "pm"
+        command: "/bmad:bmm:workflows:validate-prd"
+
+      create-epics-and-stories:
+        status: "optional"
+        agent: "pm"
+        command: "/bmad:bmm:workflows:create-epics-and-stories"
+        note: "Optional: Create epic breakdown early (basic structure only)"
+
+      create-design:
+        status: "docs/ux-design-specification.md"
+        condition: "if_has_ui"
+        agent: "ux-designer"
+        command: "/bmad:bmm:workflows:create-ux-design"
+
+      create-epics-and-stories-after-ux:
+        status: "optional"
+        agent: "pm"
+        command: "/bmad:bmm:workflows:create-epics-and-stories"
+        note: "Optional: Create epic breakdown with UX context"
+
+  # ============================================================
+  # PHASE 2: Solutioning
+  # ============================================================
+  phase_2_solutioning:
+    name: "Solutioning"
+    required: true
+    workflows:
+      architecture:
+        status: "docs/architecture.md"
+        agent: "architect"
+        command: "/bmad:bmm:workflows:architecture"
+        output: "Integration architecture - solution design for THIS project"
+        note: "COMPLETED: 25 architectural decisions made, Nuxt 4 + @nuxt/ui v4 stack defined, implementation patterns documented"
+
+      create-epics-and-stories-final:
+        status: "required"
+        agent: "pm"
+        command: "/bmad:bmm:workflows:create-epics-and-stories"
+        note: "Required: Create final epic breakdown with full context (PRD + UX + Architecture)"
+
+      test-design:
+        status: "recommended"
+        agent: "tea"
+        command: "/bmad:bmm:workflows:test-design"
+        output: "System-level testability review"
+        note: "Testability assessment before gate check - auto-detects system-level mode"
+
+      validate-architecture:
+        status: "optional"
+        agent: "architect"
+        command: "/bmad:bmm:workflows:validate-architecture"
+
+      implementation-readiness:
+        status: "required"
+        agent: "architect"
+        command: "/bmad:bmm:workflows:implementation-readiness"
+        note: "Validates PRD + UX + Architecture + Epics cohesion before implementation"
+
+  # ============================================================
+  # PHASE 3: Implementation
+  # ============================================================
+  phase_3_implementation:
+    name: "Implementation"
+    required: true
+    workflows:
+      sprint-planning:
+        status: "required"
+        agent: "sm"
+        command: "/bmad:bmm:workflows:sprint-planning"
+        note: "Creates sprint plan with stories"

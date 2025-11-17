@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Plans - Design Direction Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .nav-controls {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #192E59;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            border: 2px solid #192E59;
+            background: white;
+            color: #192E59;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: #192E59;
+            color: white;
+        }
+
+        .direction-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(25, 46, 89, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .mockup-container {
+            margin-top: 80px;
+            padding: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        .direction {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .direction.active {
+            display: block;
+        }
+
+        .direction-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .direction-title {
+            font-size: 2rem;
+            color: #192E59;
+            margin-bottom: 0.5rem;
+        }
+
+        .direction-subtitle {
+            color: #A6695B;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .direction-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .meta-item {
+            padding: 0.75rem;
+            background: #F9FAFB;
+            border-radius: 6px;
+        }
+
+        .meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+
+        .meta-value {
+            color: #192E59;
+            font-weight: 600;
+        }
+
+        /* Mockup Styles */
+        .mockup {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .mockup-header {
+            padding: 1.5rem 2rem;
+            background: #192E59;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mockup-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .mockup-nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .mockup-nav a {
+            color: #F2CC85;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .mockup-nav a:hover {
+            color: white;
+        }
+
+        .mockup-content {
+            padding: 2rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #F2CC85 0%, #F2B680 100%);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            color: #592C28;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #592C28;
+            opacity: 0.8;
+        }
+
+        .meal-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .meal-grid.grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .meal-grid.grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+
+        .meal-grid.list {
+            grid-template-columns: 1fr;
+        }
+
+        .meal-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .meal-card-image {
+            height: 200px;
+            background: linear-gradient(135deg, #F2B680 0%, #A6695B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .meal-card-content {
+            padding: 1.5rem;
+        }
+
+        .meal-card-title {
+            font-size: 1.5rem;
+            color: #192E59;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-card-subtitle {
+            color: #A6695B;
+            margin-bottom: 1rem;
+        }
+
+        .meal-card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-tag {
+            background: #F2CC85;
+            color: #592C28;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .meal-card-cta {
+            background: #192E59;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .meal-card-cta:hover {
+            background: #0f1f3d;
+        }
+
+        .sidebar-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background: #192E59;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-title {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            color: #F2CC85;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .sidebar-menu li:hover,
+        .sidebar-menu li.active {
+            background: rgba(242, 204, 133, 0.2);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #F2CC85;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateX(4px);
+            border-left-color: #192E59;
+        }
+
+        .tool-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-title {
+            font-weight: 600;
+            color: #192E59;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-description {
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+
+        .dense-layout .meal-card-image {
+            height: 120px;
+        }
+
+        .dense-layout .meal-card-content {
+            padding: 1rem;
+        }
+
+        .dense-layout .meal-card-title {
+            font-size: 1.1rem;
+        }
+
+        .list-layout .meal-card {
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            align-items: center;
+        }
+
+        .list-layout .meal-card-image {
+            height: 100%;
+            min-height: 150px;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #192E59;
+        }
+
+        .stat-label {
+            color: #A6695B;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-controls">
+        <div class="nav-title">🎨 Meal Plans Design Directions</div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="prevDirection()">← Previous</button>
+            <button class="nav-btn" onclick="nextDirection()">Next →</button>
+        </div>
+    </div>
+
+    <div class="direction-indicator">
+        <span id="current-direction">Direction 1 of 6</span>
+    </div>
+
+    <div class="mockup-container">
+        <!-- Direction 1: Card Grid - Spacious & Warm -->
+        <div class="direction active" data-index="1">
+            <div class="direction-header">
+                <div class="direction-title">Direction 1: Card Grid - Spacious & Warm</div>
+                <div class="direction-subtitle">Approachable, breathing room, great for discovery</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">3-Column Card Grid</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Spacious (lots of whitespace)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Top horizontal nav</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">Casual browsing, visual discovery</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">
+                    <div class="mockup-logo">🍳 Meal Plans</div>
+                    <div class="mockup-nav">
+                        <a href="#">Home</a>
+                        <a href="#">Meal Plans</a>
+                        <a href="#">Tools</a>
+                        <a href="#">Recipes</a>
+                    </div>
+                </div>
+
+                <div class="mockup-content">
+                    <div class="hero-section">
+                        <div class="hero-title">Your Weekly Meal Plans</div>
+                        <div class="hero-subtitle">Batch cook, save time, eat well</div>
+                    </div>
+
+                    <div class="meal-grid grid-3">
+                        <div class="meal-card">
+                            <div class="meal-card-image">🍗</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 1</div>
+                                <div class="meal-card-subtitle">Chicken-Focused Batch Cooking</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                    <span class="feature-tag">Chicken</span>
+                                    <span class="feature-tag">Easy Prep</span>
+                                </div>
+                                <button class="meal-card-cta">View Meal Plan →</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🥩</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 2</div>
+                                <div class="meal-card-subtitle">Beef & Pork Variety</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">6 Recipes</span>
+                                    <span class="feature-tag">Beef</span>
+                                    <span class="feature-tag">Hearty</span>
+                                </div>
+                                <button class="meal-card-cta">View Meal Plan →</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🐟</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 3</div>
+                                <div class="meal-card-subtitle">Seafood & Veggies</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                    <span class="feature-tag">Fish</span>
+                                    <span class="feature-tag">Light</span>
+                                </div>
+                                <button class="meal-card-cta">View Meal Plan →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 2: Sidebar Navigation with Tools Showcase -->
+        <div class="direction" data-index="2">
+            <div class="direction-header">
+                <div class="direction-title">Direction 2: Sidebar Navigation with Tools</div>
+                <div class="direction-subtitle">Power user layout, easy access to 9 tools</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">Sidebar + Content Area</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Balanced</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Left sidebar (sticky)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">Frequent users, quick tool access</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">
+                    <div class="mockup-logo">🍳 Meal Plans</div>
+                </div>
+
+                <div class="mockup-content">
+                    <div class="sidebar-layout">
+                        <div class="sidebar">
+                            <div class="sidebar-title">Navigation</div>
+                            <ul class="sidebar-menu">
+                                <li class="active">🏠 Dashboard</li>
+                                <li>📋 Meal Plans</li>
+                                <li>🛒 Shopping Helper</li>
+                                <li>📊 Nutrition</li>
+                                <li>⚖️ Recipe Scaler</li>
+                                <li>📚 Recipe Library</li>
+                                <li>⭐ Ratings</li>
+                                <li>📈 Analytics</li>
+                                <li>👨‍🍳 Cooking Mode</li>
+                                <li>⚙️ Settings</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h2 style="color: #192E59; font-size: 2rem; margin-bottom: 1.5rem;">Quick Tools</h2>
+                            <div class="tools-grid">
+                                <div class="tool-card">
+                                    <div class="tool-icon">🛒</div>
+                                    <div class="tool-title">Smart Shopping Helper</div>
+                                    <div class="tool-description">Merge ingredients, export lists</div>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-icon">📊</div>
+                                    <div class="tool-title">Nutrition Dashboard</div>
+                                    <div class="tool-description">Track macros and calories</div>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-icon">⚖️</div>
+                                    <div class="tool-title">Recipe Scaler</div>
+                                    <div class="tool-description">Adjust serving sizes</div>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-icon">👨‍🍳</div>
+                                    <div class="tool-title">Cooking Mode</div>
+                                    <div class="tool-description">Step-by-step guidance</div>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-icon">⭐</div>
+                                    <div class="tool-title">Rating System</div>
+                                    <div class="tool-description">Rate and track favorites</div>
+                                </div>
+                                <div class="tool-card">
+                                    <div class="tool-icon">📚</div>
+                                    <div class="tool-title">Recipe Library</div>
+                                    <div class="tool-description">Browse all recipes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 3: Dense Dashboard with Stats -->
+        <div class="direction" data-index="3">
+            <div class="direction-header">
+                <div class="direction-title">Direction 3: Dense Dashboard with Stats</div>
+                <div class="direction-subtitle">Information-rich, data-driven, efficient</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">Multi-section dashboard</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Dense (maximize info)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Top nav + quick stats</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">Data-focused users, analytics</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">
+                    <div class="mockup-logo">🍳 Meal Plans</div>
+                    <div class="mockup-nav">
+                        <a href="#">Dashboard</a>
+                        <a href="#">Plans</a>
+                        <a href="#">Tools</a>
+                        <a href="#">Analytics</a>
+                    </div>
+                </div>
+
+                <div class="mockup-content dense-layout">
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Meal Plans</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">16</div>
+                            <div class="stat-label">Total Recipes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Cooked This Month</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">4.8★</div>
+                            <div class="stat-label">Avg Rating</div>
+                        </div>
+                    </div>
+
+                    <h2 style="color: #192E59; margin-bottom: 1rem;">Your Meal Plans</h2>
+                    <div class="meal-grid grid-3">
+                        <div class="meal-card">
+                            <div class="meal-card-image">🍗</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 1</div>
+                                <div class="meal-card-subtitle">Chicken Batch Cooking</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                </div>
+                                <button class="meal-card-cta">View →</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🥩</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 2</div>
+                                <div class="meal-card-subtitle">Beef & Pork</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">6 Recipes</span>
+                                </div>
+                                <button class="meal-card-cta">View →</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🐟</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 3</div>
+                                <div class="meal-card-subtitle">Seafood</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                </div>
+                                <button class="meal-card-cta">View →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 4: List View - Clean & Scannable -->
+        <div class="direction" data-index="4">
+            <div class="direction-header">
+                <div class="direction-title">Direction 4: List View - Clean & Scannable</div>
+                <div class="direction-subtitle">Easy to scan, detail-oriented, efficient</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">Horizontal list cards</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Medium (scannable)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Top nav</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">Quick scanning, comparison</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header">
+                    <div class="mockup-logo">🍳 Meal Plans</div>
+                    <div class="mockup-nav">
+                        <a href="#">Home</a>
+                        <a href="#">Meal Plans</a>
+                        <a href="#">Tools</a>
+                    </div>
+                </div>
+
+                <div class="mockup-content list-layout">
+                    <h2 style="color: #192E59; font-size: 2rem; margin-bottom: 1.5rem;">All Meal Plans</h2>
+                    <div class="meal-grid list">
+                        <div class="meal-card">
+                            <div class="meal-card-image">🍗</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 1: Chicken-Focused Batch Cooking</div>
+                                <div class="meal-card-subtitle">5 recipes featuring chicken as the main protein. Perfect for meal prep beginners.</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                    <span class="feature-tag">Chicken</span>
+                                    <span class="feature-tag">Beginner</span>
+                                    <span class="feature-tag">2-3 hrs prep</span>
+                                </div>
+                            </div>
+                            <button class="meal-card-cta" style="width: auto;">View Plan →</button>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🥩</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 2: Beef & Pork Variety</div>
+                                <div class="meal-card-subtitle">6 hearty recipes with beef and pork. Great for cold weather comfort food.</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">6 Recipes</span>
+                                    <span class="feature-tag">Beef/Pork</span>
+                                    <span class="feature-tag">Intermediate</span>
+                                    <span class="feature-tag">3-4 hrs prep</span>
+                                </div>
+                            </div>
+                            <button class="meal-card-cta" style="width: auto;">View Plan →</button>
+                        </div>
+
+                        <div class="meal-card">
+                            <div class="meal-card-image">🐟</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 3: Seafood & Vegetables</div>
+                                <div class="meal-card-subtitle">5 lighter recipes featuring fish and vegetables. Perfect for spring/summer.</div>
+                                <div class="meal-card-features">
+                                    <span class="feature-tag">5 Recipes</span>
+                                    <span class="feature-tag">Seafood</span>
+                                    <span class="feature-tag">Easy</span>
+                                    <span class="feature-tag">2 hrs prep</span>
+                                </div>
+                            </div>
+                            <button class="meal-card-cta" style="width: auto;">View Plan →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 5: Minimal & Modern -->
+        <div class="direction" data-index="5">
+            <div class="direction-header">
+                <div class="direction-title">Direction 5: Minimal & Modern</div>
+                <div class="direction-subtitle">Lots of whitespace, zen-like, focused</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">2-Column centered grid</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Very spacious (zen)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Minimal top nav</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">Focus, simplicity seekers</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <div class="mockup-header" style="background: white; color: #192E59; border-bottom: 1px solid #E5E7EB;">
+                    <div class="mockup-logo" style="color: #192E59;">🍳 Meal Plans</div>
+                    <div class="mockup-nav">
+                        <a href="#" style="color: #6B7280;">Plans</a>
+                        <a href="#" style="color: #6B7280;">Tools</a>
+                        <a href="#" style="color: #6B7280;">Recipes</a>
+                    </div>
+                </div>
+
+                <div class="mockup-content" style="max-width: 900px; margin: 0 auto; padding: 4rem 2rem;">
+                    <h1 style="color: #192E59; font-size: 3rem; margin-bottom: 1rem; text-align: center;">Meal Plans</h1>
+                    <p style="text-align: center; color: #6B7280; font-size: 1.25rem; margin-bottom: 4rem;">Choose your weekly meal plan and start cooking</p>
+
+                    <div class="meal-grid grid-2">
+                        <div class="meal-card" style="border: 1px solid #E5E7EB;">
+                            <div class="meal-card-image" style="background: linear-gradient(135deg, #F2CC85 0%, #F2B680 100%);">🍗</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 1</div>
+                                <div class="meal-card-subtitle">Chicken-Focused</div>
+                                <button class="meal-card-cta">View Plan</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card" style="border: 1px solid #E5E7EB;">
+                            <div class="meal-card-image" style="background: linear-gradient(135deg, #F2B680 0%, #A6695B 100%);">🥩</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 2</div>
+                                <div class="meal-card-subtitle">Beef & Pork</div>
+                                <button class="meal-card-cta">View Plan</button>
+                            </div>
+                        </div>
+
+                        <div class="meal-card" style="border: 1px solid #E5E7EB;">
+                            <div class="meal-card-image" style="background: linear-gradient(135deg, #A6695B 0%, #592C28 100%);">🐟</div>
+                            <div class="meal-card-content">
+                                <div class="meal-card-title">Week 3</div>
+                                <div class="meal-card-subtitle">Seafood</div>
+                                <button class="meal-card-cta">View Plan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direction 6: Mobile-First Bottom Nav (Recommended) -->
+        <div class="direction" data-index="6">
+            <div class="direction-header">
+                <div class="direction-title">Direction 6: Mobile-First with Bottom Nav (⭐ Recommended)</div>
+                <div class="direction-subtitle">Thumb-friendly, PWA optimized, easy one-handed use</div>
+                <div class="direction-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Layout</div>
+                        <div class="meta-value">Mobile-first card grid</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Density</div>
+                        <div class="meta-value">Balanced</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Navigation</div>
+                        <div class="meta-value">Bottom nav bar (mobile)</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Best For</div>
+                        <div class="meta-value">PWA, mobile users (your primary use case)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mockup" style="max-width: 400px; margin: 0 auto; border: 8px solid #192E59; border-radius: 20px;">
+                <div class="mockup-header" style="background: white; color: #192E59; padding: 1rem; border-bottom: 1px solid #E5E7EB;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-size: 1.25rem; font-weight: 700; color: #192E59;">🍳 Meal Plans</div>
+                        <div style="color: #F2CC85;">⚙️</div>
+                    </div>
+                </div>
+
+                <div style="padding: 1rem; min-height: 500px;">
+                    <h2 style="color: #192E59; margin-bottom: 1rem;">This Week</h2>
+
+                    <div class="meal-card" style="margin-bottom: 1rem;">
+                        <div class="meal-card-image" style="height: 150px;">🍗</div>
+                        <div class="meal-card-content" style="padding: 1rem;">
+                            <div class="meal-card-title" style="font-size: 1.25rem;">Week 1</div>
+                            <div class="meal-card-subtitle">Chicken Batch Cooking</div>
+                            <div class="meal-card-features" style="margin: 0.75rem 0;">
+                                <span class="feature-tag">5 Recipes</span>
+                                <span class="feature-tag">Easy</span>
+                            </div>
+                            <button class="meal-card-cta">Start Cooking →</button>
+                        </div>
+                    </div>
+
+                    <h3 style="color: #192E59; font-size: 1rem; margin: 1.5rem 0 0.75rem;">Quick Tools</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛒</div>
+                            <div style="font-size: 0.85rem; color: #192E59; font-weight: 600;">Shopping</div>
+                        </div>
+                        <div style="background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                            <div style="font-size: 0.85rem; color: #192E59; font-weight: 600;">Nutrition</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 0.75rem 0; border-top: 1px solid #E5E7EB; display: flex; justify-content: space-around; position: sticky; bottom: 0;">
+                    <div style="text-align: center; color: #192E59; font-size: 0.85rem;">
+                        <div style="font-size: 1.5rem;">🏠</div>
+                        <div style="font-weight: 600;">Home</div>
+                    </div>
+                    <div style="text-align: center; color: #A6695B; font-size: 0.85rem;">
+                        <div style="font-size: 1.5rem;">📋</div>
+                        <div>Plans</div>
+                    </div>
+                    <div style="text-align: center; color: #A6695B; font-size: 0.85rem;">
+                        <div style="font-size: 1.5rem;">🔧</div>
+                        <div>Tools</div>
+                    </div>
+                    <div style="text-align: center; color: #A6695B; font-size: 0.85rem;">
+                        <div style="font-size: 1.5rem;">⭐</div>
+                        <div>Favorites</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #fff3cd; border: 1px solid #ffc107; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 style="color: #856404; margin-bottom: 0.5rem;">⭐ Why This Direction is Recommended</h3>
+                <ul style="margin-top: 1rem; margin-left: 1.5rem; line-height: 1.8; color: #856404;">
+                    <li><strong>Mobile-First:</strong> Your PRD specifies mobile as the primary platform - this design prioritizes that</li>
+                    <li><strong>Thumb-Zone Optimized:</strong> Bottom navigation is within easy thumb reach (critical for one-handed cooking)</li>
+                    <li><strong>PWA Best Practice:</strong> Bottom nav is standard for installable PWAs on mobile</li>
+                    <li><strong>Quick Tool Access:</strong> Most-used tools (Shopping, Nutrition) prominently featured</li>
+                    <li><strong>Offline-First Visual:</strong> Simple, clean design that works well even on slow connections</li>
+                    <li><strong>Swipe-Friendly:</strong> Card-based layout supports swipe gestures for recipe navigation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 1;
+        const totalDirections = 6;
+
+        function updateDirection() {
+            document.querySelectorAll('.direction').forEach((dir, idx) => {
+                dir.classList.remove('active');
+                if (parseInt(dir.dataset.index) === currentIndex) {
+                    dir.classList.add('active');
+                }
+            });
+            document.getElementById('current-direction').textContent = `Direction ${currentIndex} of ${totalDirections}`;
+        }
+
+        function nextDirection() {
+            currentIndex = currentIndex >= totalDirections ? 1 : currentIndex + 1;
+            updateDirection();
+            window.scrollTo(0, 0);
+        }
+
+        function prevDirection() {
+            currentIndex = currentIndex <= 1 ? totalDirections : currentIndex - 1;
+            updateDirection();
+            window.scrollTo(0, 0);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextDirection();
+            if (e.key === 'ArrowLeft') prevDirection();
+        });
+    </script>
+</body>
+</html>
