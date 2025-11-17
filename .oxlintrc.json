@@ -1,13 +1,94 @@
 {
   "$schema": "https://oxc.rs/schemas/oxlintrc.json",
-  "rules": {
-    "no-debugger": "error",
-    "no-console": "warn",
-    "eqeqeq": "error"
-  },
+  "plugins": [
+    "vue",
+    "typescript",
+    "unicorn",
+    "import"
+  ],
   "env": {
     "browser": true,
     "es2021": true,
     "node": true
-  }
+  },
+  "globals": {
+    "defineNuxtConfig": "readonly",
+    "defineAppConfig": "readonly",
+    "definePageMeta": "readonly",
+    "defineNuxtComponent": "readonly",
+    "defineNuxtPlugin": "readonly",
+    "defineNuxtRouteMiddleware": "readonly",
+    "navigateTo": "readonly",
+    "useRoute": "readonly",
+    "useRouter": "readonly",
+    "useHead": "readonly",
+    "useSeoMeta": "readonly",
+    "useAsyncData": "readonly",
+    "useFetch": "readonly",
+    "useRuntimeConfig": "readonly",
+    "useState": "readonly",
+    "useCookie": "readonly",
+    "useRequestHeaders": "readonly",
+    "useRequestEvent": "readonly",
+    "useNuxtApp": "readonly",
+    "useError": "readonly",
+    "showError": "readonly",
+    "clearError": "readonly",
+    "createError": "readonly",
+    "defineEventHandler": "readonly",
+    "readBody": "readonly",
+    "getQuery": "readonly",
+    "sendRedirect": "readonly"
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/.nuxt/**",
+    "**/dist/**",
+    "**/.output/**",
+    "**/pnpm-lock.yaml",
+    "**/.github/**",
+    "**/sw.js",
+    "**/mobile-utils.js",
+    "**/meals/**",
+    "**/analytics-tracker.js",
+    "**/notifications.js",
+    "**/*.html"
+  ],
+  "categories": {
+    "correctness": "warn",
+    "suspicious": "warn",
+    "pedantic": "off"
+  },
+  "rules": {
+    "no-debugger": "error",
+    "no-console": "warn",
+    "eqeqeq": "error",
+    "no-unused-vars": "warn",
+    "no-undef": "error"
+  },
+  "settings": {
+    "vue": {
+      "version": "3.5"
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.vue"],
+      "rules": {
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": ["**/*.config.ts", "**/*.config.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["**/sw.js", "**/service-worker.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
