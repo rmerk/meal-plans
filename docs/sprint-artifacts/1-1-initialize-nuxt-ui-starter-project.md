@@ -36,7 +36,9 @@ So that I have a production-ready Nuxt 4 foundation with all core modules pre-co
 
 - [x] Task 3: Install additional required modules (AC: #1)
   - [x] Run `pnpm add @nuxt/content @vite-pwa/nuxt pinia @pinia/nuxt @vueuse/nuxt nuxt-charts chart.js @nuxt/image`
-  - [x] Run `pnpm add -D oxc` (Note: @oxc/eslint-plugin not available in npm; installed base oxc 1.0.1)
+  - [x] Run `pnpm add -D oxlint` (installed oxlint 1.28.0 - correct package name)
+  - [x] Configure .oxlintrc.json with basic rules
+  - [x] Add `lint:oxc` script to package.json
   - [x] Verify additional modules added to package.json
 
 - [x] Task 4: Start development server and verify (AC: #3, #4)
@@ -138,7 +140,7 @@ claude-sonnet-4-5-20250929
 
 **Installation Approach:** Used `npm create nuxt@latest nuxt-temp -- -t ui --packageManager pnpm --gitInit false` to create Nuxt UI starter in temp directory, then copied files to current directory to coexist with brownfield vanilla JS project files
 
-**OXC Linter:** Installed oxc 1.0.1 (base package). Note: @oxc/eslint-plugin does not exist in npm registry; using @nuxt/eslint from starter template for ESLint integration
+**OXC Linter:** Installed oxlint 1.28.0 (correct package name). Created .oxlintrc.json configuration with basic rules (no-debugger: error, no-console: warn, eqeqeq: error). Added `pnpm run lint:oxc` script. Note: oxlint is complementary to ESLint - both can coexist.
 
 ### Completion Notes List
 
@@ -146,7 +148,7 @@ claude-sonnet-4-5-20250929
 
 ✅ **All required modules installed:**
 - Production: @nuxt/content (3.8.2), @vite-pwa/nuxt (1.0.7), pinia (3.0.4), @pinia/nuxt (0.11.3), @vueuse/nuxt (14.0.0), nuxt-charts (1.0.2), chart.js (4.5.1), @nuxt/image (2.0.0)
-- Dev: @nuxt/eslint (1.10.0), eslint (9.39.1), typescript (5.9.3), vue-tsc (3.1.3), oxc (1.0.1)
+- Dev: @nuxt/eslint (1.10.0), eslint (9.39.1), typescript (5.9.3), vue-tsc (3.1.3), oxlint (1.28.0)
 - Icon collections: @iconify-json/lucide, @iconify-json/simple-icons
 
 ✅ **Dev server verified** successfully running at http://localhost:3000 with Nuxt 4.2.1, Nitro 2.12.9, Vite 7.2.1, Vue 3.5.23
@@ -184,5 +186,8 @@ claude-sonnet-4-5-20250929
 - public/favicon.ico
 
 **Modified Files:**
-- package.json (replaced vanilla project package.json with Nuxt dependencies)
+- package.json (replaced vanilla project package.json with Nuxt dependencies, added lint:oxc script)
 - .gitignore (merged with Nuxt ignores)
+
+**Configuration Files:**
+- .oxlintrc.json (oxlint configuration with basic rules)
