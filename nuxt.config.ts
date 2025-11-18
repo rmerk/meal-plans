@@ -39,7 +39,25 @@ export default defineNuxtConfig({
     provider: 'none', // Disable ALL external API calls - icons bundled at build time
     clientBundle: {
       scan: true, // Auto-detect icons in components
-      icons: ['simple-icons:github', 'simple-icons:nuxtdotjs', 'lucide:moon', 'lucide:sun'], // Explicitly list critical icons
+      icons: [
+        // Brand icons
+        'simple-icons:github',
+        'simple-icons:nuxtdotjs',
+        // Theme icons
+        'lucide:moon',
+        'lucide:sun',
+        // UI component icons (UHeader mobile menu, dropdowns)
+        'lucide:menu',
+        'lucide:chevron-down',
+        // Feature/content icons (index page)
+        'lucide:arrow-right',
+        'lucide:rocket',
+        'lucide:palette',
+        'lucide:zap',
+        'lucide:blocks',
+        'lucide:code-2',
+        'lucide:shield-check'
+      ], // Explicitly list critical icons
       sizeLimitKb: 256 // Bundle size limit
     }
   },

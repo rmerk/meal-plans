@@ -1,0 +1,271 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.2</storyId>
+    <title>Configure Mountains at Sunrise Theme</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-configure-mountains-at-sunrise-theme.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>the app to display the Mountains at Sunrise color palette throughout</iWant>
+    <soThat>the visual design is warm, approachable, and brand-consistent</soThat>
+    <tasks>
+      <task id="1" ac="1,2,4">
+        <title>Configure Tailwind v4 @theme in main.css</title>
+        <subtasks>
+          <subtask>Create or update app/assets/css/main.css with @theme directive</subtask>
+          <subtask>Define Mountains at Sunrise color variables (primary, secondary, tertiary, clay, deep-brown)</subtask>
+          <subtask>Define semantic color mappings (success, warning, error, info, neutral)</subtask>
+          <subtask>Configure spacing scale following 8px grid system</subtask>
+          <subtask>Verify @import "tailwindcss" is included</subtask>
+        </subtasks>
+      </task>
+      <task id="2" ac="1">
+        <title>Configure Nuxt UI color aliases in app.config.ts</title>
+        <subtasks>
+          <subtask>Update app/app.config.ts with ui.colors object</subtask>
+          <subtask>Map 7 semantic Nuxt UI colors to Mountains at Sunrise palette</subtask>
+          <subtask>Verify color mapping: primary→#192E59, secondary→#F2CC85, etc.</subtask>
+        </subtasks>
+      </task>
+      <task id="3" ac="3">
+        <title>Configure typography with Google Fonts</title>
+        <subtasks>
+          <subtask>Update nuxt.config.ts fonts configuration</subtask>
+          <subtask>Add Playfair Display for headings</subtask>
+          <subtask>Add Inter for body text</subtask>
+          <subtask>Define font-sans and font-serif variables in @theme</subtask>
+          <subtask>Test fonts load correctly in browser</subtask>
+        </subtasks>
+      </task>
+      <task id="4" ac="5">
+        <title>Configure dark mode color adjustments</title>
+        <subtasks>
+          <subtask>Define dark mode color overrides in @theme</subtask>
+          <subtask>Set lighter primary (#2A4A7C) for better dark mode contrast</subtask>
+          <subtask>Define dark backgrounds (#1a1a1a for base, #2a2a2a for cards)</subtask>
+          <subtask>Set dark mode text colors (#F9FAFB light, #C08A7E muted accents)</subtask>
+          <subtask>Test dark mode toggle with useColorMode() composable</subtask>
+        </subtasks>
+      </task>
+      <task id="5" ac="1,5">
+        <title>Verify color contrast ratios</title>
+        <subtasks>
+          <subtask>Test primary (#192E59) on white background meets WCAG AA (target: 7.2:1)</subtask>
+          <subtask>Test all semantic colors meet minimum contrast requirements</subtask>
+          <subtask>Use browser DevTools or online contrast checker</subtask>
+          <subtask>Document contrast ratios in Dev Notes</subtask>
+        </subtasks>
+      </task>
+      <task id="6" ac="all">
+        <title>Test theme configuration</title>
+        <subtasks>
+          <subtask>Create test page with buttons using all 7 semantic colors</subtask>
+          <subtask>Verify colors render correctly in light mode</subtask>
+          <subtask>Toggle dark mode and verify adjusted colors</subtask>
+          <subtask>Test typography renders with Playfair Display and Inter</subtask>
+          <subtask>Verify spacing scale works with Tailwind utility classes</subtask>
+          <subtask>Check browser console for font loading errors</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>the Nuxt UI starter is initialized</given>
+      <when>I configure the theme in app/assets/css/main.css and app/app.config.ts</when>
+      <then>the 7 semantic colors are available globally: Primary (#192E59), Secondary (#F2CC85), Success (#22C55E), Warning (#F2B680), Error (#EF4444), Info (#3B82F6), Neutral (#6B7280)</then>
+    </criterion>
+    <criterion id="2">
+      <and>Extended palette colors are available: Clay (#A6695B), Deep Brown (#592C28)</and>
+    </criterion>
+    <criterion id="3">
+      <and>Typography is configured with Playfair Display (headings) and Inter (body)</and>
+    </criterion>
+    <criterion id="4">
+      <and>Spacing follows 8px grid (4px, 8px, 16px, 24px, 32px, 48px, 64px)</and>
+    </criterion>
+    <criterion id="5">
+      <and>Dark mode color adjustments are defined (lighter primary #2A4A7C for contrast)</and>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - Tailwind v4 Configuration</title>
+        <section>Tailwind v4 Configuration</section>
+        <snippet>The @theme directive is the new CSS-first configuration approach in Tailwind v4. Use assets/css/main.css to define Mountains at Sunrise color palette, typography (Playfair Display + Inter), and spacing scale following 8px grid.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - PWA Configuration</title>
+        <section>PWA Configuration</section>
+        <snippet>PWA manifest uses Mountains at Sunrise theme colors: theme_color #192E59 (Deep Blue), background_color #F2CC85 (Gold).</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design - Theme Configuration Strategy</title>
+        <section>1.2 Theme Configuration Strategy</section>
+        <snippet>Nuxt UI v4 uses 7 semantic color aliases (primary, secondary, success, warning, error, info, neutral) mapped via app.config.ts. Extended palette includes Clay (#A6695B) and Deep Brown (#592C28). Dark mode adjustments: lighten primary to #2A4A7C, dark backgrounds #1a1a1a/#2a2a2a.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design - Mountains at Sunrise Color System</title>
+        <section>3.1 Color System: Mountains at Sunrise</section>
+        <snippet>Primary #192E59 (Deep Blue) on white: 7.2:1 contrast (AAA). Secondary #F2CC85 (Gold) on #192E59: 4.5:1 (AA). Clay #A6695B on white: 4.8:1 (AA). Deep Brown #592C28 on white: 11.5:1 (AAA). All meet WCAG 2.1 AA requirements.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design - Typography System</title>
+        <section>3.2 Typography System</section>
+        <snippet>Font families: Playfair Display for headings (serif), Inter for body text (sans-serif). Loaded via @nuxt/fonts module from Google Fonts with automatic optimization and subsetting.</snippet>
+      </doc>
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design - Spacing & Layout</title>
+        <section>3.3 Spacing & Layout</section>
+        <snippet>Spacing scale follows 8px grid: xs=4px, sm=8px, md=16px, lg=24px, xl=32px, 2xl=48px, 3xl=64px. Defined as CSS custom properties in @theme directive.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic 1 - Story 1.2</title>
+        <section>Story 1.2: Configure Mountains at Sunrise Theme</section>
+        <snippet>Configure Tailwind v4 @theme directive and Nuxt UI app.config.ts with Mountains at Sunrise palette. Add Playfair Display and Inter via @nuxt/fonts. Test dark mode with useColorMode() composable. Verify WCAG AA contrast ratios.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-1-initialize-nuxt-ui-starter-project.md</path>
+        <title>Previous Story - 1.1 Learnings</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Nuxt files initialized in app/ directory. @nuxt/fonts module installed. Files exist: app/assets/css/main.css (currently has basic Tailwind imports with default green theme), app/app.config.ts (has green/slate colors), nuxt.config.ts (needs fonts config). Dev server running at localhost:3000.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <artifact>
+        <path>app/assets/css/main.css</path>
+        <kind>stylesheet</kind>
+        <symbol>@theme static</symbol>
+        <lines>1-18</lines>
+        <reason>Existing main.css has basic Tailwind imports and default green theme. Must be updated with Mountains at Sunrise colors, typography, and spacing using @theme directive.</reason>
+      </artifact>
+      <artifact>
+        <path>app/app.config.ts</path>
+        <kind>config</kind>
+        <symbol>defineAppConfig</symbol>
+        <lines>1-8</lines>
+        <reason>Current Nuxt UI color config uses green/slate. Must update ui.colors to map 7 semantic aliases to Mountains at Sunrise palette (#192E59, #F2CC85, etc.).</reason>
+      </artifact>
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>config</kind>
+        <symbol>defineNuxtConfig</symbol>
+        <lines>1-28</lines>
+        <reason>Nuxt configuration file. Must add fonts module configuration with Playfair Display and Inter. @nuxt/fonts already in modules array per Story 1.1.</reason>
+      </artifact>
+    </code>
+
+    <dependencies>
+      <node>
+        <package name="@nuxt/ui" version="^4.1.0" reason="Provides UI component library with 7 semantic color system" />
+        <package name="@nuxt/fonts" version="(included in @nuxt/ui)" reason="Manages Google Fonts loading, optimization, and subsetting" />
+        <package name="tailwindcss" version="v4.x (via @nuxt/ui)" reason="CSS framework with @theme directive for design tokens" />
+        <package name="@nuxt/color-mode" version="(included in @nuxt/ui)" reason="Provides useColorMode() composable for dark mode toggle" />
+        <package name="nuxt" version="^4.2.1" reason="Core framework" />
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="architecture">Use Tailwind CSS v4 @theme directive in assets/css/main.css for all design tokens (colors, typography, spacing). Do not create tailwind.config.js - CSS-first approach required.</constraint>
+    <constraint type="architecture">Update existing app/assets/css/main.css - do not recreate file. Preserve @import statements, replace @theme static content.</constraint>
+    <constraint type="architecture">Map Nuxt UI color aliases in app/app.config.ts exactly as specified: primary=#192E59, secondary=#F2CC85, success=#22C55E, warning=#F2B680, error=#EF4444, info=#3B82F6, neutral=#6B7280.</constraint>
+    <constraint type="accessibility">All color combinations must meet WCAG 2.1 Level AA contrast ratios: 4.5:1 for normal text, 3:1 for large text and UI components.</constraint>
+    <constraint type="accessibility">Primary #192E59 must achieve 7.2:1 on white (AAA level) as documented in UX spec.</constraint>
+    <constraint type="fonts">Use @nuxt/fonts module for Google Fonts loading. Configure in nuxt.config.ts with families array: Playfair Display (weights 400, 700) and Inter (weights 400, 600).</constraint>
+    <constraint type="fonts">Define font-sans and font-serif variables in @theme matching Google Fonts configuration with system font fallbacks.</constraint>
+    <constraint type="spacing">Spacing scale must follow 8px grid system exactly: 4px, 8px, 16px, 24px, 32px, 48px, 64px mapped to xs, sm, md, lg, xl, 2xl, 3xl.</constraint>
+    <constraint type="dark-mode">Dark mode adjustments via @media (prefers-color-scheme: dark) in @theme. Lighten primary to #2A4A7C, use backgrounds #1a1a1a/#2a2a2a, text #F9FAFB/#C08A7E.</constraint>
+    <constraint type="testing">Create test page to visually verify all 7 semantic colors, typography (Playfair/Inter), spacing utilities, and dark mode toggle functionality.</constraint>
+    <constraint type="git">Follow git commit pattern from Story 1.1: descriptive message with technical details and module versions.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>useColorMode()</name>
+      <kind>Nuxt Composable</kind>
+      <signature>const { preference, value } = useColorMode()</signature>
+      <path>@nuxt/color-mode (via @nuxt/ui)</path>
+      <usage>Toggle dark mode and persist preference in localStorage. preference: 'light' | 'dark' | 'system', value: resolved color mode</usage>
+    </interface>
+    <interface>
+      <name>Tailwind @theme directive</name>
+      <kind>CSS Directive</kind>
+      <signature>@theme { --custom-property: value; @media (prefers-color-scheme: dark) { ... } }</signature>
+      <path>Tailwind CSS v4</path>
+      <usage>Define design tokens as CSS custom properties. Supports media queries for dark mode overrides.</usage>
+    </interface>
+    <interface>
+      <name>Nuxt UI Color Aliases</name>
+      <kind>Config Object</kind>
+      <signature>ui.colors: { primary, secondary, success, warning, error, info, neutral }</signature>
+      <path>app/app.config.ts - defineAppConfig</path>
+      <usage>7 semantic color aliases map to hex values. Used by all Nuxt UI components for theming.</usage>
+    </interface>
+    <interface>
+      <name>@nuxt/fonts Configuration</name>
+      <kind>Module Config</kind>
+      <signature>fonts: { families: [{ name, provider, weights }] }</signature>
+      <path>nuxt.config.ts - defineNuxtConfig</path>
+      <usage>Configure Google Fonts with automatic optimization. Fonts preloaded and subsetted.</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing standards for this story focus on visual verification and accessibility compliance:
+
+      - **Visual Testing**: Create test page (e.g., app/pages/theme-test.vue) with buttons/cards using all 7 semantic color classes
+      - **Contrast Testing**: Use browser DevTools Accessibility panel or online tools (WebAIM Contrast Checker) to verify WCAG AA ratios
+      - **Dark Mode Testing**: Toggle dark mode via useColorMode() and verify color adjustments render correctly
+      - **Typography Testing**: Verify Playfair Display loads for headings, Inter for body text (inspect computed styles)
+      - **Browser Testing**: Test in Chrome/Edge (Blink), Firefox (Gecko), Safari (WebKit)
+      - **Console Verification**: Check for font loading errors, CSS variable warnings, or Tailwind build errors
+
+      No automated tests required for this story - manual visual verification sufficient.
+    </standards>
+
+    <locations>
+      <location>app/pages/ - Create theme-test.vue page for visual testing</location>
+      <location>Browser DevTools - Accessibility panel for contrast checking</location>
+      <location>Browser DevTools - Computed styles panel for typography verification</location>
+    </locations>
+
+    <ideas>
+      <idea ac="1">
+        Test Idea: Create test page with UButton components using all 7 color variants (primary, secondary, success, warning, error, info, neutral). Verify each renders with correct Mountains at Sunrise hex value.
+      </idea>
+      <idea ac="2">
+        Test Idea: Add text elements with bg-clay and text-deep-brown Tailwind classes to test page. Verify extended palette colors available.
+      </idea>
+      <idea ac="3">
+        Test Idea: Create heading (h1, h2) and paragraph elements. Inspect computed font-family - should show Playfair Display for headings, Inter for body.
+      </idea>
+      <idea ac="4">
+        Test Idea: Apply spacing utility classes (mt-md, p-lg, mb-2xl) to elements. Inspect computed margin/padding values - should match 8px grid (16px, 24px, 48px).
+      </idea>
+      <idea ac="5">
+        Test Idea: Toggle dark mode with useColorMode() composable. Verify primary color changes from #192E59 to #2A4A7C, backgrounds to #1a1a1a/#2a2a2a. Use DevTools to inspect CSS variables.
+      </idea>
+      <idea ac="all">
+        Accessibility Test: Use browser DevTools Accessibility panel to check contrast ratios. Primary on white must show 7.2:1. Document actual ratios in Dev Notes for all color combinations.
+      </idea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,0 +1,292 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>Set up PWA with Basic Service Worker</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-17</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-3-set-up-pwa-with-basic-service-worker.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>the app to work offline and be installable on my device</iWant>
+    <soThat>I can access meal plans without internet connection</soThat>
+    <tasks>
+- Task 1: Configure @vite-pwa/nuxt in nuxt.config.ts (AC: #1, #2)
+  - Add pwa configuration section to nuxt.config.ts
+  - Set strategies to 'generateSW' (Workbox-generated service worker)
+  - Set registerType to 'prompt' (for update notifications in Epic 5)
+  - Configure manifest with app name, short_name, description
+  - Set theme_color to #192E59 (Mountains at Sunrise Deep Blue)
+  - Set background_color to #F2CC85 (Mountains at Sunrise Gold)
+  - Set display to 'standalone' (hide browser UI)
+
+- Task 2: Create PWA icons (AC: #1)
+  - Create /public/icons/ directory if not exists
+  - Generate or create icon-192.png (192x192 pixels)
+  - Generate or create icon-512.png (512x512 pixels)
+  - Ensure icons use Mountains at Sunrise color palette
+  - Add icons array to manifest configuration
+  - Verify icons display correctly in browser install prompt
+
+- Task 3: Configure Workbox caching strategies (AC: #2, #3, #4)
+  - Set navigateFallback to '/' (offline fallback page)
+  - Configure globPatterns to cache essential files: ['**/*.{js,css,html,png,svg,ico}']
+  - Add runtimeCaching for Google Fonts (StaleWhileRevalidate, 1 year expiration)
+  - Add runtimeCaching for images (CacheFirst, 30 days, max 50 entries)
+  - Add runtimeCaching for HTML documents (NetworkFirst with 5s timeout, 24 hour cache)
+  - Verify cache-first strategy applies to CSS/JS/images
+  - Verify network-first strategy applies to HTML pages
+
+- Task 4: Test PWA functionality (AC: #5, #6)
+  - Run development server: pnpm dev
+  - Open Chrome DevTools → Application → Service Worker
+  - Verify service worker registered successfully
+  - Check Manifest tab for proper configuration
+  - Test offline mode: DevTools → Network → Offline checkbox
+  - Verify pages load from cache when offline
+  - Test install prompt: click browser install icon
+  - Verify installed app opens in standalone mode
+
+- Task 5: Run Lighthouse PWA audit (AC: #5)
+  - Build production version: pnpm generate
+  - Serve production build: npx serve dist
+  - Open Chrome DevTools → Lighthouse
+  - Run PWA audit (ensure HTTPS or localhost)
+  - Verify PWA score = 100
+  - Address any failing PWA criteria
+  - Document Lighthouse results in Dev Notes
+
+- Task 6: Verify offline-first functionality (AC: #6)
+  - Load app in browser with network connection
+  - Navigate to multiple pages (home, about, etc.)
+  - Open DevTools → Network → Set to Offline
+  - Refresh page and verify it loads from cache
+  - Navigate between cached pages
+  - Verify images, CSS, and JS load from cache
+  - Test service worker update mechanism
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1. **Given** the theme is configured
+   **When** I configure @vite-pwa/nuxt in `nuxt.config.ts`
+   **Then** the PWA manifest is generated with name "Meal Plans", theme_color #192E59, background_color #F2CC85, display standalone, icons (192x192, 512x512)
+
+2. **And** service worker is registered with offline-first caching strategy
+
+3. **And** static assets use cache-first strategy (CSS, JS, images)
+
+4. **And** HTML pages use network-first strategy with cache fallback
+
+5. **And** the app passes Lighthouse PWA audit with score = 100
+
+6. **And** I can disconnect from network and all cached pages still load
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <!-- Documentation artifacts -->
+      <artifact>
+        <path>docs/architecture.md</path>
+        <title>Architecture - PWA Configuration</title>
+        <section>PWA Configuration (@vite-pwa/nuxt)</section>
+        <snippet>Complete nuxt.config.ts PWA section with manifest and workbox. Includes strategies: 'generateSW', registerType: 'prompt', manifest properties, and workbox caching rules for Google Fonts, images, and HTML documents.</snippet>
+      </artifact>
+
+      <artifact>
+        <path>docs/architecture.md</path>
+        <title>Architecture - Technology Stack Details</title>
+        <section>Technology Stack Details</section>
+        <snippet>PWA module configuration using @vite-pwa/nuxt with Workbox integration. Service worker strategies, caching patterns, and GitHub Pages deployment configuration.</snippet>
+      </artifact>
+
+      <artifact>
+        <path>docs/epics.md</path>
+        <title>Epic 1 - Story 1.3</title>
+        <section>Epic 1: Foundation &amp; Infrastructure - Story 1.3</section>
+        <snippet>PWA setup with basic service worker. Configure @vite-pwa/nuxt for offline-first capabilities, create PWA icons, and achieve Lighthouse PWA score = 100.</snippet>
+      </artifact>
+    </docs>
+
+    <code>
+      <!-- Existing code artifacts -->
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>defineNuxtConfig</symbol>
+        <lines>1-36</lines>
+        <reason>Main Nuxt configuration file where PWA module and configuration must be added. Currently has modules array with @nuxt/eslint and @nuxt/ui. Need to add @vite-pwa/nuxt and pwa configuration section.</reason>
+      </artifact>
+
+      <artifact>
+        <path>app/app.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>defineAppConfig</symbol>
+        <lines>1-13</lines>
+        <reason>Theme color configuration. Primary color (#192E59) already configured for use in PWA manifest theme_color. Secondary color (#F2CC85) for background_color.</reason>
+      </artifact>
+
+      <artifact>
+        <path>app/assets/css/main.css</path>
+        <kind>stylesheet</kind>
+        <symbol>:root</symbol>
+        <lines>14-24</lines>
+        <reason>Primary color scale with --ui-color-primary-700: #192E59 defined. This is the theme_color for PWA manifest.</reason>
+      </artifact>
+
+      <artifact>
+        <path>app/assets/css/main.css</path>
+        <kind>stylesheet</kind>
+        <symbol>:root</symbol>
+        <lines>31-42</lines>
+        <reason>Secondary color scale with --ui-color-secondary-500: #F2CC85 defined. This is the background_color for PWA manifest.</reason>
+      </artifact>
+
+      <artifact>
+        <path>package.json</path>
+        <kind>configuration</kind>
+        <symbol>dependencies</symbol>
+        <lines>15-27</lines>
+        <reason>@vite-pwa/nuxt already installed at version ^1.0.7 (installed in Story 1.1). Ready for configuration.</reason>
+      </artifact>
+
+      <artifact>
+        <path>public/</path>
+        <kind>directory</kind>
+        <symbol>N/A</symbol>
+        <lines>N/A</lines>
+        <reason>Public directory exists but /public/icons/ subdirectory does not exist yet. Must be created for PWA icon assets.</reason>
+      </artifact>
+    </code>
+
+    <dependencies>
+      <node>
+        <package name="@vite-pwa/nuxt" version="^1.0.7" />
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.1.0" />
+        <package name="@nuxt/content" version="^3.8.2" />
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+- PWA manifest must use Mountains at Sunrise theme colors: theme_color #192E59, background_color #F2CC85
+- Service worker strategy must be 'generateSW' (Workbox auto-generation)
+- Register type must be 'prompt' for future update notifications (Epic 5 will implement UI)
+- Icons must be 192x192 and 512x512 PNG format minimum
+- Cache strategy must be offline-first: cache-first for static assets, network-first for HTML pages
+- Lighthouse PWA audit must achieve score = 100
+- All pages must load when offline after initial visit
+- Configuration must follow Nuxt 4 + @vite-pwa/nuxt v1.x conventions
+- Font configuration already exists using @nuxt/fonts with Google Fonts (Playfair Display, Inter)
+- No modification to existing CSS/theme colors - only add PWA manifest configuration
+  </constraints>
+
+  <interfaces>
+    <!-- API/interface signatures -->
+    <interface>
+      <name>nuxt.config.ts pwa configuration</name>
+      <kind>TypeScript configuration object</kind>
+      <signature>
+pwa: {
+  strategies: 'generateSW',
+  registerType: 'prompt',
+  manifest: {
+    name: string,
+    short_name: string,
+    description: string,
+    theme_color: string,
+    background_color: string,
+    display: 'standalone' | 'fullscreen' | 'minimal-ui' | 'browser',
+    icons: Array&lt;{ src: string, sizes: string, type: string }&gt;
+  },
+  workbox: {
+    navigateFallback: string,
+    globPatterns: string[],
+    runtimeCaching: Array&lt;{
+      urlPattern: RegExp | Function,
+      handler: 'CacheFirst' | 'NetworkFirst' | 'StaleWhileRevalidate',
+      options?: { cacheName: string, expiration: { maxEntries: number, maxAgeSeconds: number } }
+    }&gt;
+  }
+}
+      </signature>
+      <path>nuxt.config.ts</path>
+    </interface>
+
+    <interface>
+      <name>PWA Manifest</name>
+      <kind>Web App Manifest JSON</kind>
+      <signature>
+{
+  "name": "Meal Plans",
+  "short_name": "Meals",
+  "description": "Weekly meal planning with batch cooking strategies",
+  "theme_color": "#192E59",
+  "background_color": "#F2CC85",
+  "display": "standalone",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+      </signature>
+      <path>Auto-generated by @vite-pwa/nuxt</path>
+    </interface>
+
+    <interface>
+      <name>Workbox RuntimeCaching</name>
+      <kind>Service Worker caching configuration</kind>
+      <signature>
+runtimeCaching: [
+  {
+    urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+    handler: 'StaleWhileRevalidate',
+    options: { cacheName: 'google-fonts-cache', expiration: { maxEntries: 10, maxAgeSeconds: 31536000 } }
+  },
+  {
+    urlPattern: /^https:\/\/.*\.(?:png|jpg|jpeg|svg|gif|webp)$/i,
+    handler: 'CacheFirst',
+    options: { cacheName: 'image-cache', expiration: { maxEntries: 50, maxAgeSeconds: 2592000 } }
+  },
+  {
+    urlPattern: ({ request }) => request.destination === 'document',
+    handler: 'NetworkFirst',
+    options: { cacheName: 'html-cache', networkTimeoutSeconds: 5, expiration: { maxEntries: 50, maxAgeSeconds: 86400 } }
+  }
+]
+      </signature>
+      <path>nuxt.config.ts workbox section</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+Manual testing is the primary approach for this story. PWA functionality must be tested in Chrome DevTools using the Application tab. Service worker registration, manifest properties, offline functionality, and install behavior must all be manually verified. Lighthouse PWA audit (automated) provides the objective score = 100 requirement. Production build testing required using `pnpm generate` and `npx serve dist` before deploying.
+    </standards>
+
+    <locations>
+- Chrome DevTools → Application → Service Workers
+- Chrome DevTools → Application → Manifest
+- Chrome DevTools → Application → Cache Storage
+- Chrome DevTools → Lighthouse (PWA audit)
+- Chrome DevTools → Network (Offline mode testing)
+    </locations>
+
+    <ideas>
+- **AC #1 (Manifest Generation)**: Verify manifest file is auto-generated with correct name, theme_color, background_color, display, and icons array by inspecting DevTools → Application → Manifest tab
+- **AC #2 (Service Worker Registration)**: Verify service worker is registered and active in DevTools → Application → Service Workers, status shows "activated and running"
+- **AC #3 (Cache-First for Static Assets)**: Verify CSS, JS, images are cached using DevTools → Application → Cache Storage, check precache and runtime caches
+- **AC #4 (Network-First for HTML)**: Test by going offline (DevTools → Network → Offline), verify HTML pages still load from cache fallback
+- **AC #5 (Lighthouse PWA Score)**: Run Lighthouse audit in production build, verify PWA score = 100 with all criteria passing (manifest, service worker, offline, icons)
+- **AC #6 (Offline Functionality)**: Load app online, visit multiple pages, go offline, verify all visited pages load correctly, navigation works, images/CSS/JS render
+- **Install Behavior**: Test browser install prompt appears (Chrome address bar icon), install app, verify it opens in standalone mode (no browser UI)
+- **Icon Display**: Verify PWA icons display correctly in install prompt and installed app using 192x192 and 512x512 PNG files
+- **Update Mechanism**: Verify registerType: 'prompt' configuration is set (UI implementation deferred to Epic 5 but configuration must be present)
+- **Cross-Browser**: Test in Chrome (primary), consider testing in Edge, Firefox, Safari for compatibility
+    </ideas>
+  </tests>
+</story-context>
