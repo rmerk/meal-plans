@@ -27,11 +27,21 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-15',
 
   app: {
+    baseURL: '/meal-plans/', // GitHub Pages base path
     head: {
+      title: 'Meal Plans',
+      meta: [
+        { name: 'description', content: 'Weekly meal planning with batch cooking strategies' },
+        { name: 'theme-color', content: '#192E59' }
+      ],
       link: [
         { rel: 'manifest', href: '/manifest.webmanifest' }
       ]
     }
+  },
+
+  nitro: {
+    preset: 'github-pages'
   },
 
   // Configure Nuxt Icon for offline-first PWA (no external API calls)

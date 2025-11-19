@@ -1,0 +1,235 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.4</storyId>
+    <title>Configure GitHub Pages Deployment</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-4-configure-github-pages-deployment.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>to deploy the app to GitHub Pages with static generation</iWant>
+    <soThat>the app is publicly accessible at https://rmerk.github.io/meal-plans/</soThat>
+    <tasks>
+      - Task 1: Configure nuxt.config.ts for GitHub Pages (AC: #1, #2)
+        - Set app.baseURL to /meal-plans/
+        - Set nitro.preset to github-pages
+        - Verify app.head.title and meta tags
+        - Ensure PWA manifest paths are relative to baseURL
+      - Task 2: Test static site generation locally (AC: #3)
+        - Run pnpm generate command
+        - Verify .output/public/ directory created
+        - Check all pages generated (index.html, 404.html)
+        - Verify service worker (sw.js) present
+        - Verify PWA manifest (manifest.webmanifest) generated
+        - Test locally with npx serve .output/public
+      - Task 3: Create GitHub Actions deployment workflow (AC: #4, #5)
+        - Create .github/workflows/deploy.yml file
+        - Configure trigger: on push to main branch
+        - Set up Node.js 24 with pnpm action
+        - Add pnpm install step with --frozen-lockfile
+        - Add pnpm generate step
+        - Configure peaceiris/actions-gh-pages@v3
+        - Set publish_dir to ./.output/public
+      - Task 4: Configure GitHub repository settings
+        - Enable GitHub Pages in repository settings
+        - Set source to "GitHub Actions" deployment method
+        - Verify GITHUB_TOKEN permissions
+        - Check branch protection rules (if any)
+      - Task 5: Deploy and verify production build (AC: #6)
+        - Push changes to main branch to trigger workflow
+        - Monitor GitHub Actions workflow execution
+        - Verify workflow completes successfully
+        - Navigate to https://rmerk.github.io/meal-plans/
+        - Verify home page loads without errors
+        - Check browser DevTools Console for asset loading errors
+        - Verify service worker registers correctly
+        - Test PWA install prompt appears
+        - Test offline functionality (cache and reload)
+        - Verify theme colors applied correctly
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      Given PWA is configured
+      When I configure nuxt.config.ts for GitHub Pages deployment
+      Then app.baseURL is set to /meal-plans/
+    </criterion>
+    <criterion id="2">
+      And nitro.preset is set to github-pages
+    </criterion>
+    <criterion id="3">
+      And I can run pnpm generate and the .output/public/ directory is created with complete static site
+    </criterion>
+    <criterion id="4">
+      And GitHub Actions workflow (.github/workflows/deploy.yml) is created to automatically build and deploy on push to main
+    </criterion>
+    <criterion id="5">
+      And the build workflow uses pnpm for dependency installation and caching
+    </criterion>
+    <criterion id="6">
+      And the deployed site loads successfully at https://rmerk.github.io/meal-plans/ with all assets loading correctly (no 404s)
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>GitHub Pages Deployment</section>
+        <snippet>Complete GitHub Pages deployment configuration including nuxt.config.ts setup with app.baseURL and nitro.preset, GitHub Actions workflow structure with pnpm support, and deployment troubleshooting guide.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 1.4: Configure GitHub Pages Deployment</section>
+        <snippet>Acceptance criteria require configuring app.baseURL to /meal-plans/, setting nitro.preset to github-pages, creating GitHub Actions workflow with pnpm, and verifying successful deployment at https://rmerk.github.io/meal-plans/</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-3-set-up-pwa-with-basic-service-worker.md</path>
+        <title>Story 1.3: Set up PWA with Basic Service Worker</title>
+        <section>Completion Notes</section>
+        <snippet>PWA configuration complete with sw.js and manifest.webmanifest generated in production builds. Service worker precaches 19 files (782.36 KiB). Icons bundled client-side (12 icons, 4.63KB) with provider: none to disable external API calls.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>defineNuxtConfig</symbol>
+        <lines>1-120</lines>
+        <reason>Current Nuxt configuration - needs app.baseURL and nitro.preset additions for GitHub Pages deployment</reason>
+      </artifact>
+      <artifact>
+        <path>.github/workflows/ci.yml</path>
+        <kind>github-actions</kind>
+        <symbol>ci</symbol>
+        <lines>1-35</lines>
+        <reason>Existing CI workflow with pnpm setup - provides pattern for new deployment workflow</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <node>
+        <dependency name="nuxt" version="^4.2.1" />
+        <dependency name="@nuxt/ui" version="^4.1.0" />
+        <dependency name="@vite-pwa/nuxt" version="^1.0.7" />
+        <dependency name="@nuxt/content" version="^3.8.2" />
+        <dependency name="@pinia/nuxt" version="^0.11.3" />
+        <dependency name="@vueuse/nuxt" version="^14.0.0" />
+        <dependency name="pinia" version="^3.0.4" />
+        <dependency name="chart.js" version="^4.5.1" />
+        <dependency name="nuxt-charts" version="^1.0.2" />
+        <dependency name="@nuxt/image" version="^2.0.0" />
+        <dependency name="@iconify-json/simple-icons" version="^1.2.58" />
+        <devDependency name="@iconify-json/lucide" version="^1.2.73" />
+        <devDependency name="@nuxt/eslint" version="^1.10.0" />
+        <devDependency name="eslint" version="^9.39.1" />
+        <devDependency name="oxlint" version="^1.28.0" />
+        <devDependency name="sharp" version="^0.34.5" />
+        <devDependency name="typescript" version="^5.9.3" />
+        <devDependency name="vue-tsc" version="^3.1.3" />
+      </node>
+      <packageManager>pnpm@10.21.0</packageManager>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - CRITICAL: app.baseURL must be set to /meal-plans/ to match GitHub repository name - without this, all asset paths will 404 in production
+    - CRITICAL: nitro.preset must be set to github-pages for proper static site generation optimization
+    - PWA manifest and service worker paths must remain relative to baseURL
+    - GitHub Actions workflow must use pnpm consistently (already configured in package.json: pnpm@10.21.0)
+    - Node.js 24 (LTS - Iron) must be used in workflow to match architecture spec
+    - Use peaceiris/actions-gh-pages@v3 action for deployment to gh-pages branch
+    - publish_dir must be ./.output/public (Nuxt 4 output directory)
+    - Workflow should use --frozen-lockfile flag for deterministic builds
+    - Enable pnpm caching in workflow via cache: pnpm option in setup-node action
+    - GitHub Pages source must be set to "GitHub Actions" method (not "Deploy from branch")
+    - All existing PWA configuration (theme colors, icons, service worker) must remain functional after deployment
+    - Testing approach: Build locally first with pnpm generate, serve with npx serve .output/public, verify before pushing
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Nuxt Static Generation Command</name>
+      <kind>CLI</kind>
+      <signature>pnpm generate</signature>
+      <path>package.json (scripts.build)</path>
+      <description>Generates static site to .output/public/ with all routes pre-rendered, service worker, and PWA manifest</description>
+    </interface>
+    <interface>
+      <name>GitHub Actions peaceiris/actions-gh-pages</name>
+      <kind>GitHub Action</kind>
+      <signature>uses: peaceiris/actions-gh-pages@v3 with github_token, publish_dir</signature>
+      <path>.github/workflows/deploy.yml</path>
+      <description>Deploys built static site from publish_dir to gh-pages branch</description>
+    </interface>
+    <interface>
+      <name>Nuxt Config App Options</name>
+      <kind>TypeScript Interface</kind>
+      <signature>app: { baseURL: string, head: { title: string, meta: Array } }</signature>
+      <path>nuxt.config.ts</path>
+      <description>Configures base URL for asset paths and HTML head metadata</description>
+    </interface>
+    <interface>
+      <name>Nitro Deployment Preset</name>
+      <kind>TypeScript Property</kind>
+      <signature>nitro: { preset: 'github-pages' }</signature>
+      <path>nuxt.config.ts</path>
+      <description>Optimizes build output for GitHub Pages static hosting</description>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual testing workflow:
+      1. Local build verification: pnpm generate → verify .output/public/ created with index.html, sw.js, manifest.webmanifest
+      2. Local serve testing: npx serve .output/public -l 4000 → test at http://localhost:4000
+      3. Asset path verification: Check DevTools Console for any 404 errors on CSS, JS, or PWA files
+      4. Service worker verification: DevTools → Application → Service Workers → verify active and running
+      5. PWA manifest verification: DevTools → Application → Manifest → verify theme colors and icons
+      6. Offline functionality: Network tab → Offline mode → verify cached pages load
+      7. Production deployment verification: After GitHub Actions deploy, test at https://rmerk.github.io/meal-plans/
+      8. Lighthouse PWA audit: Run after deployment to ensure PWA score remains 100
+    </standards>
+    <locations>
+      Manual testing only - no automated tests for deployment story.
+      Verification checklist in story file (Acceptance Verification Checklist section).
+    </locations>
+    <ideas>
+      <idea ac="1,2">
+        Verify nuxt.config.ts contains app.baseURL: '/meal-plans/' and nitro.preset: 'github-pages' after configuration task
+      </idea>
+      <idea ac="3">
+        Run pnpm generate locally and verify .output/public/ directory structure:
+        - index.html present
+        - sw.js present (service worker)
+        - manifest.webmanifest present
+        - _nuxt/ directory with JS/CSS chunks
+        - icons/ directory with PWA icons
+      </idea>
+      <idea ac="4,5">
+        Verify .github/workflows/deploy.yml contains:
+        - Trigger: on push to main
+        - pnpm/action-setup@v2 (or v4) for pnpm installation
+        - setup-node with cache: pnpm
+        - pnpm install --frozen-lockfile
+        - pnpm generate
+        - peaceiris/actions-gh-pages@v3 with publish_dir: ./.output/public
+      </idea>
+      <idea ac="6">
+        After GitHub Actions workflow runs successfully:
+        - Navigate to https://rmerk.github.io/meal-plans/ in browser
+        - Open DevTools Console and verify no 404 errors
+        - Check Network tab - all assets should load from /meal-plans/ path
+        - Verify service worker registers (Application tab)
+        - Test PWA install prompt appears
+        - Go offline and verify cached pages still load
+      </idea>
+    </ideas>
+  </tests>
+</story-context>

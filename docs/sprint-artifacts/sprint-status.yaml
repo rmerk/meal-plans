@@ -41,7 +41,7 @@ development_status:
   1-1-initialize-nuxt-ui-starter-project: done
   1-2-configure-mountains-at-sunrise-theme: done
   1-3-set-up-pwa-with-basic-service-worker: done
-  1-4-configure-github-pages-deployment: backlog
+  1-4-configure-github-pages-deployment: done
   1-5-create-base-layouts-mobile-desktop: backlog
   1-6-document-project-setup-architecture: backlog
   epic-1-retrospective: optional
