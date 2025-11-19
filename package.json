@@ -5,7 +5,7 @@
   "description": "Weekly meal planning with batch cooking strategies - Nuxt 4 PWA",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "lsof -ti :4000 | xargs kill -9 2>/dev/null || true && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -30,6 +30,7 @@
     "@iconify-json/lucide": "^1.2.73",
     "@nuxt/eslint": "^1.10.0",
     "eslint": "^9.39.1",
+    "kill-port": "^2.0.1",
     "oxlint": "^1.28.0",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3",
