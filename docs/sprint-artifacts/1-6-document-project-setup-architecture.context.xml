@@ -1,0 +1,227 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>1.6</storyId>
+    <title>Document Project Setup & Architecture</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-6-document-project-setup-architecture.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer (future contributor)</asA>
+    <iWant>clear documentation on how to run and deploy the project</iWant>
+    <soThat>I can onboard quickly without re-discovering setup steps</soThat>
+    <tasks>
+      - Task 1: Update README with project overview (AC: #1)
+      - Task 2: Document prerequisites and installation (AC: #1, #2)
+      - Task 3: Document development workflow (AC: #1, #2)
+      - Task 4: Document build and deployment (AC: #1)
+      - Task 5: Document project structure (AC: #1)
+      - Task 6: Link to architecture and design docs (AC: #1)
+      - Task 7: Add troubleshooting section (AC: #2)
+      - Task 8: Validate with fresh developer onboarding (AC: #2)
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      **Given** layouts are created (Story 1.5 complete)
+      **When** I update `README.md` with project documentation
+      **Then** the README includes: project description, prerequisites, installation steps, development server, build/deployment, project structure, links to docs
+    </criterion>
+    <criterion id="2">
+      **And** a new developer can follow the README and get the app running locally in &lt; 10 minutes
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Project Initialization</section>
+        <snippet>Initialization command: `pnpm create nuxt@latest meal-plans`. Select "UI" template. Node.js 24+ (LTS - Iron) required. After init: install @nuxt/content, @vite-pwa/nuxt, pinia, @pinia/nuxt, @vueuse/nuxt, nuxt-charts, chart.js, @nuxt/image. Dev dependencies: oxc, @oxc/eslint-plugin.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Starter Template Decision</section>
+        <snippet>Nuxt UI starter provides 80% of required architecture out-of-box including exact UI component library specified in UX Design. Using pnpm for faster installs, better disk efficiency, and stricter dependency resolution.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>PWA Configuration</section>
+        <snippet>@vite-pwa/nuxt with generateSW strategy. Manifest includes name "Meal Plans", theme_color #192E59, background_color #F2CC85, display standalone. Service worker uses cache-first for static assets, network-first for HTML pages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>GitHub Pages Deployment</section>
+        <snippet>Build command: `pnpm generate`. Output: dist/ directory. GitHub Actions workflow deploys to GitHub Pages on push to main. Uses peaceiris/actions-gh-pages@v3. Base URL: /meal-plans/. Nitro preset: github-pages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Nuxt Content Structure</section>
+        <snippet>Markdown files in content/meals/ directory. Nested by week: week-1/index.md, week-1/recipes/*.md, week-1/prep-strategy.md. Frontmatter metadata for titles, features, proteins, nutrition.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown - meal-plans</title>
+        <section>Story 1.6: Document Project Setup & Architecture</section>
+        <snippet>README should include: project description, prerequisites (Node.js 24+, pnpm), installation, dev server, build/deployment, project structure, links to docs. Target: new developer can get app running locally in &lt; 10 minutes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-1.md</path>
+        <title>Epic Technical Specification: Foundation & Infrastructure</title>
+        <section>Story 1.6 Workflow</section>
+        <snippet>README documentation steps: 1) Update README.md with project description, 2) Add prerequisites (Node.js 20+, npm), 3) Add installation steps (clone, install, dev), 4) Add build/deployment (generate, deploy), 5) Add project structure overview, 6) Add links to docs (PRD, Architecture, UX Design), 7) Add troubleshooting section, 8) Test: new developer follows README (time &lt; 10 min).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-5-create-base-layouts-mobile-desktop.md</path>
+        <title>Story 1.5: Create Base Layouts (Mobile + Desktop)</title>
+        <section>Completion Notes List</section>
+        <snippet>Base layouts created: app/layouts/default.vue implements responsive navigation with desktop top nav (>= 640px) and mobile bottom nav (&lt; 640px). MobileNav component provides 4-tab navigation. PWA service worker and manifest correctly included in build output. Mountains at Sunrise theme applied (primary #192E59). Accessibility standards met: 44px touch targets, ARIA labels, keyboard navigation.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <file>
+        <path>package.json</path>
+        <kind>config</kind>
+        <symbol>scripts</symbol>
+        <lines>6-14</lines>
+        <reason>Contains npm scripts that should be documented: dev, build, generate, preview, lint, typecheck</reason>
+      </file>
+      <file>
+        <path>package.json</path>
+        <kind>config</kind>
+        <symbol>dependencies</symbol>
+        <lines>16-27</lines>
+        <reason>Technology stack to document: Nuxt 4.2.1, @nuxt/ui 4.1.0, @nuxt/content 3.8.2, PWA, Pinia, VueUse, Charts</reason>
+      </file>
+      <file>
+        <path>nuxt.config.ts</path>
+        <kind>config</kind>
+        <symbol>export default defineNuxtConfig</symbol>
+        <lines>all</lines>
+        <reason>Nuxt configuration including PWA setup, GitHub Pages config (app.baseURL, nitro.preset), modules list</reason>
+      </file>
+      <file>
+        <path>app/layouts/default.vue</path>
+        <kind>layout</kind>
+        <symbol>responsive layout</symbol>
+        <lines>all</lines>
+        <reason>Created in Story 1.5, demonstrates responsive navigation pattern to reference in README project structure</reason>
+      </file>
+      <file>
+        <path>app/components/navigation/MobileNav.vue</path>
+        <kind>component</kind>
+        <symbol>MobileNav</symbol>
+        <lines>all</lines>
+        <reason>Mobile navigation component from Story 1.5, example of Nuxt components directory convention</reason>
+      </file>
+    </code>
+
+    <dependencies>
+      <node>
+        <nuxt>4.2.1</nuxt>
+        <nuxt-ui>4.1.0</nuxt-ui>
+        <nuxt-content>3.8.2</nuxt-content>
+        <nuxt-image>2.0.0</nuxt-image>
+        <vite-pwa-nuxt>1.0.7</vite-pwa-nuxt>
+        <pinia>3.0.4</pinia>
+        <pinia-nuxt>0.11.3</pinia-nuxt>
+        <vueuse-nuxt>14.0.0</vueuse-nuxt>
+        <chart-js>4.5.1</chart-js>
+        <nuxt-charts>1.0.2</nuxt-charts>
+      </node>
+      <devDependencies>
+        <typescript>5.9.3</typescript>
+        <eslint>9.39.1</eslint>
+        <oxlint>1.28.0</oxlint>
+        <sharp>0.34.5</sharp>
+        <vue-tsc>3.1.3</vue-tsc>
+      </devDependencies>
+      <packageManager>pnpm@10.21.0</packageManager>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>README must be concise (target &lt; 200 lines) to ensure developers actually read it</constraint>
+    <constraint>All commands in README must be copy-paste ready (no placeholders like &lt;your-username&gt;)</constraint>
+    <constraint>Use clear, imperative language ("Run `pnpm dev`" not "You can run pnpm dev")</constraint>
+    <constraint>Include version requirements: Node.js 24+ (LTS - Iron), pnpm 10+</constraint>
+    <constraint>Document base URL path /meal-plans/ for GitHub Pages deployment</constraint>
+    <constraint>Use proper Markdown formatting with code blocks and language tags</constraint>
+    <constraint>Onboarding time target: &lt; 10 minutes (prerequisites ~3min, clone ~30s, install ~2-4min, dev server ~30s, verify ~30s = ~7-8min total)</constraint>
+    <constraint>Mountains at Sunrise theme colors must be referenced: Primary #192E59, Secondary #F2CC85</constraint>
+    <constraint>Document that pnpm is package manager (not npm) - provide installation command</constraint>
+    <constraint>Link to all documentation: docs/architecture.md, docs/PRD.md, docs/epics.md</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>npm scripts</name>
+      <kind>CLI commands</kind>
+      <signature>
+        pnpm dev - Start development server at http://localhost:3000/meal-plans/
+        pnpm generate - Static site generation to .output/public/
+        pnpm preview - Preview production build locally
+        pnpm lint - ESLint linting
+        pnpm lint:oxc - Fast oxlint linting
+        pnpm typecheck - TypeScript type checking
+      </signature>
+      <path>package.json</path>
+    </interface>
+    <interface>
+      <name>Nuxt File-Based Routing</name>
+      <kind>Convention</kind>
+      <signature>
+        app/pages/ - File-based routing (index.vue → /, plans/index.vue → /plans)
+        app/components/ - Auto-imported Vue components
+        app/layouts/ - Page layouts (default.vue)
+        app/composables/ - Auto-imported composables
+        content/meals/ - Nuxt Content markdown files
+        stores/ - Pinia state stores
+        public/ - Static assets (icons, images)
+      </signature>
+      <path>Nuxt 4 conventions</path>
+    </interface>
+    <interface>
+      <name>GitHub Pages Deployment</name>
+      <kind>CI/CD Pipeline</kind>
+      <signature>
+        Trigger: Push to main branch
+        Build: pnpm install --frozen-lockfile && pnpm generate
+        Deploy: peaceiris/actions-gh-pages@v3 publishes .output/public/ to gh-pages branch
+        Live URL: https://rmerk.github.io/meal-plans/
+      </signature>
+      <path>.github/workflows/deploy.yml</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual testing for Epic 1. No automated test suite initially per Architecture Decision #25 "Testing Strategy: Manual + Lighthouse". README documentation should be validated by having a new developer (unfamiliar with project) follow the instructions and time the onboarding process. Target: &lt; 10 minutes from clone to running dev server.
+    </standards>
+
+    <locations>
+      No test directories yet. Future test locations will be:
+      - tests/ or __tests__/ for unit/integration tests
+      - tests/e2e/ for end-to-end tests (deferred to Epic 5)
+    </locations>
+
+    <ideas>
+      <idea ac="1">Validate README completeness: All sections present (description, prerequisites, installation, dev workflow, build/deployment, project structure, doc links, troubleshooting)</idea>
+      <idea ac="1">Validate README accuracy: All commands work as documented (pnpm install, pnpm dev, pnpm generate)</idea>
+      <idea ac="1">Validate links: All documentation links are valid and point to correct files (docs/architecture.md, docs/PRD.md, docs/epics.md)</idea>
+      <idea ac="2">Onboarding time test: New developer follows README from scratch, timed (target &lt; 10 minutes)</idea>
+      <idea ac="2">Fresh clone test: Clone repo to new directory, verify commands work in clean environment</idea>
+      <idea ac="2">Prerequisites validation: Verify Node.js 24+ and pnpm 10+ version checks are clear</idea>
+    </ideas>
+  </tests>
+</story-context>
