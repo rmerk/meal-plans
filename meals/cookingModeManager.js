@@ -9,7 +9,7 @@
  * @returns {string} The storage key
  */
 function getCookingProgressKey(planId) {
-    return `cooking_progress_${planId.replace('.html', '')}`;
+  return `cooking_progress_${planId.replace('.html', '')}`
 }
 
 /**
@@ -21,24 +21,24 @@ function getCookingProgressKey(planId) {
  * @param {number} progressData.elapsedSeconds - Total elapsed time in seconds
  */
 function saveCookingProgress(planId, progressData) {
-    try {
-        const key = getCookingProgressKey(planId);
-        const data = {
-            currentStep: progressData.currentStep || 0,
-            stepCompletions: progressData.stepCompletions || [],
-            elapsedSeconds: progressData.elapsedSeconds || 0,
-            lastUpdated: Date.now()
-        };
-        localStorage.setItem(key, JSON.stringify(data));
-        return true;
-    } catch (error) {
-        console.error('Failed to save cooking progress:', error);
-        // Handle quota exceeded or other localStorage errors
-        if (error.name === 'QuotaExceededError') {
-            alert('Storage quota exceeded. Please clear some browser data.');
-        }
-        return false;
+  try {
+    const key = getCookingProgressKey(planId)
+    const data = {
+      currentStep: progressData.currentStep || 0,
+      stepCompletions: progressData.stepCompletions || [],
+      elapsedSeconds: progressData.elapsedSeconds || 0,
+      lastUpdated: Date.now()
     }
+    localStorage.setItem(key, JSON.stringify(data))
+    return true
+  } catch (error) {
+    console.error('Failed to save cooking progress:', error)
+    // Handle quota exceeded or other localStorage errors
+    if (error.name === 'QuotaExceededError') {
+      alert('Storage quota exceeded. Please clear some browser data.')
+    }
+    return false
+  }
 }
 
 /**
@@ -48,30 +48,30 @@ function saveCookingProgress(planId, progressData) {
  * @returns {Object} The progress data or default values
  */
 function loadCookingProgress(planId, totalSteps) {
-    try {
-        const key = getCookingProgressKey(planId);
-        const saved = localStorage.getItem(key);
+  try {
+    const key = getCookingProgressKey(planId)
+    const saved = localStorage.getItem(key)
 
-        if (saved) {
-            const data = JSON.parse(saved);
-            return {
-                currentStep: data.currentStep || 0,
-                stepCompletions: data.stepCompletions || Array(totalSteps).fill(false),
-                elapsedSeconds: data.elapsedSeconds || 0,
-                lastUpdated: data.lastUpdated || null
-            };
-        }
-    } catch (error) {
-        console.error('Failed to load cooking progress:', error);
+    if (saved) {
+      const data = JSON.parse(saved)
+      return {
+        currentStep: data.currentStep || 0,
+        stepCompletions: data.stepCompletions || Array(totalSteps).fill(false),
+        elapsedSeconds: data.elapsedSeconds || 0,
+        lastUpdated: data.lastUpdated || null
+      }
     }
+  } catch (error) {
+    console.error('Failed to load cooking progress:', error)
+  }
 
-    // Return default values
-    return {
-        currentStep: 0,
-        stepCompletions: Array(totalSteps).fill(false),
-        elapsedSeconds: 0,
-        lastUpdated: null
-    };
+  // Return default values
+  return {
+    currentStep: 0,
+    stepCompletions: Array(totalSteps).fill(false),
+    elapsedSeconds: 0,
+    lastUpdated: null
+  }
 }
 
 /**
@@ -80,14 +80,14 @@ function loadCookingProgress(planId, totalSteps) {
  * @returns {boolean} Success status
  */
 function clearCookingProgress(planId) {
-    try {
-        const key = getCookingProgressKey(planId);
-        localStorage.removeItem(key);
-        return true;
-    } catch (error) {
-        console.error('Failed to clear cooking progress:', error);
-        return false;
-    }
+  try {
+    const key = getCookingProgressKey(planId)
+    localStorage.removeItem(key)
+    return true
+  } catch (error) {
+    console.error('Failed to clear cooking progress:', error)
+    return false
+  }
 }
 
 /**
@@ -95,22 +95,22 @@ function clearCookingProgress(planId) {
  * @returns {Object} All cooking progress data keyed by plan ID
  */
 function getAllCookingProgress() {
-    const allProgress = {};
-    try {
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key && key.startsWith('cooking_progress_')) {
-                const planId = key.replace('cooking_progress_', '');
-                const data = localStorage.getItem(key);
-                if (data) {
-                    allProgress[planId] = JSON.parse(data);
-                }
-            }
+  const allProgress = {}
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key && key.startsWith('cooking_progress_')) {
+        const planId = key.replace('cooking_progress_', '')
+        const data = localStorage.getItem(key)
+        if (data) {
+          allProgress[planId] = JSON.parse(data)
         }
-    } catch (error) {
-        console.error('Failed to get all cooking progress:', error);
+      }
     }
-    return allProgress;
+  } catch (error) {
+    console.error('Failed to get all cooking progress:', error)
+  }
+  return allProgress
 }
 
 /**
@@ -118,20 +118,20 @@ function getAllCookingProgress() {
  * @returns {boolean} Success status
  */
 function clearAllCookingProgress() {
-    try {
-        const keys = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key && key.startsWith('cooking_progress_')) {
-                keys.push(key);
-            }
-        }
-        keys.forEach(key => localStorage.removeItem(key));
-        return true;
-    } catch (error) {
-        console.error('Failed to clear all cooking progress:', error);
-        return false;
+  try {
+    const keys = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key && key.startsWith('cooking_progress_')) {
+        keys.push(key)
+      }
     }
+    keys.forEach(key => localStorage.removeItem(key))
+    return true
+  } catch (error) {
+    console.error('Failed to clear all cooking progress:', error)
+    return false
+  }
 }
 
 /**
@@ -140,9 +140,9 @@ function clearAllCookingProgress() {
  * @returns {number} Progress percentage (0-100)
  */
 function calculateProgressPercentage(stepCompletions) {
-    if (!stepCompletions || stepCompletions.length === 0) return 0;
-    const completed = stepCompletions.filter(Boolean).length;
-    return Math.round((completed / stepCompletions.length) * 100);
+  if (!stepCompletions || stepCompletions.length === 0) return 0
+  const completed = stepCompletions.filter(Boolean).length
+  return Math.round((completed / stepCompletions.length) * 100)
 }
 
 /**
@@ -151,26 +151,26 @@ function calculateProgressPercentage(stepCompletions) {
  * @returns {string} Formatted time string (HH:MM:SS or MM:SS)
  */
 function formatElapsedTime(elapsedSeconds) {
-    const hours = Math.floor(elapsedSeconds / 3600);
-    const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-    const seconds = elapsedSeconds % 60;
+  const hours = Math.floor(elapsedSeconds / 3600)
+  const minutes = Math.floor((elapsedSeconds % 3600) / 60)
+  const seconds = elapsedSeconds % 60
 
-    if (hours > 0) {
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  if (hours > 0) {
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+  }
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
 }
 
 // Export functions for use in meal plan pages
 if (typeof window !== 'undefined') {
-    window.CookingModeManager = {
-        saveCookingProgress,
-        loadCookingProgress,
-        clearCookingProgress,
-        getAllCookingProgress,
-        clearAllCookingProgress,
-        calculateProgressPercentage,
-        formatElapsedTime,
-        getCookingProgressKey
-    };
+  window.CookingModeManager = {
+    saveCookingProgress,
+    loadCookingProgress,
+    clearCookingProgress,
+    getAllCookingProgress,
+    clearAllCookingProgress,
+    calculateProgressPercentage,
+    formatElapsedTime,
+    getCookingProgressKey
+  }
 }

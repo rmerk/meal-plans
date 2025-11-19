@@ -34,7 +34,10 @@ const tools = [
         class="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow"
       >
         <div class="flex items-start gap-4">
-          <UIcon :name="tool.icon" class="w-8 h-8 text-primary shrink-0" />
+          <UIcon
+            :name="tool.icon"
+            class="w-8 h-8 text-primary shrink-0"
+          />
           <div>
             <h3 class="font-bold text-lg mb-2 text-gray-900 dark:text-white">
               {{ tool.name }}

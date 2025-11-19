@@ -31,7 +31,10 @@ const isActive = (path: string) => {
         :aria-label="tab.label"
         :aria-current="isActive(tab.to) ? 'page' : undefined"
       >
-        <UIcon :name="tab.icon" class="w-6 h-6 mb-1" />
+        <UIcon
+          :name="tab.icon"
+          class="w-6 h-6 mb-1"
+        />
         <span class="text-xs">{{ tab.label }}</span>
       </NuxtLink>
     </div>

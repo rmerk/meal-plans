@@ -30,7 +30,10 @@ const isActive = (path: string) => {
     <header class="hidden sm:block sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
       <nav class="container mx-auto px-4 py-4 flex items-center justify-between max-w-7xl">
         <!-- Logo / Brand -->
-        <NuxtLink to="/" class="text-2xl font-bold text-primary hover:text-primary/80 transition-colors">
+        <NuxtLink
+          to="/"
+          class="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+        >
           <AppLogo class="w-auto h-6 shrink-0" />
         </NuxtLink>
 
@@ -53,7 +56,10 @@ const isActive = (path: string) => {
     </header>
 
     <!-- Main Content Area -->
-    <main id="main-content" class="flex-1 pb-16 sm:pb-0">
+    <main
+      id="main-content"
+      class="flex-1 pb-16 sm:pb-0"
+    >
       <slot />
     </main>
 

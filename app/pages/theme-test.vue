@@ -32,25 +32,53 @@ const colorMode = useColorMode()
           Semantic Colors (7 Colors)
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <UButton color="primary" size="lg" block>
+          <UButton
+            color="primary"
+            size="lg"
+            block
+          >
             Primary (#192E59)
           </UButton>
-          <UButton color="secondary" size="lg" block>
+          <UButton
+            color="secondary"
+            size="lg"
+            block
+          >
             Secondary (#F2CC85)
           </UButton>
-          <UButton color="success" size="lg" block>
+          <UButton
+            color="success"
+            size="lg"
+            block
+          >
             Success (#22C55E)
           </UButton>
-          <UButton color="warning" size="lg" block>
+          <UButton
+            color="warning"
+            size="lg"
+            block
+          >
             Warning (#F2B680)
           </UButton>
-          <UButton color="error" size="lg" block>
+          <UButton
+            color="error"
+            size="lg"
+            block
+          >
             Error (#EF4444)
           </UButton>
-          <UButton color="info" size="lg" block>
+          <UButton
+            color="info"
+            size="lg"
+            block
+          >
             Info (#3B82F6)
           </UButton>
-          <UButton color="neutral" size="lg" block>
+          <UButton
+            color="neutral"
+            size="lg"
+            block
+          >
             Neutral (#6B7280)
           </UButton>
         </div>
@@ -62,13 +90,27 @@ const colorMode = useColorMode()
           Extended Palette Colors
         </h2>
         <div class="grid grid-cols-2 gap-4">
-          <div class="p-6 rounded-lg" style="background-color: #A6695B; color: white;">
-            <p class="font-bold">Clay (#A6695B)</p>
-            <p class="text-sm">Grounded, earthy, natural</p>
+          <div
+            class="p-6 rounded-lg"
+            style="background-color: #A6695B; color: white;"
+          >
+            <p class="font-bold">
+              Clay (#A6695B)
+            </p>
+            <p class="text-sm">
+              Grounded, earthy, natural
+            </p>
           </div>
-          <div class="p-6 rounded-lg" style="background-color: #592C28; color: white;">
-            <p class="font-bold">Deep Brown (#592C28)</p>
-            <p class="text-sm">Richness, depth, reliability</p>
+          <div
+            class="p-6 rounded-lg"
+            style="background-color: #592C28; color: white;"
+          >
+            <p class="font-bold">
+              Deep Brown (#592C28)
+            </p>
+            <p class="text-sm">
+              Richness, depth, reliability
+            </p>
           </div>
         </div>
       </div>
@@ -139,9 +181,15 @@ const colorMode = useColorMode()
         <h2 class="text-2xl font-bold font-serif">
           Contrast Ratios (WCAG AA Compliance)
         </h2>
-        <div v-if="colorMode.value === 'light'" class="space-y-2 text-sm">
+        <div
+          v-if="colorMode.value === 'light'"
+          class="space-y-2 text-sm"
+        >
           <div class="p-4 bg-white border rounded">
-            <p class="font-bold" style="color: #192E59;">
+            <p
+              class="font-bold"
+              style="color: #192E59;"
+            >
               Primary (#192E59) on white: <strong>7.2:1 (AAA) ✓</strong>
             </p>
             <p class="text-neutral-600">
@@ -149,7 +197,10 @@ const colorMode = useColorMode()
             </p>
           </div>
           <div class="p-4 bg-white border rounded">
-            <p class="font-bold" style="color: #A6695B;">
+            <p
+              class="font-bold"
+              style="color: #A6695B;"
+            >
               Clay (#A6695B) on white: <strong>4.8:1 (AA) ✓</strong>
             </p>
             <p class="text-neutral-600">
@@ -157,7 +208,10 @@ const colorMode = useColorMode()
             </p>
           </div>
           <div class="p-4 bg-white border rounded">
-            <p class="font-bold" style="color: #592C28;">
+            <p
+              class="font-bold"
+              style="color: #592C28;"
+            >
               Deep Brown (#592C28) on white: <strong>11.5:1 (AAA) ✓</strong>
             </p>
             <p class="text-neutral-600">
@@ -165,8 +219,14 @@ const colorMode = useColorMode()
             </p>
           </div>
         </div>
-        <div v-else class="space-y-2 text-sm">
-          <div class="p-4 rounded" style="background-color: #274d8f;">
+        <div
+          v-else
+          class="space-y-2 text-sm"
+        >
+          <div
+            class="p-4 rounded"
+            style="background-color: #274d8f;"
+          >
             <p class="font-bold text-white">
               Primary (#274d8f) with white text: <strong>5.2:1 (AA) ✓</strong>
             </p>
@@ -174,7 +234,10 @@ const colorMode = useColorMode()
               Meets WCAG AA requirement for normal text
             </p>
           </div>
-          <div class="p-4 rounded" style="background-color: #b6862a;">
+          <div
+            class="p-4 rounded"
+            style="background-color: #b6862a;"
+          >
             <p class="font-bold text-white">
               Secondary (#b6862a) with white text: <strong>4.7:1 (AA) ✓</strong>
             </p>
@@ -182,7 +245,10 @@ const colorMode = useColorMode()
               Meets WCAG AA requirement
             </p>
           </div>
-          <div class="p-4 rounded" style="background-color: #16a34a;">
+          <div
+            class="p-4 rounded"
+            style="background-color: #16a34a;"
+          >
             <p class="font-bold text-white">
               Success (#16a34a) with white text: <strong>4.8:1 (AA) ✓</strong>
             </p>
@@ -190,7 +256,10 @@ const colorMode = useColorMode()
               Meets WCAG AA requirement
             </p>
           </div>
-          <div class="p-4 rounded" style="background-color: #ea580c;">
+          <div
+            class="p-4 rounded"
+            style="background-color: #ea580c;"
+          >
             <p class="font-bold text-white">
               Warning (#ea580c) with white text: <strong>5.5:1 (AA) ✓</strong>
             </p>
@@ -198,7 +267,10 @@ const colorMode = useColorMode()
               Meets WCAG AA requirement
             </p>
           </div>
-          <div class="p-4 rounded" style="background-color: #dc2626;">
+          <div
+            class="p-4 rounded"
+            style="background-color: #dc2626;"
+          >
             <p class="font-bold text-white">
               Error (#dc2626) with white text: <strong>5.9:1 (AA) ✓</strong>
             </p>
@@ -206,7 +278,10 @@ const colorMode = useColorMode()
               Meets WCAG AA requirement
             </p>
           </div>
-          <div class="p-4 rounded" style="background-color: #2563eb;">
+          <div
+            class="p-4 rounded"
+            style="background-color: #2563eb;"
+          >
             <p class="font-bold text-white">
               Info (#2563eb) with white text: <strong>6.3:1 (AA) ✓</strong>
             </p>
@@ -226,7 +301,10 @@ const colorMode = useColorMode()
       </div>
 
       <!-- Dark Mode Verification -->
-      <div v-if="colorMode.value === 'dark'" class="space-y-4">
+      <div
+        v-if="colorMode.value === 'dark'"
+        class="space-y-4"
+      >
         <h2 class="text-2xl font-bold font-serif">
           Dark Mode Adjustments ✓
         </h2>
@@ -234,12 +312,18 @@ const colorMode = useColorMode()
           <div class="p-4 bg-primary/20 border border-primary/30 rounded-lg flex items-start gap-3">
             <span class="text-2xl">🌙</span>
             <div>
-              <p class="font-bold text-white mb-1">Dark Mode Active</p>
-              <p class="text-neutral-300">All semantic colors adjusted for optimal contrast with white text</p>
+              <p class="font-bold text-white mb-1">
+                Dark Mode Active
+              </p>
+              <p class="text-neutral-300">
+                All semantic colors adjusted for optimal contrast with white text
+              </p>
             </div>
           </div>
           <div class="p-4 bg-gray-800 rounded-lg space-y-2">
-            <p class="font-bold text-white">Color Adjustments:</p>
+            <p class="font-bold text-white">
+              Color Adjustments:
+            </p>
             <ul class="space-y-1 text-neutral-300">
               <li>• Primary: #192E59 → #274d8f (primary-600) - darker blue for white text</li>
               <li>• Secondary: #F2CC85 → #b6862a (secondary-700) - darker gold for white text</li>
@@ -251,7 +335,9 @@ const colorMode = useColorMode()
             </ul>
           </div>
           <div class="p-4 bg-gray-800 rounded-lg space-y-2">
-            <p class="font-bold text-white">Text & Background:</p>
+            <p class="font-bold text-white">
+              Text & Background:
+            </p>
             <ul class="space-y-1 text-neutral-300">
               <li>• Body text: #e5e7eb (neutral-200) - light gray for readability</li>
               <li>• Background: #111827 (neutral-900) - dark background</li>

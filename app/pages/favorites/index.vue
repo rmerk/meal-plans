@@ -16,7 +16,10 @@ useSeoMeta({
     </p>
 
     <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 text-center">
-      <UIcon name="i-heroicons-star" class="w-16 h-16 text-secondary mx-auto mb-4" />
+      <UIcon
+        name="i-heroicons-star"
+        class="w-16 h-16 text-secondary mx-auto mb-4"
+      />
       <p class="text-gray-600 dark:text-gray-400">
         No favorites yet. Start rating meals after cooking to build your favorites collection!
       </p>

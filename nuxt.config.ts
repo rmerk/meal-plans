@@ -13,19 +13,6 @@ export default defineNuxtConfig({
     }
   },
 
-  devServer: {
-    port: 4000,
-  },
-
-  css: ['~/assets/css/main.css'],
-
-  routeRules: {
-    '/': { prerender: true },
-    '/theme-test': { prerender: true }
-  },
-
-  compatibilityDate: '2025-01-15',
-
   app: {
     baseURL: '/meal-plans/', // GitHub Pages base path
     head: {
@@ -40,8 +27,38 @@ export default defineNuxtConfig({
     }
   },
 
+  css: ['~/assets/css/main.css'],
+
+  routeRules: {
+    '/': { prerender: true },
+    '/theme-test': { prerender: true }
+  },
+
+  devServer: {
+    port: 4000
+  },
+
+  compatibilityDate: '2025-01-15',
+
   nitro: {
     preset: 'github-pages'
+  },
+
+  eslint: {
+    config: {
+      stylistic: {
+        commaDangle: 'never',
+        braceStyle: '1tbs'
+      }
+    }
+  },
+
+  // Configure Google Fonts for Mountains at Sunrise typography
+  fonts: {
+    families: [
+      { name: 'Playfair Display', provider: 'google', weights: [400, 700] },
+      { name: 'Inter', provider: 'google', weights: [400, 600] }
+    ]
   },
 
   // Configure Nuxt Icon for offline-first PWA (no external API calls)
@@ -69,23 +86,6 @@ export default defineNuxtConfig({
         'lucide:shield-check'
       ], // Explicitly list critical icons
       sizeLimitKb: 256 // Bundle size limit
-    }
-  },
-
-  // Configure Google Fonts for Mountains at Sunrise typography
-  fonts: {
-    families: [
-      { name: 'Playfair Display', provider: 'google', weights: [400, 700] },
-      { name: 'Inter', provider: 'google', weights: [400, 600] }
-    ]
-  },
-
-  eslint: {
-    config: {
-      stylistic: {
-        commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
     }
   },
 
@@ -119,12 +119,12 @@ export default defineNuxtConfig({
     workbox: {
       navigateFallback: '/',
       cleanupOutdatedCaches: true,
-      clientsClaim: true,
+      clientsClaim: true
     },
 
     devOptions: {
       enabled: true,
       type: 'module'
     }
-  },
+  }
 })
