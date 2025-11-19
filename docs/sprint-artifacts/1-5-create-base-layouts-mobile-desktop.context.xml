@@ -1,0 +1,214 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>5</storyId>
+    <title>Create Base Layouts (Mobile + Desktop)</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-5-create-base-layouts-mobile-desktop.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>a user</asA>
+    <iWant>responsive navigation that adapts to my device size</iWant>
+    <soThat>I can easily navigate the app on mobile, tablet, or desktop</soThat>
+    <tasks>
+      - Task 1: Create default layout component (AC: #1, #4, #5)
+      - Task 2: Create mobile navigation component (AC: #2, #4, #5, #6)
+      - Task 3: Implement responsive layout switching (AC: #3)
+      - Task 4: Configure routing and navigation links
+      - Task 5: Styling and Mountains at Sunrise theme integration
+      - Task 6: Accessibility implementation (AC: #6)
+      - Task 7: Manual testing across breakpoints
+      - Task 8: Cross-browser testing
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. Desktop layout (>= 1024px) displays top horizontal navigation
+    2. Mobile layout (&lt; 640px) displays bottom tab navigation with 4 tabs: Home, Plans, Tools, Favorites
+    3. Tablet layout (640-1024px) can use either layout based on viewport width
+    4. Active nav item is highlighted with bold text and primary color (#192E59)
+    5. Navigation is sticky (bottom nav fixed at bottom, top nav sticky on scroll)
+    6. All interactive elements have minimum 44px x 44px touch targets on mobile
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Project Structure</section>
+        <snippet>Nuxt conventions: /pages for routes, /components for Vue components, /composables for reusable logic, /layouts for layout files. Use &lt;NuxtLayout&gt; in app.vue or specify layout in page components. Use &lt;slot /&gt; in layout files to render page content.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Tailwind v4 Configuration</section>
+        <snippet>Mountains at Sunrise color palette: Primary (Deep Blue) #192E59, Gold/Sand #F2CC85, Terra Cotta #F2B680, Clay/Brown #A6695B, Deep Brown #592C28. Dark mode color adjustments defined (lighter primary #2A4A7C for contrast). Spacing follows 8px grid.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>meal-plans - Epic Breakdown</title>
+        <section>Story 1.5: Create Base Layouts (Mobile + Desktop)</section>
+        <snippet>Desktop layout (&gt;= 1024px) displays top horizontal navigation. Mobile layout (&lt; 640px) displays bottom tab navigation with 4 tabs: Home, Plans, Tools, Favorites. Bottom tab icons: use @nuxt/icon (Iconify) - i-heroicons-home, i-heroicons-document-text, i-heroicons-wrench-screwdriver, i-heroicons-star. Responsive breakpoints: &lt;640px (mobile), 640-1024px (tablet), &gt;1024px (desktop).</snippet>
+      </doc>
+      <doc>
+        <path>docs/prd.md</path>
+        <title>meal-plans - Product Requirements Document</title>
+        <section>FR113-FR124: Accessibility Features</section>
+        <snippet>All interactive elements keyboard accessible. Visible focus indicators. Tab order follows logical reading flow. Skip to content link. All icon-only buttons have ARIA labels. Touch targets minimum 44px x 44px on mobile. Minimum color contrast ratios meet WCAG 2.1 Level AA.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/1-4-configure-github-pages-deployment.md</path>
+        <title>Story 1.4: Configure GitHub Pages Deployment</title>
+        <section>Learnings from Previous Story</section>
+        <snippet>Mountains at Sunrise theme colors configured and available globally (primary #192E59, gold #F2CC85). @nuxt/icon configured with provider: 'none' - use Heroicons (i-heroicons-*) for navigation icons. Nuxt UI components (UButton, ULink, etc.) available for navigation elements. PWA manifest and service worker functional.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <file>
+        <path>app/app.vue</path>
+        <kind>root-component</kind>
+        <symbol>App Root Template</symbol>
+        <lines>1-79</lines>
+        <reason>Current app structure uses UApp, UHeader, UMain, UFooter from Nuxt UI. This is the starter template structure that needs to be replaced with custom layouts. Shows how Nuxt UI components are structured and how NuxtPage is used for routing.</reason>
+      </file>
+      <file>
+        <path>app/components/AppLogo.vue</path>
+        <kind>component</kind>
+        <symbol>AppLogo</symbol>
+        <lines>all</lines>
+        <reason>Existing logo component that can be reused in the new navigation header. Referenced in app.vue template #left slot.</reason>
+      </file>
+      <file>
+        <path>app/components/TemplateMenu.vue</path>
+        <kind>component</kind>
+        <symbol>TemplateMenu</symbol>
+        <lines>all</lines>
+        <reason>Existing menu component structure from starter template. Shows pattern for navigation menus, can be reference for building custom navigation.</reason>
+      </file>
+      <file>
+        <path>app/pages/index.vue</path>
+        <kind>page</kind>
+        <symbol>Index Page</symbol>
+        <lines>all</lines>
+        <reason>Existing home/dashboard page. Will be one of the navigation targets (Home tab).</reason>
+      </file>
+      <file>
+        <path>app/pages/theme-test.vue</path>
+        <kind>page</kind>
+        <symbol>Theme Test Page</symbol>
+        <lines>all</lines>
+        <reason>Example page showing theme integration. Demonstrates how Mountains at Sunrise colors are applied.</reason>
+      </file>
+      <file>
+        <path>nuxt.config.ts</path>
+        <kind>config</kind>
+        <symbol>Nuxt Configuration</symbol>
+        <lines>1-131</lines>
+        <reason>Icon configuration shows heroicons available via lucide icon set. PWA manifest colors (#192E59, #F2CC85) match navigation theme requirements. Fonts configured (Playfair Display, Inter) for typography system.</reason>
+      </file>
+      <file>
+        <path>assets/css/main.css</path>
+        <kind>stylesheet</kind>
+        <symbol>Global Styles</symbol>
+        <lines>all</lines>
+        <reason>Contains Tailwind v4 @theme configuration with Mountains at Sunrise color palette. Navigation components will use these color tokens.</reason>
+      </file>
+    </code>
+
+    <dependencies>
+      <nuxt>
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.1.0" notes="UI component library - provides UButton, ULink, UIcon for navigation" />
+        <package name="@nuxt/eslint" version="^1.10.0" />
+      </nuxt>
+      <pwa>
+        <package name="@vite-pwa/nuxt" version="^1.0.7" notes="PWA module - layouts must work offline after caching" />
+      </pwa>
+      <icons>
+        <package name="@iconify-json/lucide" version="^1.2.73" notes="Lucide icon set - includes heroicons-compatible icons" />
+        <package name="@iconify-json/simple-icons" version="^1.2.58" />
+      </icons>
+      <utils>
+        <package name="@vueuse/nuxt" version="^14.0.0" notes="Composables library - useRoute() for active route detection" />
+      </utils>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - Layouts must follow Nuxt conventions: create in layouts/ directory, use &lt;slot /&gt; for page content
+    - Use Tailwind breakpoints: &lt;640px (mobile), 640-1024px (tablet), &gt;1024px (desktop)
+    - Navigation icons must use bundled heroicons (i-heroicons-*) - no external API calls per PWA offline-first requirement
+    - Mountains at Sunrise primary color (#192E59) for active nav states, gold (#F2CC85) for hover/accents
+    - Touch targets minimum 44px x 44px for WCAG 2.1 AA compliance (FR94)
+    - ARIA labels required for all icon-only buttons (FR117)
+    - Keyboard navigation must work: tab through nav items, visible focus indicators (FR113-FR114)
+    - Sticky navigation: top nav uses position: sticky, bottom nav uses position: fixed
+    - Dark mode compatibility: navigation colors must adapt using Tailwind dark: classes
+    - Mobile bottom nav with 4 tabs: Home (i-heroicons-home), Plans (i-heroicons-document-text), Tools (i-heroicons-wrench-screwdriver), Favorites (i-heroicons-star)
+    - Desktop top nav: horizontal layout with brand logo, nav links, color mode toggle
+    - Active route detection: use useRoute() composable, apply bold text and primary color to current route
+    - Must work offline after PWA caching (no network dependencies)
+    - Skip-to-content link required for keyboard accessibility (FR116)
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>NuxtLink</name>
+      <kind>Nuxt Router Component</kind>
+      <signature>&lt;NuxtLink to="/path"&gt;Label&lt;/NuxtLink&gt;</signature>
+      <path>nuxt (framework)</path>
+      <notes>Use for all internal navigation links. Provides client-side routing, prefetching, active class detection.</notes>
+    </interface>
+    <interface>
+      <name>useRoute</name>
+      <kind>Nuxt Composable</kind>
+      <signature>const route = useRoute(); // Access route.path, route.name, route.params</signature>
+      <path>nuxt (framework)</path>
+      <notes>Reactive route object for detecting active navigation state. Use route.path.startsWith() for section matching.</notes>
+    </interface>
+    <interface>
+      <name>UButton</name>
+      <kind>Nuxt UI Component</kind>
+      <signature>&lt;UButton icon="i-heroicons-home" aria-label="Home" /&gt;</signature>
+      <path>@nuxt/ui</path>
+      <notes>Nuxt UI button component with icon support. Use for mobile tab buttons with proper ARIA labels.</notes>
+    </interface>
+    <interface>
+      <name>UIcon</name>
+      <kind>Nuxt UI Component</kind>
+      <signature>&lt;UIcon name="i-heroicons-home" class="w-6 h-6" /&gt;</signature>
+      <path>@nuxt/ui</path>
+      <notes>Icon component for Nuxt UI. Icons bundled at build time (provider: none). Use heroicons prefix.</notes>
+    </interface>
+    <interface>
+      <name>UColorModeButton</name>
+      <kind>Nuxt UI Component</kind>
+      <signature>&lt;UColorModeButton /&gt;</signature>
+      <path>@nuxt/ui</path>
+      <notes>Pre-built dark mode toggle button. Can be included in desktop navigation.</notes>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>Manual testing with browser DevTools responsive mode. No automated tests required per project architecture (architecture.md: "Testing Strategy: Manual + Lighthouse"). Focus on visual verification across breakpoints and cross-browser compatibility. Lighthouse accessibility audit target: 90+.</standards>
+
+    <locations>No test files required for this story. Testing is manual browser verification.</locations>
+
+    <ideas>
+      AC#1: Test desktop navigation - Open dev server at >= 1024px viewport, verify top horizontal nav visible, bottom nav hidden
+      AC#2: Test mobile navigation - Resize to &lt; 640px, verify bottom tab nav with 4 tabs (Home, Plans, Tools, Favorites), icons render correctly
+      AC#3: Test tablet responsive - Resize between 640-1024px, verify layout transitions smoothly, no breaking at intermediate sizes
+      AC#4: Test active highlighting - Navigate to each route, verify active nav item has bold text and #192E59 color on both mobile and desktop
+      AC#5: Test sticky behavior - Scroll down on desktop page, verify top nav sticks. On mobile, verify bottom nav stays fixed at bottom.
+      AC#6: Test touch targets - Use Chrome DevTools device mode, verify all mobile nav tabs >= 44px height. Test with ruler tool.
+      Keyboard accessibility: Tab through nav items, verify focus indicators visible, test Enter/Space to activate links
+      Dark mode: Toggle dark mode, verify nav colors adapt correctly (lighter primary #2A4A7C on dark bg)
+      Cross-browser: Test in Chrome, Firefox, Safari (desktop and mobile views)
+    </ideas>
+  </tests>
+</story-context>
