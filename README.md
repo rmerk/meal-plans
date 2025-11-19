@@ -240,6 +240,70 @@ meal-plans/
 - **Vue TSC 3.1** - TypeScript type checking for Vue
 - **pnpm 10.21** - Fast, disk-efficient package manager
 
+## Testing
+
+### Agent Testing Automation
+
+This project includes lightweight CLI tools for agent-driven browser automation and visual regression testing, based on the bash-CLI approach (alternative to MCP servers). These tools enable AI agents to complete end-to-end verification tasks autonomously.
+
+**Tools Overview:**
+- `start.js` - Launch Chrome with remote debugging
+- `nav.js` - Navigate to URLs
+- `screenshot.js` - Capture viewport screenshots
+- `extract-colors.js` - Extract CSS variables and theme colors
+- `eval.js` - Execute JavaScript in page context
+- `compare-screenshots.js` - Pixel-diff screenshot comparison
+
+**Quick Example:**
+```bash
+# Start headless Chrome
+pnpm test:browser:start
+
+# Navigate to homepage
+pnpm test:browser:nav http://localhost:4000
+
+# Capture screenshot
+pnpm test:screenshot --output=home
+
+# Extract theme colors
+pnpm test:colors
+
+# Compare with baseline
+pnpm test:compare tests/screenshots/baseline/home-desktop.png tests/screenshots/current/home-*.png
+```
+
+**Documentation:**
+- [**AGENTS.md**](./AGENTS.md) - **Start here!** Quick guide for AI agents (decision matrix, patterns, examples)
+- [Agent Tools README](./agent-tools/README.md) - Complete tool documentation and usage patterns
+- [Workflow Integration Guide](./agent-tools/WORKFLOW_INTEGRATION.md) - BMM workflow integration
+- Token cost: ~500 tokens total (vs. 13,000-18,000 for MCP servers)
+
+**Baseline Screenshots:**
+Baseline images for visual regression testing are stored in `tests/screenshots/baseline/`:
+- `home-desktop.png` - Desktop viewport (1920x1080)
+- `home-mobile.png` - Mobile viewport (375x667)
+- `theme-colors.json` - Extracted CSS custom properties
+
+**Running Tests:**
+```bash
+# Full visual regression test (desktop)
+node agent-tools/browser-tools/start.js --headless
+node agent-tools/browser-tools/nav.js http://localhost:4000
+node agent-tools/browser-tools/screenshot.js --output=test-desktop --width=1920 --height=1080
+node agent-tools/browser-tools/compare-screenshots.js \
+  tests/screenshots/baseline/home-desktop.png \
+  tests/screenshots/current/test-desktop-*.png
+
+# Mobile viewport test
+node agent-tools/browser-tools/screenshot.js --output=test-mobile --width=375 --height=667
+node agent-tools/browser-tools/compare-screenshots.js \
+  tests/screenshots/baseline/home-mobile.png \
+  tests/screenshots/current/test-mobile-*.png
+```
+
+**Integration with BMM Workflows:**
+Tasks marked `**[AUTOMATED]**` in story files can be verified autonomously by agents using these tools. See [agent-tools/README.md](./agent-tools/README.md) for integration patterns.
+
 ## Documentation
 
 **Architecture & Design:**

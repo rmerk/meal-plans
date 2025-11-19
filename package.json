@@ -11,7 +11,13 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:oxc": "oxlint",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test:browser:start": "node agent-tools/browser-tools/start.js --headless",
+    "test:browser:nav": "node agent-tools/browser-tools/nav.js",
+    "test:screenshot": "node agent-tools/browser-tools/screenshot.js",
+    "test:colors": "node agent-tools/browser-tools/extract-colors.js",
+    "test:compare": "node agent-tools/browser-tools/compare-screenshots.js",
+    "test:cleanup": "rm -rf tests/screenshots/current/* tests/screenshots/diffs/*"
   },
   "dependencies": {
     "@iconify-json/simple-icons": "^1.2.58",

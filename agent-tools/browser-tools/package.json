@@ -1,0 +1,19 @@
+{
+  "name": "browser-tools",
+  "version": "1.0.0",
+  "description": "Lightweight CLI tools for agent-driven browser automation",
+  "type": "module",
+  "bin": {
+    "start": "./start.js",
+    "nav": "./nav.js",
+    "eval": "./eval.js",
+    "screenshot": "./screenshot.js",
+    "extract-colors": "./extract-colors.js",
+    "compare-screenshots": "./compare-screenshots.js"
+  },
+  "devDependencies": {
+    "pixelmatch": "^6.0.0",
+    "pngjs": "^7.0.0",
+    "puppeteer-core": "^23.11.1"
+  }
+}
