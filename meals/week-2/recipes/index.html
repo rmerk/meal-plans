@@ -1,0 +1,97 @@
+<!DOCTYPE html><html  lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style id="nuxt-ui-colors">@layer base {
+  :root {
+  --ui-color-primary-50: var(--color-primary-50, );
+  --ui-color-primary-100: var(--color-primary-100, );
+  --ui-color-primary-200: var(--color-primary-200, );
+  --ui-color-primary-300: var(--color-primary-300, );
+  --ui-color-primary-400: var(--color-primary-400, );
+  --ui-color-primary-500: var(--color-primary-500, );
+  --ui-color-primary-600: var(--color-primary-600, );
+  --ui-color-primary-700: var(--color-primary-700, );
+  --ui-color-primary-800: var(--color-primary-800, );
+  --ui-color-primary-900: var(--color-primary-900, );
+  --ui-color-primary-950: var(--color-primary-950, );
+  --ui-color-secondary-50: var(--color-secondary-50, );
+  --ui-color-secondary-100: var(--color-secondary-100, );
+  --ui-color-secondary-200: var(--color-secondary-200, );
+  --ui-color-secondary-300: var(--color-secondary-300, );
+  --ui-color-secondary-400: var(--color-secondary-400, );
+  --ui-color-secondary-500: var(--color-secondary-500, );
+  --ui-color-secondary-600: var(--color-secondary-600, );
+  --ui-color-secondary-700: var(--color-secondary-700, );
+  --ui-color-secondary-800: var(--color-secondary-800, );
+  --ui-color-secondary-900: var(--color-secondary-900, );
+  --ui-color-secondary-950: var(--color-secondary-950, );
+  --ui-color-success-50: var(--color-green-50, oklch(98.2% 0.018 155.826));
+  --ui-color-success-100: var(--color-green-100, oklch(96.2% 0.044 156.743));
+  --ui-color-success-200: var(--color-green-200, oklch(92.5% 0.084 155.995));
+  --ui-color-success-300: var(--color-green-300, oklch(87.1% 0.15 154.449));
+  --ui-color-success-400: var(--color-green-400, oklch(79.2% 0.209 151.711));
+  --ui-color-success-500: var(--color-green-500, oklch(72.3% 0.219 149.579));
+  --ui-color-success-600: var(--color-green-600, oklch(62.7% 0.194 149.214));
+  --ui-color-success-700: var(--color-green-700, oklch(52.7% 0.154 150.069));
+  --ui-color-success-800: var(--color-green-800, oklch(44.8% 0.119 151.328));
+  --ui-color-success-900: var(--color-green-900, oklch(39.3% 0.095 152.535));
+  --ui-color-success-950: var(--color-green-950, oklch(26.6% 0.065 152.934));
+  --ui-color-info-50: var(--color-blue-50, oklch(97% 0.014 254.604));
+  --ui-color-info-100: var(--color-blue-100, oklch(93.2% 0.032 255.585));
+  --ui-color-info-200: var(--color-blue-200, oklch(88.2% 0.059 254.128));
+  --ui-color-info-300: var(--color-blue-300, oklch(80.9% 0.105 251.813));
+  --ui-color-info-400: var(--color-blue-400, oklch(70.7% 0.165 254.624));
+  --ui-color-info-500: var(--color-blue-500, oklch(62.3% 0.214 259.815));
+  --ui-color-info-600: var(--color-blue-600, oklch(54.6% 0.245 262.881));
+  --ui-color-info-700: var(--color-blue-700, oklch(48.8% 0.243 264.376));
+  --ui-color-info-800: var(--color-blue-800, oklch(42.4% 0.199 265.638));
+  --ui-color-info-900: var(--color-blue-900, oklch(37.9% 0.146 265.522));
+  --ui-color-info-950: var(--color-blue-950, oklch(28.2% 0.091 267.935));
+  --ui-color-warning-50: var(--color-orange-50, oklch(98% 0.016 73.684));
+  --ui-color-warning-100: var(--color-orange-100, oklch(95.4% 0.038 75.164));
+  --ui-color-warning-200: var(--color-orange-200, oklch(90.1% 0.076 70.697));
+  --ui-color-warning-300: var(--color-orange-300, oklch(83.7% 0.128 66.29));
+  --ui-color-warning-400: var(--color-orange-400, oklch(75% 0.183 55.934));
+  --ui-color-warning-500: var(--color-orange-500, oklch(70.5% 0.213 47.604));
+  --ui-color-warning-600: var(--color-orange-600, oklch(64.6% 0.222 41.116));
+  --ui-color-warning-700: var(--color-orange-700, oklch(55.3% 0.195 38.402));
+  --ui-color-warning-800: var(--color-orange-800, oklch(47% 0.157 37.304));
+  --ui-color-warning-900: var(--color-orange-900, oklch(40.8% 0.123 38.172));
+  --ui-color-warning-950: var(--color-orange-950, oklch(26.6% 0.079 36.259));
+  --ui-color-error-50: var(--color-red-50, oklch(97.1% 0.013 17.38));
+  --ui-color-error-100: var(--color-red-100, oklch(93.6% 0.032 17.717));
+  --ui-color-error-200: var(--color-red-200, oklch(88.5% 0.062 18.334));
+  --ui-color-error-300: var(--color-red-300, oklch(80.8% 0.114 19.571));
+  --ui-color-error-400: var(--color-red-400, oklch(70.4% 0.191 22.216));
+  --ui-color-error-500: var(--color-red-500, oklch(63.7% 0.237 25.331));
+  --ui-color-error-600: var(--color-red-600, oklch(57.7% 0.245 27.325));
+  --ui-color-error-700: var(--color-red-700, oklch(50.5% 0.213 27.518));
+  --ui-color-error-800: var(--color-red-800, oklch(44.4% 0.177 26.899));
+  --ui-color-error-900: var(--color-red-900, oklch(39.6% 0.141 25.723));
+  --ui-color-error-950: var(--color-red-950, oklch(25.8% 0.092 26.042));
+  --ui-color-neutral-50: var(--color-gray-50, oklch(98.5% 0.002 247.839));
+  --ui-color-neutral-100: var(--color-gray-100, oklch(96.7% 0.003 264.542));
+  --ui-color-neutral-200: var(--color-gray-200, oklch(92.8% 0.006 264.531));
+  --ui-color-neutral-300: var(--color-gray-300, oklch(87.2% 0.01 258.338));
+  --ui-color-neutral-400: var(--color-gray-400, oklch(70.7% 0.022 261.325));
+  --ui-color-neutral-500: var(--color-gray-500, oklch(55.1% 0.027 264.364));
+  --ui-color-neutral-600: var(--color-gray-600, oklch(44.6% 0.03 256.802));
+  --ui-color-neutral-700: var(--color-gray-700, oklch(37.3% 0.034 259.733));
+  --ui-color-neutral-800: var(--color-gray-800, oklch(27.8% 0.033 256.848));
+  --ui-color-neutral-900: var(--color-gray-900, oklch(21% 0.034 264.665));
+  --ui-color-neutral-950: var(--color-gray-950, oklch(13% 0.028 261.692));
+  }
+  :root, .light {
+  --ui-primary: var(--ui-color-primary-500);
+  --ui-secondary: var(--ui-color-secondary-500);
+  --ui-success: var(--ui-color-success-500);
+  --ui-info: var(--ui-color-info-500);
+  --ui-warning: var(--ui-color-warning-500);
+  --ui-error: var(--ui-color-error-500);
+  }
+  .dark {
+  --ui-primary: var(--ui-color-primary-400);
+  --ui-secondary: var(--ui-color-secondary-400);
+  --ui-success: var(--ui-color-success-400);
+  --ui-info: var(--ui-color-info-400);
+  --ui-warning: var(--ui-color-warning-400);
+  --ui-error: var(--ui-color-error-400);
+  }
+}</style><title>Recipes - Week 2: One-Pot Wonders | Meal Plans</title><link rel="stylesheet" href="/meal-plans/_nuxt/entry.C5MXTEYJ.css" crossorigin><link rel="preload" as="fetch" crossorigin="anonymous" href="/meal-plans/meals/week-2/recipes/_payload.json?8e15e53d-4bce-413a-827a-f28b57d3a9ec"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/BnF1ulIC.js"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/BBGqNULP.js"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/Ctp3-J01.js"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/DQrXb9db.js"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/DIVglaLe.js"><link rel="modulepreload" as="script" crossorigin href="/meal-plans/_nuxt/DQ63w9E6.js"><link rel="preload" as="fetch" fetchpriority="low" crossorigin="anonymous" href="/meal-plans/_nuxt/builds/meta/8e15e53d-4bce-413a-827a-f28b57d3a9ec.json"><meta name="description" content="Browse all recipes for Week 2: One-Pot Wonders"><meta name="theme-color" content="#192E59"><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/favicon.ico"><meta property="og:title" content="Recipes - Week 2: One-Pot Wonders"><meta property="og:description" content="Browse all recipes for Week 2: One-Pot Wonders"><meta name="twitter:card" content="summary_large_image"><script type="module" src="/meal-plans/_nuxt/BnF1ulIC.js" crossorigin></script><script>"use strict";(()=>{const t=window,e=document.documentElement,c=["dark","light"],n=getStorageValue("localStorage","nuxt-color-mode")||"system";let i=n==="system"?u():n;const r=e.getAttribute("data-color-mode-forced");r&&(i=r),l(i),t["__NUXT_COLOR_MODE__"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=""+o+"",a="";e.classList?e.classList.add(s):e.className+=" "+s,a&&e.setAttribute("data-"+a,o)}function d(o){const s=""+o+"",a="";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,"g"),""),a&&e.removeAttribute("data-"+a)}function f(o){return t.matchMedia("(prefers-color-scheme"+o+")")}function u(){if(t.matchMedia&&f("").media!=="not all"){for(const o of c)if(f(":"+o).matches)return o}return"light"}})();function getStorageValue(t,e){switch(t){case"localStorage":return window.localStorage.getItem(e);case"sessionStorage":return window.sessionStorage.getItem(e);case"cookie":return getCookie(e);default:return null}}function getCookie(t){const c=("; "+window.document.cookie).split("; "+t+"=");if(c.length===2)return c.pop()?.split(";").shift()}</script></head><body><div id="__nuxt" class="isolate"><!--[--><!--[--><!--[--><!--[--><!--[--><div class="min-h-screen flex flex-col bg-white dark:bg-gray-900"><a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-md"> Skip to main content </a><header class="hidden sm:block sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm"><nav class="container mx-auto px-4 py-4 flex items-center justify-between max-w-7xl"><a href="/meal-plans/" class="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"><svg width="1020" height="200" viewbox="0 0 1020 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-auto h-6 shrink-0"><path d="M377 200C379.16 200 381 198.209 381 196V103C381 103 386 112 395 127L434 194C435.785 197.74 439.744 200 443 200H470V50H443C441.202 50 439 51.4941 439 54V148L421 116L385 55C383.248 51.8912 379.479 50 376 50H350V200H377Z" fill="currentColor"></path><path d="M726 92H739C742.314 92 745 89.3137 745 86V60H773V92H800V116H773V159C773 169.5 778.057 174 787 174H800V200H783C759.948 200 745 185.071 745 160V116H726V92Z" fill="currentColor"></path><path d="M591 92V154C591 168.004 585.742 179.809 578 188C570.258 196.191 559.566 200 545 200C530.434 200 518.742 196.191 511 188C503.389 179.809 498 168.004 498 154V92H514C517.412 92 520.769 92.622 523 95C525.231 97.2459 526 98.5652 526 102V154C526 162.059 526.457 167.037 530 171C533.543 174.831 537.914 176 545 176C552.217 176 555.457 174.831 559 171C562.543 167.037 563 162.059 563 154V102C563 98.5652 563.769 96.378 566 94C567.96 91.9107 570.028 91.9599 573 92C573.411 92.0055 574.586 92 575 92H591Z" fill="currentColor"></path><path d="M676 144L710 92H684C680.723 92 677.812 93.1758 676 96L660 120L645 97C643.188 94.1758 639.277 92 636 92H611L645 143L608 200H634C637.25 200 640.182 196.787 642 194L660 167L679 195C680.818 197.787 683.75 200 687 200H713L676 144Z" fill="currentColor"></path><path d="M168 200H279C282.542 200 285.932 198.756 289 197C292.068 195.244 295.23 193.041 297 190C298.77 186.959 300.002 183.51 300 179.999C299.998 176.488 298.773 173.04 297 170.001L222 41C220.23 37.96 218.067 35.7552 215 34C211.933 32.2448 207.542 31 204 31C200.458 31 197.067 32.2448 194 34C190.933 35.7552 188.77 37.96 187 41L168 74L130 9.99764C128.228 6.95784 126.068 3.75491 123 2C119.932 0.245087 116.542 0 113 0C109.458 0 106.068 0.245087 103 2C99.9323 3.75491 96.7717 6.95784 95 9.99764L2 170.001C0.226979 173.04 0.00154312 176.488 1.90993e-06 179.999C-0.0015393 183.51 0.229648 186.959 2 190C3.77035 193.04 6.93245 195.244 10 197C13.0675 198.756 16.4578 200 20 200H90C117.737 200 137.925 187.558 152 164L186 105L204 74L259 168H186L168 200ZM89 168H40L113 42L150 105L125.491 147.725C116.144 163.01 105.488 168 89 168Z" fill="var(--ui-primary)"></path><path d="M958 60.0001H938C933.524 60.0001 929.926 59.9395 927 63C924.074 65.8905 925 67.5792 925 72V141C925 151.372 923.648 156.899 919 162C914.352 166.931 908.468 169 899 169C889.705 169 882.648 166.931 878 162C873.352 156.899 873 151.372 873 141V72.0001C873 67.5793 872.926 65.8906 870 63.0001C867.074 59.9396 863.476 60.0001 859 60.0001H840V141C840 159.023 845.016 173.458 855 184C865.156 194.542 879.893 200 899 200C918.107 200 932.844 194.542 943 184C953.156 173.458 958 159.023 958 141V60.0001Z" fill="var(--ui-primary)"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M1000 60.0233L1020 60V77L1020 128V156.007L1020 181L1020 189.004C1020 192.938 1019.98 194.429 1017 197.001C1014.02 199.725 1009.56 200 1005 200H986.001V181.006L986 130.012V70.0215C986 66.1576 986.016 64.5494 989 62.023C991.819 59.6358 995.437 60.0233 1000 60.0233Z" fill="var(--ui-primary)"></path></svg></a><div class="flex items-center gap-6"><!--[--><a href="/meal-plans/" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Home</a><a href="/meal-plans/plans" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Meal Plans</a><a href="/meal-plans/tools" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Tools</a><a href="/meal-plans/favorites" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors">Favorites</a><!--]--><!--[--><!--[--><div class="size-8"></div><!--]--><!--]--></div></nav></header><main id="main-content" class="flex-1 pb-16 sm:pb-0"><!--[--><div class="container mx-auto px-4 py-8"><nav aria-label="Breadcrumb" class="mb-4"><ol class="flex items-center space-x-2 text-sm"><!--[--><li class="flex items-center"><a href="/meal-plans/" class="text-primary hover:underline">Home</a><span class="mx-2 text-gray-400">&gt;</span></li><li class="flex items-center"><a href="/meal-plans/meals/week-2" class="text-primary hover:underline">Week 2: One-Pot Wonders</a><span class="mx-2 text-gray-400">&gt;</span></li><li class="flex items-center"><span class="text-gray-500 dark:text-gray-400 font-semibold">Recipes</span><!----></li><!--]--></ol></nav><h1 class="text-4xl font-bold mb-8"> Recipe Gallery </h1><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!--[--><!----><!--]--></div></div><!--]--></main><nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 sm:hidden" aria-label="Mobile navigation"><div class="flex justify-around items-center h-16"><!--[--><a href="/meal-plans/" class="flex flex-col items-center justify-center w-full h-full min-w-[44px] min-h-[44px] transition-colors text-gray-600 dark:text-gray-400" aria-label="Home"><span class="iconify i-heroicons:home w-6 h-6 mb-1" aria-hidden="true" style=""></span><span class="text-xs">Home</span></a><a href="/meal-plans/plans" class="flex flex-col items-center justify-center w-full h-full min-w-[44px] min-h-[44px] transition-colors text-gray-600 dark:text-gray-400" aria-label="Plans"><span class="iconify i-heroicons:document-text w-6 h-6 mb-1" aria-hidden="true" style=""></span><span class="text-xs">Plans</span></a><a href="/meal-plans/tools" class="flex flex-col items-center justify-center w-full h-full min-w-[44px] min-h-[44px] transition-colors text-gray-600 dark:text-gray-400" aria-label="Tools"><span class="iconify i-heroicons:wrench-screwdriver w-6 h-6 mb-1" aria-hidden="true" style=""></span><span class="text-xs">Tools</span></a><a href="/meal-plans/favorites" class="flex flex-col items-center justify-center w-full h-full min-w-[44px] min-h-[44px] transition-colors text-gray-600 dark:text-gray-400" aria-label="Favorites"><span class="iconify i-heroicons:star w-6 h-6 mb-1" aria-hidden="true" style=""></span><span class="text-xs">Favorites</span></a><!--]--></div></nav></div><!--]--><!--]--><!--[--><!--]--><!--v-if--><!--]--><!--[--><!--]--><!--]--><!--]--></div><div id="teleports"></div><script type="application/json" data-nuxt-data="nuxt-app" data-ssr="true" id="__NUXT_DATA__" data-src="/meal-plans/meals/week-2/recipes/_payload.json?8e15e53d-4bce-413a-827a-f28b57d3a9ec">[{"state":1,"once":8,"_errors":9,"serverRendered":5,"path":11,"prerenderedAt":12},["Reactive",2],{"$scolor-mode":3,"$stoasts":7},{"preference":4,"value":4,"unknown":5,"forced":6},"system",true,false,[],["Set"],["ShallowReactive",10],{"recipes-week-2":-1,"meal-week-week-2":-1},"/meals/week-2/recipes",1763748863973]</script><script>window.__NUXT__={};window.__NUXT__.config={public:{mdc:{components:{prose:true,map:{accordion:"ProseAccordion","accordion-item":"ProseAccordionItem",badge:"ProseBadge",callout:"ProseCallout",card:"ProseCard","card-group":"ProseCardGroup",caution:"ProseCaution","code-collapse":"ProseCodeCollapse","code-group":"ProseCodeGroup","code-icon":"ProseCodeIcon","code-preview":"ProseCodePreview","code-tree":"ProseCodeTree",collapsible:"ProseCollapsible",field:"ProseField","field-group":"ProseFieldGroup",icon:"ProseIcon",kbd:"ProseKbd",note:"ProseNote",steps:"ProseSteps",tabs:"ProseTabs","tabs-item":"ProseTabsItem",tip:"ProseTip",warning:"ProseWarning"}},headings:{anchorLinks:{h1:false,h2:true,h3:true,h4:true,h5:false,h6:false}}},content:{wsUrl:""}},app:{baseURL:"/meal-plans/",buildId:"8e15e53d-4bce-413a-827a-f28b57d3a9ec",buildAssetsDir:"/_nuxt/",cdnURL:""}}</script></body></html>
