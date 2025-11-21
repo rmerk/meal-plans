@@ -1,0 +1,498 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2</storyId>
+    <title>Meal Plan Overview Page</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-2-meal-plan-overview-page.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to view a detailed overview of a specific meal plan</iWant>
+    <soThat>I can understand what recipes are included and see the batch cooking workflow</soThat>
+    <tasks>
+      <task id="1" ac="2.2.1">Create Dynamic Route Page Component
+        - Create pages/meals/[week]/index.vue file
+        - Implement dynamic route with route.params.week
+        - Add Nuxt Content query: useAsyncData + queryContent
+        - Verify query runs at build time for SSG compatibility
+        - Test with existing content: week-1, week-2, week-3
+      </task>
+      <task id="2" ac="2.2.5">Implement 404 Error Handling
+        - Add null check after Nuxt Content query
+        - Throw createError when weekData is null
+        - Verify error.vue catches the error
+        - Test with invalid week IDs: week-99, week-invalid, week-
+        - Verify error page shows user-friendly message and back link
+      </task>
+      <task id="3" ac="2.2.2">Display Meal Plan Metadata
+        - Create page layout with semantic HTML structure
+        - Display title as h1, subtitle as p with gray text
+        - Render features array as UBadge components in flex wrap container
+        - Render proteins array as UBadge components in flex wrap container
+        - Apply Mountains at Sunrise color scheme to badges
+        - Add defensive checks: const features = weekData.value?.features || []
+      </task>
+      <task id="4" ac="2.2.2">Display Batch Cooking Workflow
+        - Create workflow section with heading
+        - Render batchCookingSteps array as ordered list (ol)
+        - For each step, display: title (bold) and description (regular text)
+        - Add defensive check for empty workflow array
+        - Show fallback message if workflow is empty
+      </task>
+      <task id="5" ac="2.2.3">Add CTA Buttons with Navigation
+        - Create CTA section with two UButton components
+        - Button 1: "View Recipe Gallery" navigates to /meals/${weekId}/recipes
+        - Button 2: "View Prep Strategy" navigates to /meals/${weekId}/prep-strategy
+        - Use router.push() or NuxtLink for navigation
+        - Style buttons with primary color, 44px min height for mobile
+        - Test navigation works (expect 404 until Stories 2.3/2.5)
+      </task>
+      <task id="6" ac="2.2.4">Implement Breadcrumb Navigation
+        - Add breadcrumb component above page title
+        - Compute breadcrumb items from route.path
+        - Display: "Home" (link to /) > "Week 1" (current page, not clickable)
+        - Style current page breadcrumb differently (bold, no link)
+        - Add keyboard accessibility for breadcrumb links
+        - Position breadcrumbs using consistent spacing (mb-4)
+      </task>
+      <task id="7" ac="2.2.6">Add Graceful Degradation for Missing Data
+        - Add optional chaining for all frontmatter fields
+        - Implement conditional rendering with v-if for empty arrays
+        - Add fallback messages for missing sections
+        - Test with minimal frontmatter (create test week-4 with sparse data)
+        - Verify no console errors when fields are missing
+      </task>
+      <task id="8">Add SEO Meta Tags
+        - Use useSeoMeta composable to set page metadata
+        - Set title: ${weekData.value.title} | Meal Plans
+        - Set description from subtitle
+        - Set og:title, og:description for social sharing
+        - Test meta tags appear in page head
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="2.2.1" priority="critical">
+      <title>Dynamic Route Loads with Week Parameter</title>
+      <given>I click a meal plan card from the dashboard</given>
+      <when>I navigate to /meals/week-1</when>
+      <then>the overview page renders with data from content/meals/week-1/index.md</then>
+      <validation>
+        - URL shows /meals/week-1
+        - Vue devtools shows route.params.week === "week-1"
+        - All frontmatter data renders correctly
+        - Console shows no errors
+      </validation>
+    </ac>
+    <ac id="2.2.2" priority="critical">
+      <title>All Metadata Displays Correctly</title>
+      <given>the meal plan data loads successfully</given>
+      <then>the page displays title, subtitle, features (UBadge), proteins (UBadge), batch cooking workflow as ordered list with step titles and descriptions</then>
+      <validation>
+        - Manual visual inspection
+        - Verify each frontmatter field renders in correct section
+        - Verify UBadge colors match Mountains at Sunrise theme
+        - Verify workflow displays as semantic ol with proper styling
+      </validation>
+    </ac>
+    <ac id="2.2.3" priority="high">
+      <title>CTA Buttons Navigate Correctly</title>
+      <given>the overview page is displayed</given>
+      <then>two CTA buttons are visible: "View Recipe Gallery" and "View Prep Strategy"</then>
+      <when>I click "View Recipe Gallery"</when>
+      <then>I navigate to /meals/week-1/recipes</then>
+      <when>I click "View Prep Strategy"</when>
+      <then>I navigate to /meals/week-1/prep-strategy</then>
+      <validation>
+        - Both buttons visible with proper styling (UButton component)
+        - Clicking each button changes URL correctly
+        - Browser back button returns to overview page
+        - Note: Target pages will 404 until Stories 2.3/2.5 (expected behavior)
+      </validation>
+    </ac>
+    <ac id="2.2.4" priority="medium">
+      <title>Breadcrumb Navigation Displays</title>
+      <given>the overview page is displayed</given>
+      <then>breadcrumb navigation shows "Home > Week 1"</then>
+      <and>breadcrumb is positioned above the page title</and>
+      <and>clicking "Home" navigates to /</and>
+      <and>"Week 1" is not clickable (current page)</and>
+      <validation>
+        - Breadcrumb visible above title
+        - "Home" link works
+        - Current page breadcrumb is styled differently (not a link)
+        - Breadcrumb updates correctly for different weeks
+      </validation>
+    </ac>
+    <ac id="2.2.5" priority="critical">
+      <title>404 Handling Works for Invalid Weeks</title>
+      <given>I navigate to an invalid week URL (e.g., /meals/week-99, /meals/week-invalid)</given>
+      <when>queryContent returns null (no matching content file)</when>
+      <then>createError({ statusCode: 404 }) is thrown</then>
+      <and>the error.vue page renders</and>
+      <and>error message shows "Meal plan not found"</and>
+      <and>"Back to Dashboard" link navigates to /</and>
+      <validation>
+        - Test multiple invalid week IDs: week-99, week-0, week-invalid, week-
+        - Verify error.vue renders (not white screen)
+        - Verify error message is user-friendly
+        - Verify navigation back to dashboard works
+      </validation>
+    </ac>
+    <ac id="2.2.6" priority="medium">
+      <title>Graceful Degradation for Missing Data</title>
+      <given>a meal plan markdown file exists but has missing/empty fields</given>
+      <when>the page renders</when>
+      <then>missing data is handled gracefully: empty features/proteins arrays hide sections or show fallback, empty batchCookingSteps shows "Workflow information coming soon", missing subtitle hides subtitle section</then>
+      <validation>
+        - Create test meal plan with minimal frontmatter
+        - Verify no JavaScript errors in console
+        - Verify page still renders with available data
+        - Verify fallback messages are user-friendly
+      </validation>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Content Discovery & Browsing</title>
+        <section>Story 2.2: Meal Plan Overview Page (AC 2.2.1-2.2.4)</section>
+        <snippet>Meal plan overview pages showing week details, features, proteins, batch cooking workflow, CTAs to recipe gallery and prep strategy. Dynamic route: /meals/[week] with week parameter. Query specific week data: queryContent('meals', week).findOne(). 404 handling: throw createError({ statusCode: 404 }).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Data Models</title>
+        <section>MealPlanIndex Interface</section>
+        <snippet>interface MealPlanIndex { title: string, subtitle: string, emoji: string, category: string, color: string, features: string[], proteins: string[], batchCookingSteps: { title: string, description: string }[], recipeCount: number, prepTime: string }</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Nuxt Content Query Pattern (lines 975-986)</section>
+        <snippet>All pages use useAsyncData + queryContent for SSG-friendly fetching, ensuring static generation works for GitHub Pages deployment. Pattern: const { data } = await useAsyncData('key', () => queryContent('path').findOne())</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Error Handling Pattern (lines 479-501)</section>
+        <snippet>When Nuxt Content returns null, throw createError({ statusCode: 404, message: 'Resource not found', fatal: false }) to trigger error boundary. error.vue page catches all thrown errors and displays user-friendly messages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Dynamic Routes (File-Based Routing)</section>
+        <snippet>Nuxt 4 file-based routing: pages/meals/[week]/index.vue maps to /meals/:week route. Bracket syntax [week] creates dynamic route parameter accessible via route.params.week. Supports nested dynamic routes for future stories.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-1-dashboard-with-meal-plan-cards.md</path>
+        <title>Story 2.1: Dashboard with Meal Plan Cards</title>
+        <section>Completion Notes and Learnings</section>
+        <snippet>Lighthouse scores exceeded targets: Performance 100, Accessibility 90+. useAsyncData + queryContent pattern works perfectly for SSG. Mountains at Sunrise theme (Primary #192E59, Secondary #F2CC85) applied to UBadge components. Responsive grid pattern established: grid-cols-1 sm:grid-cols-2 lg:grid-cols-3.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic 2: Content Discovery & Browsing</title>
+        <section>Story 2.2</section>
+        <snippet>Meal plan overview page with dynamic routing [week] parameter. Display title, subtitle, features, proteins, batch cooking workflow. Two CTAs: "View Recipe Gallery" and "View Prep Strategy". 404 handling for invalid week IDs. Breadcrumb navigation: Home > Week 1.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>pages/index.vue</path>
+        <kind>page</kind>
+        <symbol>Dashboard page component</symbol>
+        <lines>26-32, 65-77</lines>
+        <reason>Reference for useAsyncData + queryContent pattern and responsive grid layout. Shows how MealPlanCard navigation works (source of clicks leading to overview page).</reason>
+      </artifact>
+      <artifact>
+        <path>app/components/MealPlanCard.vue</path>
+        <kind>component</kind>
+        <symbol>MealPlanCard component</symbol>
+        <lines>55, 63, 75-98</lines>
+        <reason>Reference for UBadge usage pattern with Mountains at Sunrise colors (color="primary", color="secondary"). Shows hover effects and navigation patterns to reuse.</reason>
+      </artifact>
+      <artifact>
+        <path>app/layouts/default.vue</path>
+        <kind>layout</kind>
+        <symbol>Default layout with navigation</symbol>
+        <lines>all</lines>
+        <reason>Inherited layout providing responsive navigation (desktop top nav, mobile bottom nav). Overview page will use this layout automatically.</reason>
+      </artifact>
+      <artifact>
+        <path>content/meals/week-1/index.md</path>
+        <kind>content</kind>
+        <symbol>Week 1 meal plan data</symbol>
+        <lines>frontmatter</lines>
+        <reason>Data source for overview page. Contains title, subtitle, features, proteins, batchCookingSteps arrays that Story 2.2 must render. Use as reference for frontmatter schema.</reason>
+      </artifact>
+      <artifact>
+        <path>content/meals/week-2/index.md</path>
+        <kind>content</kind>
+        <symbol>Week 2 meal plan data</symbol>
+        <lines>frontmatter</lines>
+        <reason>Additional test data for dynamic routing. Verify overview page works for multiple weeks.</reason>
+      </artifact>
+      <artifact>
+        <path>content/meals/week-3/index.md</path>
+        <kind>content</kind>
+        <symbol>Week 3 meal plan data</symbol>
+        <lines>frontmatter</lines>
+        <reason>Additional test data for dynamic routing. Verify overview page works for multiple weeks.</reason>
+      </artifact>
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>config</kind>
+        <symbol>Nuxt configuration</symbol>
+        <lines>modules section</lines>
+        <reason>Verify @nuxt/content module is configured. Ensure dynamic routing and queryContent API are available.</reason>
+      </artifact>
+      <artifact>
+        <path>app.config.ts</path>
+        <kind>config</kind>
+        <symbol>Nuxt UI theme configuration</symbol>
+        <lines>all</lines>
+        <reason>Mountains at Sunrise theme configuration. Defines primary/secondary colors used by UBadge components.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <node>
+        <nuxt>4.2.1</nuxt>
+        <@nuxt/ui>4.1.0</@nuxt/ui>
+        <@nuxt/content>3.8.2</@nuxt/content>
+        <@vueuse/nuxt>14.0.0</@vueuse/nuxt>
+        <@vite-pwa/nuxt>1.0.7</@vite-pwa/nuxt>
+        <@nuxt/image>2.0.0</@nuxt/image>
+        <typescript>5.9.3</typescript>
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint id="1" type="architectural">
+      <title>SSG Compatibility Required</title>
+      <description>All Nuxt Content queries must use useAsyncData pattern to ensure static site generation works for GitHub Pages deployment. Avoid client-side only queries.</description>
+      <source>docs/architecture.md:975-986</source>
+    </constraint>
+    <constraint id="2" type="architectural">
+      <title>Error Boundaries Must Be Implemented</title>
+      <description>When queryContent returns null (content file not found), must throw createError({ statusCode: 404 }) immediately. Do not let null propagate to template causing crashes.</description>
+      <source>docs/architecture.md:479-501</source>
+    </constraint>
+    <constraint id="3" type="design">
+      <title>Mountains at Sunrise Theme Consistency</title>
+      <description>Use Mountains at Sunrise color palette for all UI components. UBadge components must use color="primary" (#192E59) for features and color="secondary" (#F2CC85) for proteins.</description>
+      <source>docs/sprint-artifacts/2-1-dashboard-with-meal-plan-cards.md</source>
+    </constraint>
+    <constraint id="4" type="architectural">
+      <title>Defensive Coding for External Data</title>
+      <description>Always use optional chaining (?.) and nullish coalescing (||) for data from Nuxt Content. Frontmatter fields may be missing or empty. Provide fallback values and conditional rendering to prevent crashes.</description>
+      <source>docs/sprint-artifacts/2-2-meal-plan-overview-page.md:Dev-Notes</source>
+    </constraint>
+    <constraint id="5" type="accessibility">
+      <title>WCAG 2.1 AA Compliance</title>
+      <description>Implement keyboard navigation for all interactive elements (breadcrumbs, CTA buttons). Use semantic HTML (nav, ol, h1, h2). Ensure 44px minimum touch targets for mobile. Add ARIA labels where needed.</description>
+      <source>docs/architecture.md:Cross-Cutting-Concerns</source>
+    </constraint>
+    <constraint id="6" type="performance">
+      <title>Lighthouse Performance Target 90+</title>
+      <description>Page must achieve Lighthouse scores: Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+. Static generation and service worker caching ensure fast page loads.</description>
+      <source>docs/sprint-artifacts/tech-spec-epic-2.md</source>
+    </constraint>
+    <constraint id="7" type="routing">
+      <title>Dynamic Route Naming Convention</title>
+      <description>Use bracket syntax [week] for dynamic route parameter in pages/meals/[week]/index.vue. Parameter accessible via route.params.week. Nested routes use same pattern: [week]/recipes/[slug].vue for future stories.</description>
+      <source>docs/architecture.md:Dynamic-Routes</source>
+    </constraint>
+    <constraint id="8" type="responsive">
+      <title>Mobile-First Responsive Breakpoints</title>
+      <description>Follow established breakpoints: mobile < 640px, tablet 640-1024px, desktop > 1024px. CTA buttons stack vertically on mobile (flex-col), side-by-side on desktop (sm:flex-row).</description>
+      <source>docs/architecture.md:582-610</source>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>MealPlanIndex (TypeScript Interface)</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+        interface MealPlanIndex {
+          title: string              // "Week 1: Batch Cooking Basics"
+          subtitle: string           // "Learn foundational batch cooking techniques"
+          emoji: string              // "🍳"
+          category: string           // "beginner" | "intermediate" | "advanced"
+          color: string              // "blue" | "green" | "purple"
+          features: string[]         // ["Batch cooking", "Meal prep friendly"]
+          proteins: string[]         // ["Chicken", "Tofu", "Eggs"]
+          batchCookingSteps: {
+            title: string
+            description: string
+          }[]
+          recipeCount: number        // 6
+          prepTime: string           // "2 hours"
+        }
+      </signature>
+      <path>docs/sprint-artifacts/tech-spec-epic-2.md:140-158</path>
+    </interface>
+    <interface>
+      <name>Nuxt Content queryContent API</name>
+      <kind>Function Signature</kind>
+      <signature>
+        queryContent&lt;T&gt;(path: string, ...paths: string[]): ContentQuery&lt;T&gt;
+        - findOne(): Promise&lt;T | null&gt;
+        - find(): Promise&lt;T[]&gt;
+        - only(keys: string[]): ContentQuery&lt;T&gt;
+      </signature>
+      <path>@nuxt/content API</path>
+    </interface>
+    <interface>
+      <name>Nuxt useAsyncData composable</name>
+      <kind>Function Signature</kind>
+      <signature>
+        useAsyncData&lt;T&gt;(
+          key: string,
+          handler: () => Promise&lt;T&gt;,
+          options?: AsyncDataOptions
+        ): AsyncData&lt;T&gt;
+        Returns: { data: Ref&lt;T | null&gt;, pending: Ref&lt;boolean&gt;, error: Ref&lt;Error | null&gt; }
+      </signature>
+      <path>Nuxt 4 composables</path>
+    </interface>
+    <interface>
+      <name>Nuxt createError function</name>
+      <kind>Function Signature</kind>
+      <signature>
+        createError(options: {
+          statusCode: number         // HTTP status code (e.g., 404)
+          message: string            // User-friendly error message
+          fatal?: boolean            // Default: false (allow navigation recovery)
+        }): Error
+      </signature>
+      <path>Nuxt 4 error handling</path>
+    </interface>
+    <interface>
+      <name>Vue Router useRoute composable</name>
+      <kind>Function Signature</kind>
+      <signature>
+        useRoute(): RouteLocationNormalizedLoaded
+        Returns: { params: Record&lt;string, string&gt;, path: string, query: Record&lt;string, string&gt;, ... }
+        Access dynamic params: route.params.week
+      </signature>
+      <path>Vue Router API</path>
+    </interface>
+    <interface>
+      <name>Vue Router useRouter composable</name>
+      <kind>Function Signature</kind>
+      <signature>
+        useRouter(): Router
+        Methods: push(to: string | RouteLocation), replace(to: string | RouteLocation), back(), forward()
+        Example: router.push(`/meals/${weekId}/recipes`)
+      </signature>
+      <path>Vue Router API</path>
+    </interface>
+    <interface>
+      <name>Nuxt useSeoMeta composable</name>
+      <kind>Function Signature</kind>
+      <signature>
+        useSeoMeta(meta: {
+          title?: string
+          description?: string
+          ogTitle?: string
+          ogDescription?: string
+          ogImage?: string
+          ogType?: string
+          twitterCard?: string
+        }): void
+      </signature>
+      <path>Nuxt 4 SEO utilities</path>
+    </interface>
+    <interface>
+      <name>@nuxt/ui UBadge Component</name>
+      <kind>Vue Component Props</kind>
+      <signature>
+        &lt;UBadge
+          color?: "primary" | "secondary" | "gray" | ...    // Theme color
+          variant?: "solid" | "subtle" | "outline"          // Visual style
+          size?: "xs" | "sm" | "md" | "lg"                  // Badge size
+        &gt;
+          Text content
+        &lt;/UBadge&gt;
+      </signature>
+      <path>@nuxt/ui v4 components</path>
+    </interface>
+    <interface>
+      <name>@nuxt/ui UButton Component</name>
+      <kind>Vue Component Props</kind>
+      <signature>
+        &lt;UButton
+          color?: "primary" | "secondary" | ...             // Theme color
+          variant?: "solid" | "outline" | "ghost"           // Visual style
+          size?: "xs" | "sm" | "md" | "lg"                  // Button size
+          @click?: () => void                               // Click handler
+        &gt;
+          Button text
+        &lt;/UButton&gt;
+      </signature>
+      <path>@nuxt/ui v4 components</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Epic 2 uses manual testing with Lighthouse audits and browser DevTools. Testing approach: (1) Manual component testing at story level verifying render, props, responsive breakpoints; (2) Manual integration testing at epic level for complete user journeys; (3) Lighthouse audits (automated) for PWA, Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+; (4) Manual accessibility testing with keyboard navigation and screen readers; (5) Cross-browser testing on Chrome, Firefox, Safari, Edge. All manual tests require evidence artifacts (screenshots, Lighthouse JSON, videos) stored in docs/test-evidence/. Automated testing (Playwright E2E, Jest unit tests) deferred to post-MVP.
+    </standards>
+    <locations>
+      - docs/test-evidence/ (screenshots, Lighthouse JSON, screen recordings)
+      - Manual tests documented in story Tasks section
+      - Future: tests/ directory for automated tests (post-MVP)
+    </locations>
+    <ideas>
+      <test ac="2.2.1">
+        <description>Test dynamic routing with multiple weeks</description>
+        <approach>Navigate to /meals/week-1, /meals/week-2, /meals/week-3 from dashboard. Verify URL updates, route.params.week value, and correct data loads for each week. Check console for errors.</approach>
+      </test>
+      <test ac="2.2.2">
+        <description>Test metadata rendering with full and sparse data</description>
+        <approach>Verify all fields render for week-1 (full frontmatter). Create test week-4 with minimal frontmatter (only title). Verify page doesn't crash, fallback messages show, no console errors.</approach>
+      </test>
+      <test ac="2.2.3">
+        <description>Test CTA button navigation</description>
+        <approach>Click "View Recipe Gallery" button, verify URL changes to /meals/week-1/recipes (expect 404 until Story 2.3). Click browser back button, verify return to overview. Repeat for "View Prep Strategy" button. Test keyboard navigation (Tab to button, Enter to activate).</approach>
+      </test>
+      <test ac="2.2.4">
+        <description>Test breadcrumb navigation</description>
+        <approach>Verify breadcrumb shows "Home > Week 1" above title. Click "Home" link, verify navigation to dashboard. Verify "Week 1" is not clickable. Navigate to different weeks, verify breadcrumb updates (Week 2, Week 3).</approach>
+      </test>
+      <test ac="2.2.5">
+        <description>Test 404 handling for invalid weeks</description>
+        <approach>Navigate to /meals/week-99, /meals/week-invalid, /meals/week-, /meals/week-0. Verify error.vue renders (not white screen). Verify error message "Meal plan not found" displays. Click "Back to Dashboard" link, verify navigation to /. Test browser back button from error page.</approach>
+      </test>
+      <test ac="2.2.6">
+        <description>Test graceful degradation with missing data</description>
+        <approach>Create test week-4/index.md with minimal frontmatter: only title, no subtitle, empty features/proteins arrays, no batchCookingSteps. Verify page renders without crashes. Verify fallback messages: "Workflow information coming soon" for empty workflow. Check console for JavaScript errors (should be zero).</approach>
+      </test>
+      <test>
+        <description>Test responsive layout at all breakpoints</description>
+        <approach>Use Chrome DevTools responsive mode. Test at 320px (iPhone SE), 768px (iPad portrait), 1024px (iPad landscape), 1920px (desktop). Verify CTA buttons stack on mobile (vertical), side-by-side on desktop (horizontal). Verify badges wrap properly. Take screenshots at each breakpoint for evidence.</approach>
+      </test>
+      <test>
+        <description>Lighthouse audit on production build</description>
+        <approach>Run pnpm generate to build static site. Serve with pnpm preview or static file server. Run Lighthouse on /meals/week-1 page. Verify scores: Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+. Save JSON report to docs/test-evidence/story-2-2-lighthouse.json.</approach>
+      </test>
+      <test>
+        <description>Test browser navigation (back/forward)</description>
+        <approach>User journey: Dashboard → Click Week 1 card → Overview page loads → Click "View Recipe Gallery" → 404 page (expected) → Browser back → Overview page → Browser back → Dashboard. Verify all navigation works, no crashes, correct pages load at each step.</approach>
+      </test>
+      <test>
+        <description>Test SEO meta tags</description>
+        <approach>Navigate to /meals/week-1. Open browser DevTools, inspect <head> element. Verify useSeoMeta tags present: title contains "Week 1: Batch Cooking Basics | Meal Plans", description from subtitle, og:title, og:description for social sharing. Use browser extension or online tool to validate meta tags.</approach>
+      </test>
+    </ideas>
+  </tests>
+</story-context>

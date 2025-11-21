@@ -1,0 +1,280 @@
+<story-context id="meal-plans/story-2-4" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>4</storyId>
+    <title>Recipe Detail Page</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-20</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-4-recipe-detail-page.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to view complete recipe details with ingredients and step-by-step instructions</iWant>
+    <soThat>I can follow the recipe to prepare the meal</soThat>
+    <tasks>
+      <task id="1">Create Recipe Detail Page Component (AC: 2.4.1, 2.4.5)</task>
+      <task id="2">Implement Ingredients Section with Monospace Quantities (AC: 2.4.1)</task>
+      <task id="3">Implement Instructions Section (AC: 2.4.1)</task>
+      <task id="4">Add Cooking Mode CTA Button (AC: 2.4.2)</task>
+      <task id="5">Implement SEO Meta Tags (AC: 2.4.3)</task>
+      <task id="6">Implement Schema.org Recipe Structured Data (AC: 2.4.3)</task>
+      <task id="7">Add Breadcrumb Navigation (AC: 2.4.4)</task>
+      <task id="8">Implement Responsive Layout (AC: 2.4.6)</task>
+      <task id="9">Add Defensive Coding and Error Handling</task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <ac id="2.4.1">
+      <title>Recipe Detail Page Loads with Complete Information</title>
+      <description>Page displays complete recipe: title, emoji/image, servings, times, difficulty, meal type badge, ingredients with monospace quantities, numbered instructions, tags, nutrition (if available)</description>
+      <validation>Navigate to /meals/week-1/recipes/chicken-stir-fry, verify all metadata, monospace font for quantities, numbered instructions, no console errors</validation>
+    </ac>
+    <ac id="2.4.2">
+      <title>Cooking Mode CTA Button Navigation</title>
+      <description>"Start Cooking Mode" button navigates to /tools/cooking-mode?recipe=[slug] with query parameter</description>
+      <validation>Click button, verify URL changes with query param (will 404 until Epic 4)</validation>
+    </ac>
+    <ac id="2.4.3">
+      <title>SEO Meta Tags and Schema.org Structured Data</title>
+      <description>Page includes useSeoMeta tags (title, description, OpenGraph, Twitter Card) and schema.org Recipe JSON-LD with all required properties</description>
+      <validation>View page source, verify script type="application/ld+json", validate with Google Rich Results Test, check all meta tags in head</validation>
+    </ac>
+    <ac id="2.4.4">
+      <title>Breadcrumb Navigation</title>
+      <description>Breadcrumb shows "Home > Week 1 > Recipes > [Recipe Name]", all segments clickable except current page</description>
+      <validation>Verify 4 breadcrumb segments, test all links navigate correctly, recipe name not clickable</validation>
+    </ac>
+    <ac id="2.4.5">
+      <title>404 Handling for Invalid Recipe Slugs</title>
+      <description>Invalid recipe URL throws createError({ statusCode: 404 }), error.vue renders "Recipe not found", back link to gallery</description>
+      <validation>Navigate to /meals/week-1/recipes/invalid-slug, verify 404 page, back link works</validation>
+    </ac>
+    <ac id="2.4.6">
+      <title>Responsive Layout Across Breakpoints</title>
+      <description>Single column layout at all breakpoints, max-w-3xl for comfortable reading, monospace font for ingredient quantities, readable typography</description>
+      <validation>Test at 320px, 768px, 1280px, verify single-column, centered, font-mono for quantities, screenshots at each breakpoint</validation>
+    </ac>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Content Discovery & Browsing</title>
+        <section>Story 2.4: Recipe Detail Page</section>
+        <snippet>Recipe detail pages display complete ingredients (monospace font for quantities), step-by-step instructions, SEO metadata, schema.org structured data, and "Start Cooking Mode" CTA. Implements single recipe query with findOne(), ISO 8601 time conversion for schema.org, and responsive layout with max-w-3xl for comfortable reading.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Content Discovery & Browsing</title>
+        <section>Data Models and Contracts - Recipe Interface</section>
+        <snippet>Recipe interface defines: title, emoji, servings, prepTime, cookTime, totalTime, mealType, difficulty, ingredients (Ingredient[] with quantity/item/category), instructions (string[]), tags, nutrition. Ingredient interface: quantity (string, monospace display), item (string), category (optional for shopping list grouping).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic Technical Specification: Content Discovery & Browsing</title>
+        <section>SEO Schema.org Recipe</section>
+        <snippet>Schema.org Recipe JSON-LD structure: @context "https://schema.org", @type "Recipe", name, description, prepTime/cookTime/totalTime (ISO 8601 duration "PT15M"), recipeYield, recipeIngredient (string[]), recipeInstructions (HowToStep[] with @type and text), nutrition (NutritionInformation with calories, proteinContent, carbohydrateContent, fatContent).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Nuxt Content Query Pattern</section>
+        <snippet>SSG-compatible pattern: useAsyncData with unique key, queryContent with findOne() for single items. Always handle null case with createError({ statusCode: 404 }). Example: const { data: recipe } = await useAsyncData(`recipe-${weekId}-${slug}`, () => queryContent('meals', weekId, 'recipes', slug).findOne())</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - meal-plans</title>
+        <section>Cross-Cutting Concerns - SEO Optimization</section>
+        <snippet>Use useSeoMeta composable for meta tags (title, description, og:*, twitter:*). Use useHead to inject JSON-LD scripts for structured data. OpenGraph images need absolute URLs or fallback to default og-image.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-3-recipe-gallery-grid-view.md</path>
+        <title>Story 2.3: Recipe Gallery Grid View</title>
+        <section>Dev Agent Record - Completion Notes</section>
+        <snippet>Story 2.3 created RecipeCard component with Mountains at Sunrise theme badge colors (breakfast: amber, lunch: green, dinner: primary, snack: secondary), responsive grid pattern, nested dynamic routing (/meals/[week]/recipes/index.vue). Mobile swipe navigation deferred to Story 2.4 for recipe detail pages using VueUse useSwipe with 50px threshold.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/meal/RecipeCard.vue</path>
+        <kind>component</kind>
+        <symbol>RecipeCard</symbol>
+        <lines>1-147</lines>
+        <reason>Defines Recipe props interface and styling patterns to reference for recipe detail page. Shows meal type badge color mapping (breakfast: amber, lunch: green, dinner: primary, snack: secondary), emoji display pattern, and Mountains at Sunrise theme usage.</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/meals/[week]/index.vue</path>
+        <kind>page</kind>
+        <symbol>MealPlanOverview</symbol>
+        <lines>1-218</lines>
+        <reason>Demonstrates nested dynamic routing pattern with single route param, SSG-friendly useAsyncData + queryContent.findOne(), breadcrumb navigation (2 segments), and 404 error handling. Recipe detail extends this to use TWO route params (week + slug).</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/meals/[week]/recipes/index.vue</path>
+        <kind>page</kind>
+        <symbol>RecipeGallery</symbol>
+        <lines>1-218</lines>
+        <reason>Immediate parent page that navigates to recipe detail. Shows nested dynamic routing pattern, breadcrumb with 3 segments, and serves as navigation source. Recipe detail adds fourth breadcrumb segment (recipe title).</reason>
+      </artifact>
+      <artifact>
+        <path>app/error.vue</path>
+        <kind>page</kind>
+        <symbol>ErrorPage</symbol>
+        <lines>1-50</lines>
+        <reason>Global 404 error handling page used when createError is thrown. Recipe detail page uses this for invalid recipe slugs.</reason>
+      </artifact>
+      <artifact>
+        <path>app.config.ts</path>
+        <kind>config</kind>
+        <symbol>AppConfig</symbol>
+        <lines>1-20</lines>
+        <reason>Contains Mountains at Sunrise theme color configuration. Recipe detail uses theme colors for badges and styling consistency.</reason>
+      </artifact>
+      <artifact>
+        <path>content/meals/week-1/recipes/chicken-stir-fry.md</path>
+        <kind>content</kind>
+        <symbol>RecipeMarkdown</symbol>
+        <lines>1-31</lines>
+        <reason>Example recipe markdown file with frontmatter structure. Shows Recipe data model in practice: title, emoji, servings, prepTime, cookTime, totalTime, mealType, difficulty, ingredients array, instructions array.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <npm>
+        <package name="nuxt" version="^4.2.1">Core framework with Vue 3 Composition API, file-based routing, auto-imports, SSG support</package>
+        <package name="@nuxt/ui" version="^4.1.0">UI component library - UButton, UBadge used in recipe detail page</package>
+        <package name="@nuxt/content" version="^3.8.2">Markdown CMS - queryContent API for loading recipe data</package>
+        <package name="@vueuse/nuxt" version="^14.0.0">Composables library - useSwipe for mobile swipe navigation between recipes</package>
+        <package name="@nuxt/image" version="^2.0.0">Image optimization - will be used if recipes have food photography</package>
+        <package name="typescript" version="^5.9.3">Type safety for component props and Recipe interface</package>
+      </npm>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>File-based routing: Recipe detail page must be created at pages/meals/[week]/recipes/[slug].vue to map to /meals/:week/recipes/:slug URL pattern</constraint>
+    <constraint>SSG compatibility: Must use useAsyncData with queryContent for static site generation, no client-side only data fetching</constraint>
+    <constraint>Mountains at Sunrise theme: Meal type badge colors must match established pattern - breakfast: amber, lunch: green, dinner: primary, snack: secondary</constraint>
+    <constraint>Monospace typography: Ingredient quantities MUST use font-mono class for alignment (UX requirement from tech spec)</constraint>
+    <constraint>Error handling: Invalid recipe slugs must throw createError({ statusCode: 404, message: 'Recipe not found' }) to trigger error.vue</constraint>
+    <constraint>SEO optimization: Must use useSeoMeta for meta tags and useHead for schema.org JSON-LD injection</constraint>
+    <constraint>Responsive design: Single column layout at all breakpoints with max-w-3xl for comfortable reading width</constraint>
+    <constraint>Breadcrumb pattern: Extend Story 2.3 breadcrumb to add fourth segment (recipe title), maintain computed pattern from route.path</constraint>
+    <constraint>Mobile swipe navigation: Implement VueUse useSwipe with 50px threshold for left/right navigation between recipes (deferred from Story 2.3)</constraint>
+    <constraint>Schema.org compliance: prepTime, cookTime, totalTime must be converted to ISO 8601 duration format (e.g., "PT15M" for 15 minutes)</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Recipe (Nuxt Content)</name>
+      <kind>TypeScript interface</kind>
+      <signature>
+interface Recipe {
+  title: string              // "Chicken Stir-Fry with Vegetables"
+  emoji: string              // "🍗" (fallback if no image)
+  servings: number           // 4
+  prepTime: string           // "15 min"
+  cookTime: string           // "20 min"
+  totalTime: string          // "35 min"
+  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack'
+  difficulty: 'easy' | 'medium' | 'hard'
+  ingredients: Ingredient[]
+  instructions: string[]     // Step-by-step array
+  tags?: string[]            // ["quick", "healthy", "high-protein"]
+  nutrition?: {
+    calories: number
+    protein: number
+    carbs: number
+    fat: number
+  }
+}
+
+interface Ingredient {
+  quantity: string           // "2 lbs" (monospace font)
+  item: string               // "chicken breast, diced"
+  category?: string          // "protein" | "vegetable" | "grain" | "sauce"
+}
+      </signature>
+      <path>docs/sprint-artifacts/tech-spec-epic-2.md (lines 140-188)</path>
+    </interface>
+    <interface>
+      <name>Schema.org Recipe</name>
+      <kind>JSON-LD structured data</kind>
+      <signature>
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": string,              // Recipe title
+  "description": string,       // Brief description
+  "prepTime": string,          // ISO 8601 "PT15M"
+  "cookTime": string,          // ISO 8601 "PT20M"
+  "totalTime": string,         // ISO 8601 "PT35M"
+  "recipeYield": string,       // "4 servings"
+  "recipeIngredient": string[],// ["2 lbs chicken", ...]
+  "recipeInstructions": [{
+    "@type": "HowToStep",
+    "text": string
+  }],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": string,        // "450 calories"
+    "proteinContent": string,  // "35g"
+    "carbohydrateContent": string,
+    "fatContent": string
+  }
+}
+      </signature>
+      <path>docs/sprint-artifacts/tech-spec-epic-2.md (lines 229-256)</path>
+    </interface>
+    <interface>
+      <name>useSeoMeta Composable</name>
+      <kind>Nuxt composable</kind>
+      <signature>
+useSeoMeta({
+  title: string,               // Page title
+  description: string,         // Meta description
+  ogTitle: string,             // OpenGraph title
+  ogDescription: string,       // OpenGraph description
+  ogImage: string,             // OpenGraph image URL (absolute or fallback)
+  ogType: string,              // 'article'
+  twitterCard: string          // 'summary_large_image'
+})
+      </signature>
+      <path>Nuxt documentation - SEO and Meta</path>
+    </interface>
+    <interface>
+      <name>useSwipe Composable (VueUse)</name>
+      <kind>Composable for touch gestures</kind>
+      <signature>
+useSwipe(target: Ref&lt;HTMLElement | null&gt;, options: {
+  threshold: number,           // Minimum swipe distance (50px)
+  onSwipeEnd: (e: { direction: 'left' | 'right' | 'up' | 'down' }) => void
+})
+      </signature>
+      <path>@vueuse/nuxt - useSwipe documentation</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual testing with Lighthouse audits is the current testing strategy. No automated unit or E2E tests for MVP. Focus on: (1) Manual component testing with browser DevTools, (2) Lighthouse audits for Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+, (3) Cross-browser testing (Chrome, Firefox, Safari, Edge), (4) Mobile device testing (iPhone, Android), (5) Manual accessibility testing (keyboard navigation, screen reader, WCAG 2.1 AA compliance). All test evidence stored in docs/test-evidence/ as screenshots or JSON files.
+    </standards>
+    <locations>
+      <location>docs/test-evidence/story-2-4-*.json</location>
+      <location>docs/test-evidence/story-2-4-*.png</location>
+    </locations>
+    <ideas>
+      <test ac="2.4.1">Navigate to /meals/week-1/recipes/chicken-stir-fry, verify all recipe metadata renders, verify ingredient quantities use font-mono class, verify instructions are numbered list, screenshot evidence</test>
+      <test ac="2.4.2">Click "Start Cooking Mode" button, verify URL changes to /tools/cooking-mode?recipe=chicken-stir-fry, note 404 expected until Epic 4</test>
+      <test ac="2.4.3">View page source, locate script type="application/ld+json", validate JSON-LD with Google Rich Results Test tool, verify all useSeoMeta tags present in head</test>
+      <test ac="2.4.4">Verify breadcrumb displays 4 segments, test Home link navigates to /, Week 1 link to /meals/week-1, Recipes link to /meals/week-1/recipes, verify recipe name not clickable</test>
+      <test ac="2.4.5">Navigate to /meals/week-1/recipes/nonexistent-slug, verify error.vue renders with "Recipe not found", test back link to gallery</test>
+      <test ac="2.4.6">Use browser DevTools responsive mode, test at 320px (mobile), 768px (tablet), 1280px (desktop), verify single-column centered layout, max-w-3xl container, monospace font for quantities, screenshot at each breakpoint</test>
+      <test general>Run Lighthouse audit: lighthouse http://localhost:4000/meal-plans/meals/week-1/recipes/chicken-stir-fry --output=json --output-path=docs/test-evidence/story-2-4-lighthouse.json, verify Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+</test>
+      <test general>Mobile swipe navigation: on mobile device or Chrome DevTools touch emulation, swipe left to navigate to next recipe, swipe right to navigate to previous recipe, verify 50px threshold prevents accidental swipes</test>
+    </ideas>
+  </tests>
+</story-context>

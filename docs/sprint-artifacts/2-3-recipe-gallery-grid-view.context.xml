@@ -1,0 +1,462 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>3</storyId>
+    <title>Recipe Gallery Grid View</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-20</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-3-recipe-gallery-grid-view.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to browse all recipes in a meal plan as a visual grid</iWant>
+    <soThat>I can see what meals are included and select one to view in detail</soThat>
+    <tasks>
+      <task id="1" acs="2.3.1,2.3.6,2.3.7">
+        <title>Create Recipe Gallery Page Component</title>
+        <subtasks>
+          <subtask>Create `pages/meals/[week]/recipes/index.vue` file (nested dynamic route)</subtask>
+          <subtask>Implement route params: `route.params.week`</subtask>
+          <subtask>Add Nuxt Content query: `useAsyncData('recipes-${weekId.value}', () => queryContent('meals', weekId.value, 'recipes').find())`</subtask>
+          <subtask>Handle empty recipes array (AC 2.3.6): show "No recipes found" message with back button</subtask>
+          <subtask>Add breadcrumb navigation component: "Home > Week 1 > Recipes"</subtask>
+          <subtask>Test with existing content: week-1, week-2, week-3 recipes</subtask>
+        </subtasks>
+      </task>
+      <task id="2" acs="2.3.2">
+        <title>Create RecipeCard Component</title>
+        <subtasks>
+          <subtask>Create `app/components/meal/RecipeCard.vue` file</subtask>
+          <subtask>Define props interface: `{ title, servings, mealType, ingredients, emoji, slug, week }`</subtask>
+          <subtask>Display emoji with large font size (no image in v1, emoji fallback)</subtask>
+          <subtask>Display title as heading (text-lg or text-xl, bold)</subtask>
+          <subtask>Display "Serves X" text below title</subtask>
+          <subtask>Render meal type as UBadge with color based on mealType</subtask>
+          <subtask>Truncate ingredients array to first 3 items, add "..." if more exist</subtask>
+          <subtask>Add hover effect matching MealPlanCard: `hover:translate-y-[-4px] hover:shadow-lg`</subtask>
+          <subtask>Make entire card clickable (emit 'click' event with slug)</subtask>
+          <subtask>Add UCard wrapper for consistent card styling</subtask>
+        </subtasks>
+      </task>
+      <task id="3" acs="2.3.3">
+        <title>Implement Responsive Grid Layout</title>
+        <subtasks>
+          <subtask>Add grid container in gallery page: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`</subtask>
+          <subtask>Verify responsive breakpoints work: mobile 1-col, tablet 2-col, desktop 3-col</subtask>
+          <subtask>Test at specific widths: 320px, 768px, 1280px</subtask>
+          <subtask>Ensure proper gap spacing between cards (gap-6 = 24px)</subtask>
+          <subtask>Add container padding for mobile: `px-4`</subtask>
+          <subtask>Screenshot evidence at each breakpoint for manual testing section</subtask>
+        </subtasks>
+      </task>
+      <task id="4" acs="2.3.4">
+        <title>Implement Card Click Navigation</title>
+        <subtasks>
+          <subtask>Add @click handler to RecipeCard component</subtask>
+          <subtask>Navigate to `/meals/${week}/recipes/${slug}` using router.push()</subtask>
+          <subtask>Pass week and slug props to RecipeCard from parent</subtask>
+          <subtask>Test navigation with multiple recipe cards</subtask>
+          <subtask>Verify browser back button returns to gallery</subtask>
+          <subtask>Note: Target page will 404 until Story 2.4 (expected behavior for this story)</subtask>
+        </subtasks>
+      </task>
+      <task id="5" acs="2.3.5">
+        <title>Implement Mobile Swipe Navigation</title>
+        <subtasks>
+          <subtask>Import VueUse `useSwipe` composable (auto-imported from @vueuse/nuxt)</subtask>
+          <subtask>Create ref for gallery container element</subtask>
+          <subtask>Attach swipe listener: `useSwipe(galleryRef, { threshold: 50, onSwipeEnd: handleSwipe })`</subtask>
+          <subtask>Implement handleSwipe function: Swipe left → navigate to next recipe (increment current index)</subtask>
+          <subtask>Implement handleSwipe function: Swipe right → navigate to previous recipe (decrement current index)</subtask>
+          <subtask>Add boundary checks (don't navigate past first/last recipe)</subtask>
+          <subtask>Calculate current recipe index from route params</subtask>
+          <subtask>Navigate using router.push with next/previous recipe slug</subtask>
+          <subtask>Test on mobile device or Chrome DevTools touch simulation</subtask>
+          <subtask>Optional: Disable swipe on desktop with viewport detection</subtask>
+        </subtasks>
+      </task>
+      <task id="6" acs="*">
+        <title>Add SEO Meta Tags</title>
+        <subtasks>
+          <subtask>Use useSeoMeta composable in gallery page</subtask>
+          <subtask>Set dynamic title: `Recipes - ${weekData.title} | Meal Plans`</subtask>
+          <subtask>Set description: `Browse all recipes for ${weekData.title}`</subtask>
+          <subtask>Add og:title and og:description for social sharing</subtask>
+          <subtask>Test meta tags appear in page `<head>` using DevTools</subtask>
+        </subtasks>
+      </task>
+      <task id="7" acs="2.3.6">
+        <title>Add Defensive Coding and Error Handling</title>
+        <subtasks>
+          <subtask>Add optional chaining for all recipe data fields in RecipeCard</subtask>
+          <subtask>Handle null/empty recipes array gracefully (AC 2.3.6)</subtask>
+          <subtask>Add computed property for empty state: `const hasRecipes = computed(() => recipes.value?.length > 0)`</subtask>
+          <subtask>Verify no console errors when recipe data fields missing</subtask>
+          <subtask>Test with minimal recipe frontmatter (title only)</subtask>
+          <subtask>Add TypeScript Recipe interface matching tech spec</subtask>
+        </subtasks>
+      </task>
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="2.3.1">
+      <title>Recipe Gallery Page Loads with All Recipes</title>
+      <given>I'm on a meal plan overview page (`/meals/week-1`)</given>
+      <when>I click "View Recipe Gallery" button</when>
+      <then>I navigate to `/meals/week-1/recipes`</then>
+      <and>all recipes for that week are displayed as RecipeCard components in a grid</and>
+      <and>the page queries all recipe files from `content/meals/week-1/recipes/*.md`</and>
+      <validation>
+        - URL changes to `/meals/week-1/recipes`
+        - Vue devtools shows `route.params.week === "week-1"`
+        - RecipeCard components rendered (count matches number of recipe files)
+        - Console shows no errors
+      </validation>
+    </criterion>
+    <criterion id="2.3.2">
+      <title>Recipe Cards Display Complete Preview Information</title>
+      <given>the recipe gallery page has loaded</given>
+      <then>each RecipeCard displays:
+        - Recipe title (e.g., "Chicken Stir-Fry with Vegetables")
+        - Emoji or image (emoji fallback if no image available)
+        - Servings count (e.g., "Serves 4")
+        - Meal type badge (UBadge component: "breakfast", "lunch", "dinner", "snack")
+        - First 3 ingredients preview (truncated with "..." if more)
+      </then>
+      <validation>
+        - Manual visual inspection of each card element
+        - Verify emoji displays if no image
+        - Verify UBadge color matches meal type (e.g., primary for dinner)
+        - Verify ingredient truncation works (show only first 3)
+      </validation>
+    </criterion>
+    <criterion id="2.3.3">
+      <title>Responsive Grid Layout Functions Across Breakpoints</title>
+      <given>the recipe gallery is displayed</given>
+      <then>the grid layout is responsive:
+        - Mobile (&lt; 640px): 1 column (grid-cols-1)
+        - Tablet (640px - 1024px): 2 columns (md:grid-cols-2)
+        - Desktop (&gt; 1024px): 3 columns (lg:grid-cols-3)
+      </then>
+      <and>cards have consistent gap spacing (gap-4 or gap-6)</and>
+      <and>grid wraps properly at all breakpoints</and>
+      <validation>
+        - Browser DevTools responsive mode testing
+        - Test at 320px (mobile), 768px (tablet), 1280px (desktop)
+        - Verify column count changes at breakpoints
+        - Screenshot evidence at each breakpoint
+      </validation>
+    </criterion>
+    <criterion id="2.3.4">
+      <title>Clicking Recipe Card Navigates to Detail Page</title>
+      <given>the recipe gallery displays recipe cards</given>
+      <when>I click any RecipeCard</when>
+      <then>I navigate to `/meals/week-1/recipes/[slug]` where slug is the recipe filename</then>
+      <and>the recipe detail page loads (will 404 until Story 2.4 - expected behavior)</and>
+      <validation>
+        - Click test on multiple cards
+        - Verify URL updates correctly with recipe slug
+        - Verify browser back button returns to gallery
+        - Note: 404 expected until Story 2.4 implements recipe detail page
+      </validation>
+    </criterion>
+    <criterion id="2.3.5">
+      <title>Mobile Swipe Gestures Navigate Between Recipes</title>
+      <given>I'm on the recipe gallery page on a mobile device (&lt; 640px)</given>
+      <when>I swipe left on the screen</when>
+      <then>I navigate to the next recipe detail page</then>
+      <when>I swipe right</when>
+      <then>I navigate to the previous recipe detail page</then>
+      <and>swipe threshold is 50px minimum (prevents accidental swipes)</and>
+      <and>swipe gestures only work on mobile viewports</and>
+      <validation>
+        - Mobile device test (iPhone/Android) or Chrome DevTools touch simulation
+        - Swipe left: verify navigation to next recipe
+        - Swipe right: verify navigation to previous recipe
+        - Test swipe threshold (&lt; 50px should not trigger)
+        - Desktop: verify swipe disabled (mouse drag doesn't navigate)
+      </validation>
+    </criterion>
+    <criterion id="2.3.6">
+      <title>404 Handling for Weeks with No Recipes</title>
+      <given>I navigate to a week that exists but has no recipes</given>
+      <when>queryContent returns empty array `[]`</when>
+      <then>display user-friendly message: "No recipes found for this week."</then>
+      <and>show "Back to Meal Plan" button navigating to `/meals/week-1`</and>
+      <validation>
+        - Create test week with no recipes folder
+        - Verify empty state message displays
+        - Verify back button works
+        - No console errors
+      </validation>
+    </criterion>
+    <criterion id="2.3.7">
+      <title>Breadcrumb Navigation Shows Correct Path</title>
+      <given>the recipe gallery page is displayed</given>
+      <then>breadcrumb shows: "Home > Week 1 > Recipes"</then>
+      <and>"Home" and "Week 1" are clickable links</and>
+      <and>"Recipes" is current page (not clickable, styled differently)</and>
+      <validation>
+        - Verify all three breadcrumb segments
+        - Click "Home" → navigates to `/`
+        - Click "Week 1" → navigates to `/meals/week-1`
+        - Verify "Recipes" styled differently (bold, no link)
+      </validation>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Technical Specification - Epic 2: Content Discovery & Browsing</title>
+        <section>AC 2.3.1-2.3.5: Recipe Gallery Grid View Requirements</section>
+        <snippet>Comprehensive technical requirements for recipe gallery including nested content queries, RecipeCard component specifications, responsive grid layout patterns, mobile swipe gestures with VueUse, and empty state handling.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Meal Plans Architecture</title>
+        <section>Nuxt Content Query Pattern (lines 975-986)</section>
+        <snippet>SSG-compatible data fetching pattern using useAsyncData + queryContent for nested content folders. Ensures pages are pre-rendered at build time for optimal performance.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Meal Plans Architecture</title>
+        <section>Responsive Strategy (lines 582-610)</section>
+        <snippet>Mobile-first responsive breakpoints: mobile (&lt;640px), tablet (640-1024px), desktop (&gt;1024px). Tailwind classes for responsive grids and flex layouts.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Meal Plans Architecture</title>
+        <section>Mobile Features - Swipe Gestures (lines 89-97)</section>
+        <snippet>VueUse useSwipe composable for mobile touch gestures. Configuration: 50px threshold, onSwipeEnd handler for left/right swipe navigation between recipes.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-2-meal-plan-overview-page.md</path>
+        <title>Story 2.2: Meal Plan Overview Page</title>
+        <section>Dev Notes - Learnings from Previous Story</section>
+        <snippet>Establishes nested dynamic routing foundation with [week] parameter, SSG-friendly data fetching, error handling with createError, Mountains at Sunrise theme usage, defensive coding patterns with optional chaining, and breadcrumb navigation computed from route.path.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/components/MealPlanCard.vue</path>
+        <kind>component</kind>
+        <symbol>MealPlanCard</symbol>
+        <lines>1-126</lines>
+        <reason>Reference pattern for RecipeCard component structure, hover effects (hover:-translate-y-1 hover:shadow-xl), UBadge usage for tags, and card navigation pattern with router.push()</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/meals/[week]/index.vue</path>
+        <kind>page</kind>
+        <symbol>MealPlanOverviewPage</symbol>
+        <lines>1-100</lines>
+        <reason>Establishes nested dynamic routing pattern for [week] parameter, SSG-compatible queryContent pattern, 404 error handling, defensive data access, breadcrumb navigation, and SEO meta tags - all patterns to be extended in recipe gallery page</reason>
+      </artifact>
+      <artifact>
+        <path>app/error.vue</path>
+        <kind>page</kind>
+        <symbol>ErrorPage</symbol>
+        <lines>1-113</lines>
+        <reason>Global 404 error handling page created in Story 2.2 - handles createError throws for missing content, displays user-friendly messages with navigation back to dashboard</reason>
+      </artifact>
+      <artifact>
+        <path>app.config.ts</path>
+        <kind>config</kind>
+        <symbol>AppConfig</symbol>
+        <lines>1-76</lines>
+        <reason>Mountains at Sunrise theme configuration defining primary (#192E59 Deep Blue) and secondary (#F2CC85 Warm Gold) colors used for meal type badges, plus component overrides for UButton and UBadge</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="nuxt" version="^4.2.1" />
+        <package name="@nuxt/ui" version="^4.1.0" />
+        <package name="@nuxt/content" version="^3.8.2" />
+        <package name="@vueuse/nuxt" version="^14.0.0" />
+        <package name="@nuxt/image" version="^2.0.0" />
+        <package name="@vite-pwa/nuxt" version="^1.0.7" />
+        <package name="vue" version="^3.5.23" />
+        <package name="typescript" version="^5.9.3" />
+        <package name="pinia" version="^3.0.4" />
+        <package name="@pinia/nuxt" version="^0.11.3" />
+        <package name="chart.js" version="^4.5.1" />
+        <package name="nuxt-charts" version="^1.0.2" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <category>Architecture Pattern</category>
+      <rule>Use nested dynamic routing: `pages/meals/[week]/recipes/index.vue` maps to `/meals/:week/recipes` route automatically per Nuxt 4 file-based routing conventions</rule>
+    </constraint>
+    <constraint>
+      <category>Data Fetching</category>
+      <rule>Use SSG-compatible pattern: `useAsyncData` + `queryContent('meals', weekId, 'recipes').find()` to query nested recipe markdown files. Runs at build time for pre-rendering.</rule>
+    </constraint>
+    <constraint>
+      <category>Component Design</category>
+      <rule>RecipeCard component MUST match MealPlanCard patterns: UCard wrapper, hover effects (hover:translate-y-[-4px] hover:shadow-lg), click navigation, and defensive props with optional chaining</rule>
+    </constraint>
+    <constraint>
+      <category>Responsive Design</category>
+      <rule>Responsive grid MUST use Tailwind breakpoints: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6` for mobile-first design matching architecture strategy (lines 582-610)</rule>
+    </constraint>
+    <constraint>
+      <category>Mobile Interaction</category>
+      <rule>Swipe gestures MUST use VueUse `useSwipe(galleryRef, { threshold: 50, onSwipeEnd })` composable with 50px minimum threshold to prevent accidental navigation</rule>
+    </constraint>
+    <constraint>
+      <category>Theme</category>
+      <rule>Meal type badge colors MUST use Mountains at Sunrise theme from app.config.ts: primary (#192E59) for dinner, secondary (#F2CC85) for snacks, amber for breakfast, green for lunch</rule>
+    </constraint>
+    <constraint>
+      <category>Error Handling</category>
+      <rule>Handle empty recipes array gracefully: display "No recipes found for this week" message with "Back to Meal Plan" button, NO createError throw (array is empty, not missing content)</rule>
+    </constraint>
+    <constraint>
+      <category>Navigation</category>
+      <rule>Breadcrumb MUST be computed from route data: "Home > Week 1 > Recipes" with Home and Week 1 as clickable NuxtLinks, Recipes as current page (not clickable)</rule>
+    </constraint>
+    <constraint>
+      <category>Data Truncation</category>
+      <rule>Ingredient preview MUST show first 3 items with "..." appended if more exist: `ingredients?.slice(0, 3)` with conditional check for length &gt; 3</rule>
+    </constraint>
+    <constraint>
+      <category>TypeScript</category>
+      <rule>Define Recipe interface matching tech spec with fields: title, servings, mealType, ingredients, emoji, slug - use for queryContent type parameter</rule>
+    </constraint>
+    <constraint>
+      <category>Defensive Coding</category>
+      <rule>ALL data access MUST use optional chaining (`?.`) and nullish coalescing (`||`) to prevent null/undefined errors when recipe data fields are missing</rule>
+    </constraint>
+    <constraint>
+      <category>SEO</category>
+      <rule>Use `useSeoMeta` composable with dynamic title `Recipes - ${weekData.title} | Meal Plans` and description for social sharing (og:title, og:description)</rule>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Recipe</name>
+      <kind>TypeScript Interface</kind>
+      <signature>
+interface Recipe {
+  title: string
+  servings: number
+  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack'
+  ingredients: string[]
+  emoji: string
+  _path: string  // Nuxt Content path property
+}
+      </signature>
+      <path>Define in pages/meals/[week]/recipes/index.vue or types/meal.ts</path>
+    </interface>
+    <interface>
+      <name>RecipeCard Props</name>
+      <kind>Vue Component Props Interface</kind>
+      <signature>
+interface Props {
+  title: string
+  servings: number
+  mealType: 'breakfast' | 'lunch' | 'dinner' | 'snack'
+  ingredients: string[]
+  emoji: string
+  slug: string
+  week: string
+}
+      </signature>
+      <path>app/components/meal/RecipeCard.vue</path>
+    </interface>
+    <interface>
+      <name>Nuxt Content Query</name>
+      <kind>Composable API</kind>
+      <signature>
+const { data: recipes } = await useAsyncData(
+  `recipes-${weekId.value}`,
+  () => queryContent&lt;Recipe&gt;('meals', weekId.value, 'recipes').find()
+)
+      </signature>
+      <path>pages/meals/[week]/recipes/index.vue</path>
+    </interface>
+    <interface>
+      <name>VueUse Swipe</name>
+      <kind>Composable API</kind>
+      <signature>
+useSwipe(galleryRef, {
+  threshold: 50,
+  onSwipeEnd: (e) => {
+    // e.direction: 'left' | 'right' | 'up' | 'down'
+    if (e.direction === 'left') { /* next recipe */ }
+    else if (e.direction === 'right') { /* previous recipe */ }
+  }
+})
+      </signature>
+      <path>pages/meals/[week]/recipes/index.vue</path>
+    </interface>
+    <interface>
+      <name>Router Navigation</name>
+      <kind>Nuxt Router API</kind>
+      <signature>
+const router = useRouter()
+router.push(`/meals/${weekId.value}/recipes/${slug}`)
+      </signature>
+      <path>pages/meals/[week]/recipes/index.vue and app/components/meal/RecipeCard.vue</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      This project currently uses manual testing with evidence artifacts (screenshots, Lighthouse JSON, videos) stored in `docs/test-evidence/`. Testing standards follow Epic 1 learnings: all manual tests require evidence, use specific file:line references, quantitative metrics with measurement, and binary pass/fail criteria. Future implementation may add automated tests using Vitest for unit tests and Playwright for E2E tests.
+    </standards>
+    <locations>
+      <location>docs/test-evidence/</location>
+    </locations>
+    <ideas>
+      <testIdea ac="2.3.1">
+        <title>Test Recipe Gallery Page Load</title>
+        <approach>Navigate from meal plan overview (/meals/week-1) to recipe gallery (/meals/week-1/recipes), verify URL change, verify RecipeCard components rendered matching recipe file count, verify no console errors</approach>
+        <evidence>Screenshot: docs/test-evidence/story-2-3-gallery-test.png</evidence>
+      </testIdea>
+      <testIdea ac="2.3.2">
+        <title>Test Recipe Card Display</title>
+        <approach>Visual inspection of RecipeCard elements: emoji displays (6xl font size), title (bold, xl), servings text, meal type UBadge with correct color, first 3 ingredients with "..." if more</approach>
+        <evidence>Screenshot: docs/test-evidence/story-2-3-card-details.png</evidence>
+      </testIdea>
+      <testIdea ac="2.3.3">
+        <title>Test Responsive Grid Layout</title>
+        <approach>DevTools responsive mode testing at 320px (1-column), 768px (2-column), 1280px (3-column), verify gap-6 spacing, verify grid wraps properly</approach>
+        <evidence>Screenshots: docs/test-evidence/story-2-3-responsive-mobile.png, story-2-3-responsive-tablet.png, story-2-3-responsive-desktop.png</evidence>
+      </testIdea>
+      <testIdea ac="2.3.4">
+        <title>Test Recipe Card Click Navigation</title>
+        <approach>Click multiple RecipeCards, verify URL updates to /meals/week-1/recipes/[slug], verify browser back button returns to gallery, note 404 expected until Story 2.4</approach>
+        <evidence>Screenshot or video: docs/test-evidence/story-2-3-navigation-test.png</evidence>
+      </testIdea>
+      <testIdea ac="2.3.5">
+        <title>Test Mobile Swipe Gestures</title>
+        <approach>Mobile device or Chrome DevTools touch emulation, swipe left to next recipe, swipe right to previous recipe, verify 50px threshold (short swipes don't navigate), verify desktop disables swipe</approach>
+        <evidence>Screen recording: docs/test-evidence/story-2-3-swipe-test.mp4</evidence>
+      </testIdea>
+      <testIdea ac="2.3.6">
+        <title>Test Empty State Handling</title>
+        <approach>Create test week with no recipes folder, navigate to gallery, verify "No recipes found" message displays, verify "Back to Meal Plan" button works, no console errors</approach>
+        <evidence>Screenshot: docs/test-evidence/story-2-3-empty-state.png</evidence>
+      </testIdea>
+      <testIdea ac="2.3.7">
+        <title>Test Breadcrumb Navigation</title>
+        <approach>Verify breadcrumb shows "Home > Week 1 > Recipes", click "Home" navigates to /, click "Week 1" navigates to /meals/week-1, "Recipes" styled differently (not clickable)</approach>
+        <evidence>Included in story-2-3-gallery-test.png</evidence>
+      </testIdea>
+      <testIdea ac="*">
+        <title>Lighthouse Audit</title>
+        <approach>Run `lighthouse http://localhost:4000/meal-plans/meals/week-1/recipes --output=json --output-path=docs/test-evidence/story-2-3-lighthouse.json`, verify Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+</approach>
+        <evidence>JSON file: docs/test-evidence/story-2-3-lighthouse.json</evidence>
+      </testIdea>
+    </ideas>
+  </tests>
+</story-context>

@@ -1,76 +1,95 @@
+<script setup lang="ts">
+/**
+ * Meal Plans Dashboard
+ *
+ * Displays all available meal plans as cards in a responsive grid.
+ * Queries content from content/meals/[week]/index.md files.
+ *
+ * Story: 2.1 - Dashboard with Meal Plan Cards
+ */
+
+import type { ParsedContent } from '@nuxt/content'
+
+interface MealPlan {
+  title: string
+  subtitle: string
+  emoji: string
+  category: string
+  color: string
+  features: string[]
+  proteins: string[]
+  recipeCount: number
+  prepTime: string
+  path: string
+}
+
+// Query all meal plans from content (only week index files, not prep-strategy or recipes)
+const { data: mealPlans } = await useAsyncData<MealPlan[]>('meal-plans', async () => {
+  const results = await queryCollection('meals').all()
+  // Filter to only include week index files (e.g., /meals/week-1)
+  // Exclude prep-strategy.md and recipe files
+  const weekIndexes = results.filter((item: ParsedContent) => {
+    const path = item.path || ''
+    // Path should match /meals/week-X (no additional segments)
+    return path.match(/^\/meals\/week-\d+$/)
+  })
+  return weekIndexes as unknown as MealPlan[]
+})
+
+// Extract week ID from path (e.g., "/meals/week-1" -> "week-1")
+const getWeekId = (path: string) => {
+  if (!path) return ''
+  const parts = path.split('/')
+  return parts[parts.length - 1] || ''
+}
+
+// SEO metadata
+useSeoMeta({
+  title: 'Meal Plans | Weekly Batch Cooking Guides',
+  description: 'Browse our collection of weekly meal plans with batch cooking strategies, prep guides, and delicious recipes.',
+  ogTitle: 'Meal Plans | Weekly Batch Cooking Guides',
+  ogDescription: 'Browse our collection of weekly meal plans with batch cooking strategies, prep guides, and delicious recipes.'
+})
+</script>
+
 <template>
-  <div>
-    <UPageHero
-      title="Nuxt Starter Template"
-      description="A production-ready starter template powered by Nuxt UI. Build beautiful, accessible, and performant applications in minutes, not hours."
-      :links="[{
-        label: 'Get started',
-        to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-        target: '_blank',
-        trailingIcon: 'i-lucide-arrow-right',
-        size: 'xl'
-      }, {
-        label: 'Use this template',
-        to: 'https://github.com/nuxt-ui-templates/starter',
-        target: '_blank',
-        icon: 'i-simple-icons-github',
-        size: 'xl',
-        color: 'neutral',
-        variant: 'subtle'
-      }]"
-    />
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+        Weekly Meal Plans
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        Browse batch cooking meal plans with step-by-step prep strategies
+      </p>
+    </div>
 
-    <UPageSection
-      id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[{
-        icon: 'i-lucide-rocket',
-        title: 'Production-ready from day one',
-        description: 'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.'
-      }, {
-        icon: 'i-lucide-palette',
-        title: 'Beautiful by default',
-        description: 'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.'
-      }, {
-        icon: 'i-lucide-zap',
-        title: 'Lightning fast',
-        description: 'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.'
-      }, {
-        icon: 'i-lucide-blocks',
-        title: '100+ components included',
-        description: 'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.'
-      }, {
-        icon: 'i-lucide-code-2',
-        title: 'Developer experience first',
-        description: 'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.'
-      }, {
-        icon: 'i-lucide-shield-check',
-        title: 'Built for scale',
-        description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
-      }]"
-    />
-
-    <UPageSection>
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[{
-          label: 'Start building',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
-          trailingIcon: 'i-lucide-arrow-right',
-          color: 'neutral'
-        }, {
-          label: 'View on GitHub',
-          to: 'https://github.com/nuxt-ui-templates/starter',
-          target: '_blank',
-          icon: 'i-simple-icons-github',
-          color: 'neutral',
-          variant: 'outline'
-        }]"
+    <!-- Meal Plan Cards Grid -->
+    <div
+      v-if="mealPlans && mealPlans.length > 0"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <MealPlanCard
+        v-for="plan in mealPlans"
+        :key="plan.path"
+        :title="plan.title"
+        :subtitle="plan.subtitle"
+        :features="plan.features"
+        :proteins="plan.proteins"
+        :emoji="plan.emoji"
+        :week="getWeekId(plan.path)"
+        :color="plan.color"
       />
-    </UPageSection>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      v-else
+      class="bg-gray-100 dark:bg-gray-800 rounded-lg p-12 text-center"
+    >
+      <p class="text-gray-600 dark:text-gray-400 text-lg">
+        No meal plans available yet. Check back soon!
+      </p>
+    </div>
   </div>
 </template>

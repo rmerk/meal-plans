@@ -12,79 +12,78 @@
  *   node screenshot.js --fullpage
  */
 
-import puppeteer from 'puppeteer-core';
-import { resolve, dirname } from 'path';
-import { mkdirSync } from 'fs';
-import { fileURLToPath } from 'url';
+import puppeteer from 'puppeteer-core'
+import { resolve, dirname } from 'path'
+import { mkdirSync } from 'fs'
+import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 // Parse command line arguments
-const args = process.argv.slice(2);
-const portArg = args.find(arg => arg.startsWith('--port='));
-const port = portArg ? portArg.split('=')[1] : '9222';
-const outputArg = args.find(arg => arg.startsWith('--output='));
-const outputName = outputArg ? outputArg.split('=')[1] : 'screenshot';
-const fullpage = args.includes('--fullpage');
-const widthArg = args.find(arg => arg.startsWith('--width='));
-const width = widthArg ? parseInt(widthArg.split('=')[1]) : 1920;
-const heightArg = args.find(arg => arg.startsWith('--height='));
-const height = heightArg ? parseInt(heightArg.split('=')[1]) : 1080;
+const args = process.argv.slice(2)
+const portArg = args.find(arg => arg.startsWith('--port='))
+const port = portArg ? portArg.split('=')[1] : '9222'
+const outputArg = args.find(arg => arg.startsWith('--output='))
+const outputName = outputArg ? outputArg.split('=')[1] : 'screenshot'
+const fullpage = args.includes('--fullpage')
+const widthArg = args.find(arg => arg.startsWith('--width='))
+const width = widthArg ? parseInt(widthArg.split('=')[1]) : 1920
+const heightArg = args.find(arg => arg.startsWith('--height='))
+const height = heightArg ? parseInt(heightArg.split('=')[1]) : 1080
 
 /**
  * Capture screenshot
  */
 async function screenshot() {
-  let browser;
+  let browser
 
   try {
     // Connect to existing Chrome instance
     browser = await puppeteer.connect({
       browserURL: `http://localhost:${port}`
-    });
+    })
 
     // Get the active page
-    const pages = await browser.pages();
+    const pages = await browser.pages()
     if (pages.length === 0) {
-      throw new Error('No pages open. Navigate to a URL first using nav.js');
+      throw new Error('No pages open. Navigate to a URL first using nav.js')
     }
 
-    const page = pages[0];
+    const page = pages[0]
 
     // Set viewport size
-    await page.setViewport({ width, height });
+    await page.setViewport({ width, height })
 
     // Create output directory
-    const outputDir = resolve(__dirname, '../../tests/screenshots/current');
-    mkdirSync(outputDir, { recursive: true });
+    const outputDir = resolve(__dirname, '../../tests/screenshots/current')
+    mkdirSync(outputDir, { recursive: true })
 
     // Generate filename with timestamp
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
-    const filename = `${outputName}-${timestamp}.png`;
-    const outputPath = resolve(outputDir, filename);
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5)
+    const filename = `${outputName}-${timestamp}.png`
+    const outputPath = resolve(outputDir, filename)
 
     // Take screenshot
     await page.screenshot({
       path: outputPath,
       fullPage: fullpage
-    });
+    })
 
-    console.log(`✓ Screenshot saved: ${outputPath}`);
-    console.log(`Viewport: ${width}x${height}`);
-    console.log(`Full page: ${fullpage}`);
+    console.log(`✓ Screenshot saved: ${outputPath}`)
+    console.log(`Viewport: ${width}x${height}`)
+    console.log(`Full page: ${fullpage}`)
 
     // Return the path for agent use
-    return outputPath;
-
+    return outputPath
   } catch (error) {
-    console.error('❌ Error:', error.message);
-    process.exit(1);
+    console.error('❌ Error:', error.message)
+    process.exit(1)
   } finally {
     if (browser) {
-      await browser.disconnect();
+      await browser.disconnect()
     }
   }
 }
 
-screenshot();
+screenshot()

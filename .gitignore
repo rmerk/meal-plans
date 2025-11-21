@@ -165,3 +165,8 @@ logs
 # Agent testing screenshots (keep baseline, ignore current/diffs)
 tests/screenshots/current/
 tests/screenshots/diffs/
+
+# Playwright test results
+test-results/
+playwright-report/
+playwright/.cache/

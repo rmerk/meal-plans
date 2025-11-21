@@ -64,6 +64,6 @@ const isActive = (path: string) => {
     </main>
 
     <!-- Mobile Bottom Navigation (hidden on desktop >= 640px) -->
-    <MobileNav class="sm:hidden" />
+    <NavigationMobileNav class="sm:hidden" />
   </div>
 </template>

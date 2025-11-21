@@ -59,7 +59,7 @@ cd meal-plans
 pnpm install
 ```
 
-**Note:** This project uses `pnpm` as its package manager (not `npm`). The installation should take 2-4 minutes on a typical connection.
+**Note:** This project uses `pnpm` as its package manager (not `npm`). The installation typically takes 2-4 minutes depending on network speed and system performance.
 
 ## Development
 
@@ -310,6 +310,7 @@ Tasks marked `**[AUTOMATED]**` in story files can be verified autonomously by ag
 - [Architecture](./docs/architecture.md) - System architecture, technology decisions, and implementation patterns
 - [Product Requirements (PRD)](./docs/PRD.md) - Complete feature specifications and 134 functional requirements
 - [Epic Breakdown](./docs/epics.md) - User stories organized into 5 epics with acceptance criteria
+- [UX Design Specification](./docs/ux-design-specification.md) - Visual design system and component specifications
 
 **Sprint Artifacts:**
 - [Sprint Status](./docs/sprint-artifacts/sprint-status.yaml) - Current development progress tracking

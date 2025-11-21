@@ -1,0 +1,340 @@
+<story-context id="meal-plans/bmm/story-2-5-context" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>5</storyId>
+    <title>Prep Strategy Guide Page</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2025-11-20</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-5-prep-strategy-guide-page.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to view the batch cooking prep strategy for a meal plan</iWant>
+    <soThat>I can understand the workflow and cook efficiently</soThat>
+    <tasks>
+      - Task 1: Create Prep Strategy Page Component (AC: #2.5.1, #2.5.2, #2.5.4)
+      - Task 2: Implement "Back to Meal Plan" Navigation (AC: #2.5.3)
+      - Task 3: Implement SEO Meta Tags (AC: #2.5.5)
+      - Task 4: Implement Responsive Layout (AC: #2.5.6)
+      - Task 5: Add Defensive Coding and Error Handling
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="2.5.1">
+      <title>Prep Strategy Page Loads with Markdown Content</title>
+      <given>I'm on a meal plan overview page</given>
+      <when>I click "View Prep Strategy"</when>
+      <then>
+        - Navigate to /meals/week-1/prep-strategy
+        - See prep guide content rendered from Nuxt Content markdown
+        - Content uses prose class for typography
+        - All 6 workflow steps display with pro tips
+      </then>
+    </criterion>
+    <criterion id="2.5.2">
+      <title>Content Rendered from Nuxt Content</title>
+      <given>Prep strategy page is loaded</given>
+      <then>
+        - Content queried via queryContent('meals', week, 'prep-strategy').findOne()
+        - Frontmatter metadata displays (title, subtitle, prepTime, totalMeals)
+        - Markdown body renders with proper HTML structure
+      </then>
+    </criterion>
+    <criterion id="2.5.3">
+      <title>Back to Meal Plan Navigation Link</title>
+      <given>Viewing a prep strategy page</given>
+      <then>
+        - "Back to Week X Overview" link displayed prominently
+        - Clicking navigates to /meals/week-1 (meal plan overview)
+        - Accessible via keyboard (tab + enter)
+      </then>
+    </criterion>
+    <criterion id="2.5.4">
+      <title>404 Handling for Missing Prep Strategy Files</title>
+      <given>Navigate to non-existent week prep strategy</given>
+      <when>Page tries to load /meals/week-99/prep-strategy</when>
+      <then>
+        - Nuxt Content returns null
+        - App throws createError({ statusCode: 404 })
+        - error.vue renders with "Prep strategy not found" message
+        - "Back to Home" link navigates to /
+      </then>
+    </criterion>
+    <criterion id="2.5.5">
+      <title>SEO Meta Tags for Prep Strategy Pages</title>
+      <given>Prep strategy page is loaded</given>
+      <then>
+        - title tag with prep strategy title and site name
+        - meta description from frontmatter
+        - OpenGraph tags (og:title, og:description, og:type: 'article')
+      </then>
+    </criterion>
+    <criterion id="2.5.6">
+      <title>Responsive Layout Across Breakpoints</title>
+      <given>Prep strategy page is displayed</given>
+      <then>
+        - Mobile (< 640px): Single column, full width with prose styling
+        - Tablet/Desktop (≥ 640px): max-w-3xl, centered layout
+        - All text readable with proper typography
+        - Back button accessible on all screen sizes
+      </then>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Story 2.5: Prep Strategy Guide Pages</section>
+        <snippet>Story 2.5 creates prep strategy guide pages rendered from Nuxt Content markdown with prose styling, navigation back to meal plan overview. Uses same SSG pattern as Story 2.2 meal plan overview.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Project Architecture</title>
+        <section>Nuxt Content Query Pattern</section>
+        <snippet>SSG-compatible single item query using queryContent().findOne(). For prep strategy: queryContent('meals', weekId, 'prep-strategy').findOne() to load markdown files.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Project Architecture</title>
+        <section>SEO Optimization</section>
+        <snippet>Use useSeoMeta composable for title and description. Apply OpenGraph and Twitter Card meta tags for social sharing.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Epic 2: Story 2.5</section>
+        <snippet>As a user, I want to view the batch cooking prep strategy for a meal plan, so that I can understand the workflow and cook efficiently. Creates /meals/[week]/prep-strategy pages.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-2-meal-plan-overview-page.md</path>
+        <title>Story 2.2: Meal Plan Overview Page (Reference Pattern)</title>
+        <section>Implementation</section>
+        <snippet>Story 2.2 established the /meals/[week]/index.vue pattern with dynamic routing, SSG queries, and 404 handling. Story 2.5 uses identical pattern for /meals/[week]/prep-strategy.vue.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/2-4-recipe-detail-page.md</path>
+        <title>Story 2.4: Recipe Detail Page (Prose Styling Reference)</title>
+        <section>Implementation</section>
+        <snippet>Story 2.4 uses prose class for markdown typography styling and useSeoMeta for SEO. Established comfortable reading width with max-w-3xl container pattern.</snippet>
+      </doc>
+      <doc>
+        <path>content/meals/week-1/prep-strategy.md</path>
+        <title>Week 1 Prep Strategy Content</title>
+        <section>Content Source</section>
+        <snippet>Week 1 prep strategy markdown file with frontmatter (title, subtitle, prepTime, totalMeals, difficulty) and markdown body containing 5-step batch cooking workflow.</snippet>
+      </doc>
+      <doc>
+        <path>content/meals/week-2/prep-strategy.md</path>
+        <title>Week 2 Prep Strategy Content</title>
+        <section>Content Source</section>
+        <snippet>Week 2 prep strategy markdown file with 6-step workflow focusing on tofu prep and Asian-inspired stir-fries.</snippet>
+      </doc>
+      <doc>
+        <path>content/meals/week-3/prep-strategy.md</path>
+        <title>Week 3 Prep Strategy Content</title>
+        <section>Content Source</section>
+        <snippet>Week 3 prep strategy markdown file with 6-step workflow featuring diverse proteins (chicken, beef, shrimp, tofu) and curry flavors.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>app/pages/meals/[week]/index.vue</path>
+        <kind>page component</kind>
+        <symbol>Meal Plan Overview Page</symbol>
+        <lines>entire file</lines>
+        <reason>Direct pattern reference for Story 2.5. Uses same dynamic routing pattern (/meals/[week]/), same SSG query structure (useAsyncData + queryContent), same 404 handling (createError). Story 2.5 implements nearly identical pattern for prep-strategy.vue.</reason>
+      </artifact>
+      <artifact>
+        <path>app/pages/meals/[week]/recipes/[slug].vue</path>
+        <kind>page component</kind>
+        <symbol>Recipe Detail Page</symbol>
+        <lines>entire file</lines>
+        <reason>Reference for prose styling pattern (Tailwind Typography), SEO meta tags (useSeoMeta), comfortable reading width (max-w-3xl), and markdown content rendering with ContentRenderer component.</reason>
+      </artifact>
+      <artifact>
+        <path>app/error.vue</path>
+        <kind>error page</kind>
+        <symbol>Global Error Handler</symbol>
+        <lines>entire file</lines>
+        <reason>404 error handling pattern used when queryContent returns null. Story 2.5 AC 2.5.4 requires createError({ statusCode: 404 }) which routes to this error page.</reason>
+      </artifact>
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>Nuxt Configuration</symbol>
+        <lines>entire file</lines>
+        <reason>Check modules array for @nuxt/content, @tailwindcss/typography (prose class), and other dependencies. Verify content configuration.</reason>
+      </artifact>
+      <artifact>
+        <path>app.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>App Configuration</symbol>
+        <lines>entire file</lines>
+        <reason>UI color theme configuration and app metadata used for consistent branding across all pages including prep strategy.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <node>
+        <package name="@nuxt/content" version="latest" />
+        <package name="@nuxt/ui" version="^4.1.0" />
+        <package name="@tailwindcss/typography" version="optional" note="Required for prose class styling" />
+        <package name="nuxt" version="^4.2.1" />
+        <package name="vue" version="^3.5.13" />
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - MUST reuse Story 2.2 meal plan overview pattern (dynamic routing, SSG queries, 404 handling)
+    - MUST use queryContent('meals', weekId, 'prep-strategy').findOne() for single file query
+    - MUST apply prose class or equivalent for markdown typography styling
+    - MUST use useSeoMeta composable for SEO meta tags (title, description, OpenGraph)
+    - MUST handle null content with createError({ statusCode: 404, message: 'Prep strategy not found' })
+    - MUST use max-w-3xl container for comfortable reading width (established pattern from Story 2.4)
+    - MUST provide "Back to Meal Plan" navigation using UButton with icon
+    - MUST render ContentRenderer component or equivalent for markdown body
+    - MUST extract frontmatter metadata (title, subtitle, prepTime, totalMeals)
+    - MUST be keyboard accessible (tab navigation, enter key triggers)
+    - MUST be responsive across all breakpoints (mobile, tablet, desktop)
+    - File to create: app/pages/meals/[week]/prep-strategy.vue (NEW file)
+    - Pattern: Follow app/pages/meals/[week]/index.vue structure exactly
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Nuxt Content Query API</name>
+      <kind>Composable API</kind>
+      <signature>
+        queryContent&lt;T&gt;(path: string, ...paths: string[]): QueryBuilder&lt;T&gt;
+        .findOne(): Promise&lt;T | null&gt;
+      </signature>
+      <path>node_modules/@nuxt/content</path>
+      <usage>
+        const { data: prepStrategy } = await useAsyncData(
+          `prep-strategy-${weekId.value}`,
+          () => queryContent('meals', weekId.value, 'prep-strategy').findOne()
+        )
+      </usage>
+    </interface>
+    <interface>
+      <name>useSeoMeta Composable</name>
+      <kind>Composable API</kind>
+      <signature>
+        useSeoMeta(meta: MaybeComputedRef&lt;SeoMetaInput&gt;): void
+      </signature>
+      <path>node_modules/@nuxt/seo</path>
+      <usage>
+        useSeoMeta({
+          title: `${prepStrategy.value.title} | Meal Plans`,
+          description: prepStrategy.value.description,
+          ogTitle: prepStrategy.value.title,
+          ogDescription: prepStrategy.value.description,
+          ogType: 'article'
+        })
+      </usage>
+    </interface>
+    <interface>
+      <name>createError Helper</name>
+      <kind>Nuxt Helper Function</kind>
+      <signature>
+        createError(error: { statusCode: number; message?: string }): Error
+      </signature>
+      <path>node_modules/nuxt</path>
+      <usage>
+        if (!prepStrategy.value) {
+          throw createError({ statusCode: 404, message: 'Prep strategy not found' })
+        }
+      </usage>
+    </interface>
+    <interface>
+      <name>ContentRenderer Component</name>
+      <kind>Vue Component</kind>
+      <signature>
+        &lt;ContentRenderer :value="parsedContent" /&gt;
+      </signature>
+      <path>node_modules/@nuxt/content</path>
+      <usage>
+        &lt;article class="prose prose-lg dark:prose-invert max-w-none"&gt;
+          &lt;ContentRenderer :value="prepStrategy" /&gt;
+        &lt;/article&gt;
+      </usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing for Story 2.5 follows established Epic 2 patterns:
+      - Manual browser testing with DevTools for responsive breakpoints (320px, 768px, 1280px)
+      - Lighthouse audit for Performance/Accessibility/SEO scores (target: 90+)
+      - Vue DevTools verification of useAsyncData query execution
+      - Browser DevTools inspection of SEO meta tags in page &lt;head&gt;
+      - Manual keyboard navigation testing (tab order, enter key activation)
+      - 404 error handling verification with invalid week slugs
+      - Content rendering verification for all 3 weeks (week-1, week-2, week-3)
+    </standards>
+    <locations>
+      Manual test evidence artifacts should be saved to:
+      - docs/test-evidence/story-2-5-lighthouse.json (Lighthouse audit JSON)
+      - docs/test-evidence/story-2-5-responsive-*.png (responsive screenshots)
+    </locations>
+    <ideas>
+      <idea ac="2.5.1">
+        - Navigate to /meals/week-1/prep-strategy
+        - Verify URL changes correctly
+        - Verify markdown content renders with prose styling
+        - Verify all 6 workflow steps display
+        - Verify pro tips render correctly
+        - Console should show no errors
+      </idea>
+      <idea ac="2.5.2">
+        - Open Vue DevTools
+        - Verify useAsyncData executes successfully
+        - Verify queryContent query appears in DevTools
+        - Verify frontmatter displays (title, subtitle, prepTime, totalMeals)
+        - Verify markdown AST parses correctly
+        - Test with all 3 weeks
+      </idea>
+      <idea ac="2.5.3">
+        - Verify "Back" link displays prominently
+        - Click link, verify navigation to /meals/week-1
+        - Test keyboard navigation (tab to link, press enter)
+        - Verify focus indicator visible
+        - Test on all 3 weeks
+      </idea>
+      <idea ac="2.5.4">
+        - Navigate to /meals/week-99/prep-strategy
+        - Verify 404 error page displays
+        - Verify "Prep strategy not found" message
+        - Verify "Back to Home" link works
+        - Console should show 404 error (expected)
+      </idea>
+      <idea ac="2.5.5">
+        - View page source (right-click → View Source)
+        - Verify title tag format correct
+        - Verify meta description from frontmatter
+        - Verify OpenGraph tags present (og:title, og:description, og:type)
+        - Test on all 3 weeks
+      </idea>
+      <idea ac="2.5.6">
+        - DevTools responsive mode
+        - Test at 320px (mobile): single column, full width
+        - Test at 768px (tablet): max-w-3xl, centered
+        - Test at 1280px (desktop): max-w-3xl, centered
+        - Verify prose styling readable at all sizes
+        - Take screenshot evidence at each breakpoint
+      </idea>
+      <idea ac="lighthouse">
+        - Run: lighthouse http://localhost:4000/meal-plans/meals/week-1/prep-strategy --output=json --output-path=docs/test-evidence/story-2-5-lighthouse.json
+        - Verify Performance ≥ 90
+        - Verify Accessibility ≥ 90
+        - Verify Best Practices ≥ 90
+        - Verify SEO ≥ 90
+      </idea>
+    </ideas>
+  </tests>
+</story-context>

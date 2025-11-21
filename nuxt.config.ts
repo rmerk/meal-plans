@@ -1,10 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/ui',
-    '@vite-pwa/nuxt'
-  ],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxt/content', '@vite-pwa/nuxt', '@nuxtjs/mdc', '@vueuse/nuxt'],
 
   devtools: {
     enabled: true,
@@ -14,7 +10,9 @@ export default defineNuxtConfig({
   },
 
   app: {
-    baseURL: '/meal-plans/', // GitHub Pages base path
+    // Use root path for dev/test, GitHub Pages path for production
+    // Must use empty string for dev to prevent baseURL from being applied to /_nuxt/ assets
+    baseURL: process.env.NODE_ENV === 'production' && !process.dev ? '/meal-plans/' : '',
     head: {
       title: 'Meal Plans',
       meta: [
@@ -123,7 +121,7 @@ export default defineNuxtConfig({
     },
 
     devOptions: {
-      enabled: true,
+      enabled: false, // Disable PWA in dev to avoid baseURL conflicts
       type: 'module'
     }
   }

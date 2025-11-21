@@ -116,17 +116,17 @@ workflow_status:
         note: "COMPLETED: 25 architectural decisions made, Nuxt 4 + @nuxt/ui v4 stack defined, implementation patterns documented"
 
       create-epics-and-stories-final:
-        status: "required"
+        status: "docs/sprint-artifacts/sprint-status.yaml"
         agent: "pm"
         command: "/bmad:bmm:workflows:create-epics-and-stories"
         note: "Required: Create final epic breakdown with full context (PRD + UX + Architecture)"
 
       test-design:
-        status: "recommended"
+        status: "docs/system-test-design.md"
         agent: "tea"
         command: "/bmad:bmm:workflows:test-design"
         output: "System-level testability review"
-        note: "Testability assessment before gate check - auto-detects system-level mode"
+        note: "COMPLETED: Retrospective testability assessment. CRITICAL FINDING: Zero tests exist. Immediate action required to set up test infrastructure (Playwright + Vitest). See test-design doc for roadmap."
 
       validate-architecture:
         status: "optional"
@@ -147,7 +147,7 @@ workflow_status:
     required: true
     workflows:
       sprint-planning:
-        status: "required"
+        status: "docs/sprint-artifacts/sprint-status.yaml"
         agent: "sm"
         command: "/bmad:bmm:workflows:sprint-planning"
         note: "Creates sprint plan with stories"

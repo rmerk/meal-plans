@@ -1,0 +1,299 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.1</storyId>
+    <title>Dashboard with Meal Plan Cards</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-19</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/2-1-dashboard-with-meal-plan-cards.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>to see all available meal plans displayed as attractive cards on the home page</iWant>
+    <soThat>I can quickly browse and select which meal plan to explore</soThat>
+    <tasks>
+      - Task 1: Create Dashboard Page Component (pages/index.vue)
+      - Task 2: Create MealPlanCard Component (components/meal/MealPlanCard.vue)
+      - Task 3: Implement Responsive Grid Layout (1-col mobile, 2-col tablet, 3-col desktop)
+      - Task 4: Add Card Hover Effects (lift + shadow animation)
+      - Task 5: Implement Card Click Navigation (to /meals/{week})
+      - Task 6: Create Sample Meal Plan Content (week-1, week-2, week-3 markdown files)
+      - Manual Testing: Responsive layout, Lighthouse audit, hover state, navigation
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="AC-2.1.1" priority="high">
+      <description>Dashboard page loads with meal plan cards displayed in grid layout</description>
+      <given>I navigate to the home page (/)</given>
+      <when>the dashboard loads</when>
+      <then>all meal plans are displayed as MealPlanCard components in a grid layout</then>
+      <validation>Lighthouse audit, manual visual inspection, Vue devtools component tree</validation>
+    </criterion>
+
+    <criterion id="AC-2.1.2" priority="high">
+      <description>Card content display with all required elements</description>
+      <details>Each card displays: title, subtitle, feature tags (UBadge), protein tags (UBadge), gradient background with emoji, "View Meal Plan →" CTA</details>
+      <validation>Manual visual inspection, check frontmatter data renders correctly, verify UBadge components present</validation>
+    </criterion>
+
+    <criterion id="AC-2.1.3" priority="high">
+      <description>Responsive grid layout adapts to viewport width</description>
+      <breakpoints>
+        - Mobile (&lt; 640px): Single column (1 card per row)
+        - Tablet (640px-1024px): 2-column grid (2 cards per row)
+        - Desktop (&gt; 1024px): 3-column grid (3 cards per row)
+      </breakpoints>
+      <validation>Browser DevTools responsive mode, manual test on iPhone SE/iPad/desktop, verify grid columns change at breakpoints</validation>
+    </criterion>
+
+    <criterion id="AC-2.1.4" priority="medium">
+      <description>Card hover state provides visual feedback on desktop</description>
+      <effects>
+        - Lift effect: translateY(-4px)
+        - Deeper shadow (box-shadow increases)
+        - Smooth transition animation (200-300ms)
+      </effects>
+      <validation>Manual hover test on desktop, inspect computed styles, verify transform and box-shadow CSS</validation>
+    </criterion>
+
+    <criterion id="AC-2.1.5" priority="high">
+      <description>Clicking a card navigates to meal plan overview page</description>
+      <behavior>Click "Week 1" card → navigates to /meals/week-1, browser URL updates, overview page loads</behavior>
+      <validation>Click card, verify URL changes, verify overview page loads (will 404 until Story 2.2 complete)</validation>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Nuxt Content Query Pattern</section>
+        <snippet>All pages use useAsyncData + queryContent for SSG-friendly fetching. Pattern: const { data: mealPlans } = await useAsyncData('meal-plans', () => queryContent('meals').find()). Ensures static generation works for GitHub Pages deployment.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Vue Component Structure (Mandatory Order)</section>
+        <snippet>Component organization: 1. Type imports, 2. Composables, 3. Props, 4. Emits, 5. Reactive state, 6. Computed properties, 7. Functions, 8. Lifecycle hooks, 9. Watchers. Always follow this order, never mix sections.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Nuxt Content Structure</section>
+        <snippet>Content structure: content/meals/week-{n}/index.md (week overview), content/meals/week-{n}/recipes/*.md (individual recipes), content/meals/week-{n}/prep-strategy.md (batch cooking guide). Frontmatter metadata includes title, subtitle, emoji, features, proteins, category, color.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Story 2.1 Data Models</section>
+        <snippet>MealPlanIndex interface: title (string), subtitle (string), emoji (string), category (beginner|intermediate|advanced), color (gradient background), features (string[]), proteins (string[]), batchCookingSteps, recipeCount (number), prepTime (string). MealPlanCardProps: title, subtitle, features, proteins, emoji, week (for navigation), color (optional).</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/sprint-artifacts/tech-spec-epic-2.md</path>
+        <title>Epic 2 Technical Specification</title>
+        <section>Performance Requirements</section>
+        <snippet>Lighthouse Performance Target: 90+. Metrics: FCP &lt; 1.5s, LCP &lt; 2.5s, TTI &lt; 3.5s, CLS &lt; 0.1, TBT &lt; 200ms. Static generation ensures instant paint, service worker cache-first for assets. Nuxt Content pre-renders all markdown at build time, no client-side parsing.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 2.1 Technical Notes</section>
+        <snippet>Create pages/index.vue for dashboard, components/meal/MealPlanCard.vue component. Query all meal plans: useAsyncData('meal-plans', () => queryContent('meals').find()). Use UCard, UBadge, UButton from @nuxt/ui v4. This is THE defining experience per UX Design doc Section 2.1.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/ux-design-specification.md</path>
+        <title>UX Design Specification</title>
+        <section>2.1 Defining Experience - Meal Plan Browsing</section>
+        <snippet>Dashboard meal plan browsing is the defining first interaction. Cards must be visually appealing with gradient backgrounds, clear typography, and smooth hover effects. Mountains at Sunrise color palette (Primary #192E59, Secondary #F2CC85) applied throughout. Responsive grid adapts seamlessly across devices.</snippet>
+      </doc>
+
+      <doc>
+        <path>docs/sprint-artifacts/1-6-document-project-setup-architecture.md</path>
+        <title>Story 1.6 - Previous Story Learnings</title>
+        <section>Completion Notes and Key Takeaways</section>
+        <snippet>Base layouts created: app/layouts/default.vue with responsive navigation (desktop top nav ≥ 640px, mobile bottom nav &lt; 640px). Mountains at Sunrise theme applied (Primary #192E59, dark mode support). PWA service worker configured and functional. Nuxt 4 initialized with @nuxt/ui v4, TypeScript, Tailwind CSS v4. Auto-imports enabled for components, composables, stores.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <artifact>
+        <path>app/layouts/default.vue</path>
+        <kind>layout</kind>
+        <symbol>default layout</symbol>
+        <lines>1-70</lines>
+        <reason>Provides base responsive layout with desktop top navigation and mobile bottom navigation. Dashboard page will use this layout via Nuxt conventions. Contains skip-to-content accessibility link, color mode toggle, and navigation structure to inherit.</reason>
+      </artifact>
+
+      <artifact>
+        <path>nuxt.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>Nuxt configuration</symbol>
+        <lines>all</lines>
+        <reason>Contains Nuxt modules configuration including @nuxt/content, @nuxt/ui, PWA settings, GitHub Pages base URL (/meal-plans/), and responsive breakpoints. Must verify @nuxt/content module is registered for queryContent API to work.</reason>
+      </artifact>
+
+      <artifact>
+        <path>app.config.ts</path>
+        <kind>configuration</kind>
+        <symbol>Nuxt UI theme config</symbol>
+        <lines>all</lines>
+        <reason>Mountains at Sunrise theme configuration for @nuxt/ui components. Defines primary/secondary colors, component styling. MealPlanCard will use UCard, UBadge, UButton with this theme.</reason>
+      </artifact>
+    </code>
+
+    <dependencies>
+      <node>
+        <package name="nuxt" version="^4.2.1" scope="production">Core framework, provides file-based routing, SSG, auto-imports</package>
+        <package name="@nuxt/ui" version="^4.1.0" scope="production">Component library (UCard, UBadge, UButton)</package>
+        <package name="@nuxt/content" version="^3.8.2" scope="production">CRITICAL: Markdown CMS for meal plan data, provides queryContent API</package>
+        <package name="@vueuse/nuxt" version="^14.0.0" scope="production">Composables library (not directly used in Story 2.1, used in later stories for useSwipe)</package>
+        <package name="@vite-pwa/nuxt" version="^1.0.7" scope="production">PWA capabilities, service worker will precache dashboard page</package>
+        <package name="vue-tsc" version="^3.1.3" scope="development">TypeScript type checking for Vue components</package>
+        <package name="typescript" version="^5.9.3" scope="development">Type safety for component props and interfaces</package>
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint type="architecture" priority="high">
+      <rule>Use useAsyncData + queryContent pattern for all Nuxt Content queries to ensure SSG compatibility</rule>
+      <reference>docs/architecture.md lines 975-986</reference>
+    </constraint>
+
+    <constraint type="architecture" priority="high">
+      <rule>Follow Vue component structure order: type imports, composables, props, emits, reactive state, computed, functions, lifecycle, watchers</rule>
+      <reference>docs/architecture.md lines 931-963</reference>
+    </constraint>
+
+    <constraint type="design" priority="high">
+      <rule>Apply Mountains at Sunrise color palette: Primary #192E59, Secondary #F2CC85, ensure WCAG 2.1 AA color contrast (Primary on white: 7.2:1)</rule>
+      <reference>docs/architecture.md, docs/ux-design-specification.md</reference>
+    </constraint>
+
+    <constraint type="accessibility" priority="high">
+      <rule>Maintain 44px minimum touch targets for mobile accessibility, keyboard navigation support, ARIA labels on interactive elements</rule>
+      <reference>docs/architecture.md Accessibility Patterns</reference>
+    </constraint>
+
+    <constraint type="responsive" priority="high">
+      <rule>Responsive breakpoints: mobile &lt; 640px (1 col), tablet 640-1024px (2 cols), desktop ≥ 1024px (3 cols). Use Tailwind classes: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3</rule>
+      <reference>docs/architecture.md, docs/sprint-artifacts/tech-spec-epic-2.md</reference>
+    </constraint>
+
+    <constraint type="performance" priority="high">
+      <rule>Lighthouse Performance score ≥ 90. Static generation must work correctly for GitHub Pages deployment. No client-side markdown parsing.</rule>
+      <reference>docs/sprint-artifacts/tech-spec-epic-2.md Performance section</reference>
+    </constraint>
+
+    <constraint type="file-structure" priority="medium">
+      <rule>Pages in pages/ directory auto-route. Components in components/ auto-import. Content in content/meals/ directory. Use project-relative paths only.</rule>
+      <reference>docs/architecture.md Project Structure</reference>
+    </constraint>
+
+    <constraint type="naming" priority="medium">
+      <rule>Component names: PascalCase (MealPlanCard.vue). File names match component name. Props interface names: {ComponentName}Props.</rule>
+      <reference>docs/architecture.md Implementation Patterns</reference>
+    </constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>queryContent API (Nuxt Content)</name>
+      <kind>API</kind>
+      <signature>queryContent(path?: string).only(fields: string[]).find() → Promise&lt;ContentFile[]&gt;</signature>
+      <path>@nuxt/content module</path>
+      <usage>const { data: mealPlans } = await useAsyncData('meal-plans', () => queryContent('meals').only(['title', 'subtitle', 'emoji', 'features', 'proteins', '_path', 'color']).find())</usage>
+    </interface>
+
+    <interface>
+      <name>MealPlanCardProps</name>
+      <kind>TypeScript interface</kind>
+      <signature>interface Props { title: string; subtitle: string; features: string[]; proteins: string[]; emoji: string; week: string; color?: string }</signature>
+      <path>components/meal/MealPlanCard.vue</path>
+      <usage>Define component props for MealPlanCard, use with defineProps&lt;Props&gt;()</usage>
+    </interface>
+
+    <interface>
+      <name>UCard component (@nuxt/ui)</name>
+      <kind>Vue component</kind>
+      <signature>&lt;UCard class="..." @click="handler"&gt;&lt;/UCard&gt;</signature>
+      <path>@nuxt/ui module</path>
+      <usage>Base component for MealPlanCard, provides card styling and structure</usage>
+    </interface>
+
+    <interface>
+      <name>UBadge component (@nuxt/ui)</name>
+      <kind>Vue component</kind>
+      <signature>&lt;UBadge color="primary" variant="subtle"&gt;text&lt;/UBadge&gt;</signature>
+      <path>@nuxt/ui module</path>
+      <usage>Used for feature tags and protein tags in MealPlanCard</usage>
+    </interface>
+
+    <interface>
+      <name>UButton component (@nuxt/ui)</name>
+      <kind>Vue component</kind>
+      <signature>&lt;UButton block color="primary" trailing-icon="..."&gt;label&lt;/UButton&gt;</signature>
+      <path>@nuxt/ui module</path>
+      <usage>CTA button "View Meal Plan →" in MealPlanCard</usage>
+    </interface>
+
+    <interface>
+      <name>useRouter (Vue Router)</name>
+      <kind>Composable</kind>
+      <signature>const router = useRouter(); router.push(path: string)</signature>
+      <path>Nuxt auto-import</path>
+      <usage>Programmatic navigation when card is clicked: router.push(`/meals/${props.week}`)</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Epic 2 uses manual testing with Lighthouse audits and browser DevTools. Automated testing deferred to post-MVP. Testing approach: 1) Manual component testing (verify rendering, responsive breakpoints, prop bindings), 2) Manual integration testing (test user journeys), 3) Lighthouse audits (PWA 100, Performance 90+, Accessibility 90+, Best Practices 90+, SEO 90+), 4) Manual accessibility testing (keyboard navigation, screen reader, ARIA labels, 44px touch targets), 5) Cross-browser testing (Chrome, Firefox, Safari, Edge), 6) Mobile device testing (iPhone SE, iPad, Pixel). Test evidence required in docs/test-evidence/ directory.
+    </standards>
+
+    <locations>
+      - docs/test-evidence/ (manual test screenshots, Lighthouse JSON reports)
+      - No automated test files for Epic 2 (deferred to post-MVP)
+    </locations>
+
+    <ideas>
+      <idea ac="AC-2.1.1" type="manual">
+        Visual inspection: Verify dashboard page renders with grid of MealPlanCard components. Check Vue devtools component tree shows correct hierarchy. Verify 3 meal plan cards visible (week-1, week-2, week-3).
+      </idea>
+
+      <idea ac="AC-2.1.2" type="manual">
+        Content verification: Inspect each card for title, subtitle, emoji, feature badges, protein badges, CTA button. Verify frontmatter data from markdown files renders correctly. Check UBadge components have correct colors (primary for features, secondary for proteins).
+      </idea>
+
+      <idea ac="AC-2.1.3" type="manual">
+        Responsive testing: Use browser DevTools responsive mode. Test breakpoints at 320px (mobile), 640px (tablet starts), 1024px (desktop starts), 1920px (large desktop). Verify grid switches from 1-col to 2-col to 3-col. Capture screenshots at each breakpoint for evidence.
+      </idea>
+
+      <idea ac="AC-2.1.4" type="manual">
+        Hover state testing: On desktop browser, hover over card. Verify lift effect (card moves up ~4px). Verify shadow deepens. Verify smooth transition animation. Inspect computed styles in DevTools to confirm CSS transforms and box-shadow changes.
+      </idea>
+
+      <idea ac="AC-2.1.5" type="manual">
+        Navigation testing: Click card, verify URL changes to /meals/week-1. Verify browser history updated. Note: Overview page will 404 until Story 2.2 complete (expected behavior). Test keyboard navigation: Tab to card, press Enter, verify navigation triggers.
+      </idea>
+
+      <idea type="lighthouse">
+        Run Lighthouse audit: lighthouse http://localhost:4000/meal-plans/ --output=json --output-path=docs/test-evidence/story-2-1-lighthouse.json. Verify Performance ≥ 90, Accessibility ≥ 90, Best Practices ≥ 90, SEO ≥ 90, PWA = 100. If scores below threshold, iterate on implementation.
+      </idea>
+
+      <idea type="accessibility">
+        Keyboard navigation: Tab through page, verify focus visible on all interactive elements (cards, nav links). Press Enter on focused card, verify navigation. Screen reader test: Use VoiceOver (macOS) or NVDA (Windows), verify card announces title and "link" role, verify ARIA labels read correctly.
+      </idea>
+    </ideas>
+  </tests>
+</story-context>
